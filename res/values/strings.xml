@@ -1,0 +1,61 @@
+<resources>
+   
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">宏信龙门店考核系统</string>
+    <string name="title_activity_item">查看考评明细</string>
+    <string name="title_activity_message">通知公告</string>
+    <string name="title_activity_message_detail">通知详细</string>
+    <string name="title_activity_score_choose">请打分</string>
+    <string name="title_activity_shop_select">门店选择</string>
+    
+    
+    <string name="tab_home">首页</string>
+    <string name="tab_category">品类</string>
+    <string name="tab_mark">品牌</string>
+    <string name="tab_cart">购物车</string>
+    <string name="tab_my">我的</string>
+    <string name="app_name">商城</string>
+    <string name="title_activity_guide">向导画面</string>
+    <string name="action_settings">设置</string>
+    <string name="group_copyright">Copyright © 2004 Adobe Systems Incorporated. All rights reserved</string>
+    
+    
+    <!-- brains framework 框架用设定 开始 -->
+    <!-- Log TAG 名 -->
+    <string name="tag_for_logging">brains-smart</string>
+
+    <!-- RDBの物理名 -->
+    <string name="rdb_physical_name">brains_smart_db</string>
+    
+    <!-- GoogleMap API Key -->
+    <string name="google_map_api_key">GoogleMap API Key TODO </string>
+	<!-- brains framework 框架用设定 结束 -->
+	<string name="userLoginId">帐号：</string>
+	<string name="password">密码：</string>
+	<string name="input_username">请输入用户名</string>
+	<string name="input_password">请输入密码</string>
+    <string name="login">登录</string>
+	<string name="do_score">打&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;分</string>
+    <string name="query_kp_detail">查看考评明细</string>
+    <string name="tongzhi">通&#160;&#160;&#160;知&#160;&#160;&#160;公&#160;&#160;&#160;告</string>
+    <string name="fgx">分隔线</string>
+    <string name="choose_store">选择店铺</string>
+    <string name="read_y">已读</string>
+    <string name="read_n">未读</string>
+    <string name="msg_list">通知公告列表</string>
+    <string name="back">返回</string>
+    <string name="kpdf">考评打分</string>
+    <string name="kpitemlist">考评明细列表</string>
+    <string name="isextends_arrow">是否展开箭头标识</string>
+    <string name="submit">提交</string>
+    <string name="dfxx">打分选项</string>
+	<string name="hint_shop_input">店名查询</string>
+    <string name="msg_no_data">没有数据</string>
+    <string name="omenu_exit">退出</string>
+    <string name="omenu_logout">注销</string>
+    <string name="btn_confirm">确定</string>    
+    <string name="btn_cancel">取消</string>
+    <string name="btn_search">查询</string>
+    <string name="btn_takepicture">拍照</string>
+</resources>

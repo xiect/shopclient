@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/imLaster"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/startup05" />
+
+    <RelativeLayout
+        style="@style/startup_match_base"
+        android:layout_gravity="bottom|center"
+        android:paddingBottom="@dimen/startup_btn_padding_bottom" >
+
+        <Button
+            android:id="@+id/startup_button_go"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/startup_button_selector"
+            android:gravity="center" />
+    </RelativeLayout>
+
+</FrameLayout>
