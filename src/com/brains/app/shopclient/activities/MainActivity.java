@@ -23,7 +23,7 @@ import android.widget.TabHost;
 public class MainActivity extends BaseNormalActivity{
 	private final static String ACTION_MAIN = "brains.intent.action.ACTION_MAIN";
 
-	public static final String TAG = "HomeActivity";
+	public static final String TAG = "MainActivity";
 	
 	private TabHost mTabHost;
 	private RadioGroup mRadioGroup;
@@ -41,8 +41,7 @@ public class MainActivity extends BaseNormalActivity{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.layout_home);
-		
+		setContentView(R.layout.layout_main);
 	}
 	
 	private void findViews() {
