@@ -9,5 +9,6 @@
 	<dimen name="bottom_tab_padding_up">3.0dip</dimen>
 	<dimen name="bottom_tab_padding_button">1.0dip</dimen>
 	<dimen name="bottom_tab_font_size">10.0dip</dimen>
-
+    <dimen name="home_no_network_hint_comment_size">16.0sp</dimen>
+    
 </resources>

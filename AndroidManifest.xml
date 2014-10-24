@@ -74,6 +74,13 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".activities.TabMainActivity" android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="brains.intent.action.ACTION_TABMAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+       
     </application>
 
 </manifest>

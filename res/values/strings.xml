@@ -18,6 +18,10 @@
     <string name="app_name">商城</string>
     <string name="title_activity_guide">向导画面</string>
     <string name="action_settings">设置</string>
+    <string name="homeActivity_autoComplete">搜索商品</string>
+    <string name="loading_error_tips_home">请检查您的手机是否已联网～</string>
+    <string name="image_desc_common">image desc</string>
+    
     <string name="group_copyright">Copyright © 2004 Adobe Systems Incorporated. All rights reserved</string>
     
     

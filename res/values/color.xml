@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="title_bg_red">#ffe4393c</color>
+    <color name="transparent">#00000000</color>
+    <color name="search_font_dark_grey">#ffb2b2b2</color>
+	<color name="home_no_network_hint">#ffada39b</color>
+    <color name="main_tab_selected_bg_color">#2F4F4F</color>
+    <color name="main_tab_bar_bg_color">#D3D3D3</color>        
+	
     <color name="white">#FFFFFF</color> <!-- 白色 -->
     <color name="ivory">#FFFFF0</color> <!-- 象牙色 -->
     <color name="lightyellow">#FFFFE0</color> <!-- 亮黄色 -->

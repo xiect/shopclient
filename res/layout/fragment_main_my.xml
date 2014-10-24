@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+      <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1.0dip"
+                android:gravity="center"
+                android:lineSpacingExtra="5.0dip"
+                android:text="my"
+                android:textColor="@color/home_no_network_hint"
+                android:textSize="@dimen/home_no_network_hint_comment_size" />
+
+</LinearLayout>

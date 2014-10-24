@@ -170,7 +170,8 @@ public class GuideActivity extends BaseNormalActivity implements OnPageChangeLis
 	@Override
 	public void onClick(View v) {
 		// 点击“启用”按钮 跳转至主画面
-		this.startActivity(MainActivity.makeIntent());
+//		this.startActivity(MainActivity.makeIntent());
+		this.startActivity(TabMainActivity.makeIntent());
 		this.finish();
 	} 
 }

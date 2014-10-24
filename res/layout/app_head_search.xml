@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_header"
+    android:layout_width="fill_parent"
+    android:layout_height="50.0dip"
+    android:background="@color/title_bg_red"
+    android:gravity="center_vertical"
+    android:paddingLeft="10.0dip" >
+
+    <RelativeLayout
+        android:id="@+id/layout_search"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_vertical" >
+
+        <ImageView
+            android:id="@+id/home_title_logo"
+            android:layout_width="60.0dip"
+            android:layout_height="23.0dip"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15.0dip"
+            android:scaleType="centerInside"
+            android:src="@drawable/home_logo" />
+
+        <RelativeLayout
+            android:id="@+id/home_title_search"
+            android:layout_width="226.0dip"
+            android:layout_height="30.0dip"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="13.0dip"
+            android:layout_toRightOf="@id/home_title_logo"
+            android:background="@color/white"
+            android:gravity="center_vertical" >
+
+            <ImageView
+                android:id="@+id/iv_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10.0dip"
+                android:src="@drawable/icon_search" />
+
+            <AutoCompleteTextView
+                android:id="@+id/homeActivity_autoComplete"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10.0dip"
+                android:layout_marginRight="2.0dip"
+                android:layout_toRightOf="@id/iv_search"
+                android:background="@color/transparent"
+                android:completionThreshold="1"
+                android:dropDownWidth="fill_parent"
+                android:focusable="false"
+                android:gravity="center_vertical"
+                android:hint="@string/homeActivity_autoComplete"
+                android:paddingBottom="2.0dip"
+                android:paddingRight="20.0dip"
+                android:paddingTop="2.0dip"
+                android:singleLine="true"
+                android:textColor="@color/search_font_dark_grey"
+                android:textSize="14.0dip" />
+
+            <ImageButton
+                android:id="@+id/homeActivity_voice"
+                android:layout_width="12.0dip"
+                android:layout_height="20.0dip"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10.0dip"
+                android:background="@drawable/app_icon_voice"
+                android:scaleType="centerInside" />
+        </RelativeLayout>
+
+<!--         <FrameLayout -->
+<!--             android:id="@id/home_search_layout" -->
+<!--             android:layout_width="wrap_content" -->
+<!--             android:layout_height="fill_parent" -->
+<!--             android:layout_alignParentRight="true" -->
+<!--             android:layout_centerVertical="true" -->
+<!--             android:layout_gravity="center_vertical" > -->
+
+<!--             <ImageView -->
+<!--                 android:id="@id/home_search_button" -->
+<!--                 android:layout_width="wrap_content" -->
+<!--                 android:layout_height="wrap_content" -->
+<!--                 android:layout_gravity="center_vertical" -->
+<!--                 android:paddingBottom="10.0dip" -->
+<!--                 android:paddingRight="10.0dip" -->
+<!--                 android:paddingTop="10.0dip" -->
+<!--                 android:scaleType="centerInside" -->
+<!--                 android:src="@drawable/android_search_button_icon" /> -->
+
+<!--             <ImageView -->
+<!--                 android:id="@id/home_search_button_tip" -->
+<!--                 android:layout_width="wrap_content" -->
+<!--                 android:layout_height="wrap_content" -->
+<!--                 android:layout_gravity="top|right|center" -->
+<!--                 android:layout_marginRight="4.0dip" -->
+<!--                 android:layout_marginTop="4.0dip" -->
+<!--                 android:adjustViewBounds="true" -->
+<!--                 android:scaleType="centerInside" -->
+<!--                 android:src="@drawable/home_camera_tip" -->
+<!--                 android:visibility="gone" /> -->
+<!--         </FrameLayout> -->
+    </RelativeLayout>
+
+</RelativeLayout>
