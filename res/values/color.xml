@@ -6,8 +6,9 @@
 	<color name="home_no_network_hint">#ffada39b</color>
     <color name="main_tab_selected_bg_color">#2F4F4F</color>
     <color name="main_tab_bar_bg_color">#D3D3D3</color>        
-	
+	<color name="font_gray">#ff888888</color>
     <color name="white">#FFFFFF</color> <!-- 白色 -->
+    
     <color name="ivory">#FFFFF0</color> <!-- 象牙色 -->
     <color name="lightyellow">#FFFFE0</color> <!-- 亮黄色 -->
     <color name="yellow">#FFFF00</color> <!-- 黄色 -->

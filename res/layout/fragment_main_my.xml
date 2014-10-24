@@ -3,14 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-      <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1.0dip"
-                android:gravity="center"
-                android:lineSpacingExtra="5.0dip"
-                android:text="my"
-                android:textColor="@color/home_no_network_hint"
-                android:textSize="@dimen/home_no_network_hint_comment_size" />
-
+  <include android:id="@+id/home_category_header" layout="@layout/app_head_common"/>
+   <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:padding="10dip" >
+        <ListView
+            android:id="@+id/menu_list_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:cacheColorHint="#ff000000"
+            android:divider="@drawable/circle_list_divider"
+  			android:dividerHeight="0.1dip"
+            android:fadingEdgeLength="0.0sp"
+            android:scrollbars="none" />
+    </LinearLayout>
 </LinearLayout>
+ 

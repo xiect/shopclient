@@ -10,5 +10,6 @@
 	<dimen name="bottom_tab_padding_button">1.0dip</dimen>
 	<dimen name="bottom_tab_font_size">10.0dip</dimen>
     <dimen name="home_no_network_hint_comment_size">16.0sp</dimen>
-    
+    <dimen name="home_no_network_reload_button_margin_top">10.0dip</dimen>
+    <dimen name="home_no_network_reload_button_size">18.0sp</dimen>
 </resources>

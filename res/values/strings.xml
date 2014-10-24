@@ -8,14 +8,23 @@
     <string name="title_activity_message_detail">通知详细</string>
     <string name="title_activity_score_choose">请打分</string>
     <string name="title_activity_shop_select">门店选择</string>
+     <string name="loading">加载中...</string>
     
-    
+    <string name="loading_error_again">重新加载</string>
+    <string name="loading_error_tips_1">这位客官，网络不给力啊。</string>
+    <string name="loading_error_tips_2">请检查一下您的网络，重新加载吧！</string>
     <string name="tab_home">首页</string>
     <string name="tab_category">品类</string>
     <string name="tab_mark">品牌</string>
     <string name="tab_cart">购物车</string>
     <string name="tab_my">我的</string>
     <string name="app_name">商城</string>
+    
+    <string name="person_menu_query_order">订单查询</string>
+    <string name="person_menu_account">帐户管理</string>
+    <string name="person_menu_about">关于</string>
+    <string name="person_menu_exit">退出</string>
+    
     <string name="title_activity_guide">向导画面</string>
     <string name="action_settings">设置</string>
     <string name="homeActivity_autoComplete">搜索商品</string>
