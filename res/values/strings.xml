@@ -27,7 +27,7 @@
     
     
     
-    
+     <string name="msg_no_data">没有数据</string>
     <string name="user_name">用户名：</string>
     <string name="verification_code">验证码：</string>
     <string name="user_password">密    码：</string>
@@ -97,7 +97,7 @@
     <string name="submit">提交</string>
     <string name="dfxx">打分选项</string>
 	<string name="hint_shop_input">店名查询</string>
-    <string name="msg_no_data">没有数据</string>
+   
     <string name="omenu_exit">退出</string>
     <string name="omenu_logout">注销</string>
     <string name="btn_confirm">确定</string>    

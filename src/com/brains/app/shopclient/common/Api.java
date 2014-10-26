@@ -14,7 +14,9 @@ import org.json.JSONObject;
 import android.location.Location;
 import android.util.Log;
 
+import com.brains.app.shopclient.bean.Category;
 import com.brains.framework.common.Const;
+import com.brains.framework.exception.AppException;
 import com.brains.framework.http.HttpClient;
 
 /**
@@ -69,22 +71,37 @@ public class Api implements java.io.Serializable {
 	// ===============
 	// Api 远程调用方法
 	// ===============
-//	/**
-//	 * 考评单下一级列表。
-//	 * 
-//	 * @param kpdId
-//	 * @param kpdSubId
-//	 * @return List<KpResult>
-//	 */
-//	public List<KpResult> getGpxList(String kpdId, String kpdSubId)
-//			throws AppException {
-//		String url = remoteDomain + "/phoneapp/control/queryInstDetailItemList";
-//		return KpResult.constructKpxList(http.post(
-//				url,
-//				createParams(new BasicNameValuePair("instId", kpdId),
-//						new BasicNameValuePair("instItemId", kpdSubId)))
-//				.asJSONObject());
-//	}
+	/**
+	 * 考评单下一级列表。
+	 * 
+	 * @param kpdId
+	 * @param kpdSubId
+	 * @return List<KpResult>
+	 */
+	public List<Category> getCategoryList()
+			throws AppException {
+		String url = remoteDomain + "/phoneapp/control/queryInstDetailItemList";
+		
+		Category category1 = new Category();
+		category1.setName("手机");
+		category1.setName("电子产品手机电池电池电池电池电池电池");
+		category1.setImgSrc("http://p.zdmimg.com/201410/24/5449c05168659.jpg_v1.jpg");
+		Category category2 = new Category();
+		category2.setName("口酒");
+		category2.setName("使用天然原料的Burt's Bees 小蜜蜂品牌护手霜");
+		category2.setImgSrc("http://p.zdmimg.com/201410/26/544cbe4370f4b.jpg_v1.jpg");
+		Category category3 = new Category();
+		category3.setName("滤网");
+		category3.setName("百人城利口酒，20ml餐后一口闷~Berentzen百人");
+		category3.setImgSrc("http://p.zdmimg.com/201410/26/544cc76903683.jpg_v1.jpg");
+		List<Category> retList = new ArrayList<Category>();
+		retList.add(category1);
+		retList.add(category2);
+		retList.add(category3);
+		
+		return null;
+//		return Category.constructListFromJson(http.get(url).asJSONObject());
+	}
 //
 //	/**
 //	 * 系统公告列表获的。

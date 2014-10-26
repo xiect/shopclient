@@ -74,4 +74,11 @@ public class StringUtil {
 		return s;
 	}
 	
+	public static boolean isEmpty(String str){
+		if(str == null || str.length() < 1){
+			return true;
+		}
+		return false;
+	}
+	
 }
