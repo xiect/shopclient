@@ -8,8 +8,41 @@
     <string name="title_activity_message_detail">通知详细</string>
     <string name="title_activity_score_choose">请打分</string>
     <string name="title_activity_shop_select">门店选择</string>
-     <string name="loading">加载中...</string>
+    <!-- JazzyViewPager -->
+    <string-array name="jazzy_effects">
+        <item>Standard</item>
+        <item>Tablet</item>
+        <item>CubeIn</item>
+        <item>CubeOut</item>
+        <item>FlipVertical</item>
+        <item>FlipHorizontal</item>
+        <item>Stack</item>
+        <item>ZoomIn</item>
+        <item>ZoomOut</item>
+        <item>RotateUp</item>
+        <item>RotateDown</item>
+        <item>Accordion</item>
+    </string-array>
+    <!-- JazzyViewPager -->
     
+    
+    
+    
+    <string name="user_name">用户名：</string>
+    <string name="verification_code">验证码：</string>
+    <string name="user_password">密    码：</string>
+    <string name="login_failed_title">登录失败</string>
+    <string name="login_failed_message">登录失败：用户名或密码错误</string>
+    <string name="login_user_name_error_hint">请输入用户名</string>
+    <string name="login_user_password_hint">请输入密码</string>
+    <string name="login_user_verification_hint">请输入验证码</string>
+    <string name="user_name_hint">请输入用户名，长度在4-20个字之间,由中文，字母，数字，\"_\"，\"-\"组成</string>
+    <string name="user_password_hint">请输入密码，长度在6-20个字之间，由字母，数字，\"_\"，\"-\"组成</string>
+    <string name="remember_user">  自动登录</string>
+    <string name="loading">加载中...</string>
+    <string name="personal_click_for_login">登  录</string>
+    <string name="personal_for_welcome">欢迎来到XX商城</string>
+     
     <string name="loading_error_again">重新加载</string>
     <string name="loading_error_tips_1">这位客官，网络不给力啊。</string>
     <string name="loading_error_tips_2">请检查一下您的网络，重新加载吧！</string>

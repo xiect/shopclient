@@ -201,4 +201,11 @@ public class TabMainActivity extends FragmentActivity {
 			}
 		}
 	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		int currentIndex = mViewPager.getCurrentItem();
+		fragmentList.get(currentIndex).onActivityResult(requestCode, resultCode, data);
+	}
 }

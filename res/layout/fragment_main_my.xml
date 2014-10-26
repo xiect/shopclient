@@ -4,6 +4,27 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
   <include android:id="@+id/home_category_header" layout="@layout/app_head_common"/>
+  
+   <RelativeLayout android:id="@+id/personal_header" android:layout_width="wrap_content" android:layout_height="@dimen/personal_user_head_height">
+       <RelativeLayout android:id="@+id/personal_for_login_info" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_centerVertical="true">
+          <!--  <RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_centerVertical="true"> -->
+               <ImageView android:id="@+id/user_img_view" android:background="@drawable/user_photo_background_corners" android:padding="3.0dip" android:layout_width="@dimen/personal_user_img_view_width" android:layout_height="@dimen/personal_user_img_view_height" android:layout_marginLeft="@dimen/personal_user_photo_marginleft" android:scaleType="fitXY" android:layout_centerVertical="true" android:contentDescription="@string/image_desc_common" />
+               <ImageView android:background="@drawable/android_user_image_prompt" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="-18.0dip" android:layout_marginTop="-18.0dip" android:layout_toRightOf="@id/user_img_view" android:layout_below="@id/user_img_view" android:contentDescription="@string/image_desc_common" />
+               <RelativeLayout android:id="@+id/name_balance_textview" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="24.0dip" android:layout_toRightOf="@id/user_img_view" android:layout_alignTop="@id/user_img_view">
+                   <TextView android:textSize="15.0dip" android:textColor="@color/white" android:ellipsize="end" android:id="@+id/who_and_say_hello" android:paddingBottom="3.0dip" android:layout_width="110.0dip" android:layout_height="wrap_content" android:singleLine="true" android:lineSpacingMultiplier="1.1" />
+                   <TextView android:textSize="15.0sp" android:textColor="@color/white" android:ellipsize="end" android:id="@+id/user_level" android:layout_width="110.0dip" android:layout_height="wrap_content" android:singleLine="true" android:layout_below="@id/who_and_say_hello" android:lineSpacingMultiplier="1.1" />
+                   <TextView android:textSize="15.0sp" android:textColor="@color/white" android:ellipsize="end" android:id="@+id/user_score" android:layout_width="110.0dip" android:layout_height="wrap_content" android:singleLine="true" android:layout_below="@id/user_level" android:lineSpacingMultiplier="1.1" />
+               </RelativeLayout>
+           <!--  </RelativeLayout> -->
+       </RelativeLayout>
+       <RelativeLayout android:id="@+id/personal_for_not_login" android:layout_width="fill_parent" android:layout_height="@dimen/personal_user_head_height">
+           <LinearLayout android:gravity="center" android:orientation="vertical" android:id="@+id/personal_click_to_login" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerInParent="true">
+               <TextView android:textSize="15.0sp" android:textColor="@color/white" android:id="@+id/personal_for_welcome" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/personal_for_welcome" android:shadowColor="@color/my_personal_login_shadow_color" android:shadowDx="0.0" android:shadowDy="3.0" android:shadowRadius="1.0" />
+               <Button android:textSize="15.0sp" android:textColor="@color/my_personal_login_textcolor" android:id="@+id/personal_click_for_login" android:background="@drawable/my_personal_click_login" android:layout_width="112.0dip" android:layout_height="38.0dip" android:layout_marginTop="7.0dip" android:text="@string/personal_click_for_login" />
+           </LinearLayout>
+       </RelativeLayout>
+   </RelativeLayout>
+            
    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:pullrefresh="http://schemas.android.com/apk/res/com.jingdong.app.mall"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/white"
@@ -17,7 +16,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical"
-            android:visibility="visible" >
+            android:visibility="gone" >
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -37,32 +36,55 @@
                 android:textColor="@color/home_no_network_hint"
                 android:textSize="@dimen/home_no_network_hint_comment_size" />
         </LinearLayout>
-
-        <ScrollView
-            android:id="@+id/home_scroll"
+        
+        <com.handmark.pulltorefresh.library.PullToRefreshScrollView
+            xmlns:ptr="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/pull_refresh_scrollview"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:fadingEdge="none"
-            android:scrollbars="none" android:visibility="gone">
-
+            ptr:ptrAnimationStyle="flip"
+            ptr:ptrMode="pullFromStart" >
+            
+		<FrameLayout 
+		    android:layout_width="fill_parent"  
+		    android:layout_height="100dp"  
+		    android:background="@color/skyblue"
+		    android:orientation="vertical" >  
+		      
+		   <android.support.v4.view.ViewPager    
+		        android:id="@+id/viewPager_banner"    
+		        android:layout_width="fill_parent"    
+		        android:layout_height="100dp" />   
+		          
+		    <RelativeLayout    
+		        android:layout_width="fill_parent"    
+		        android:layout_height="fill_parent"   
+		        android:orientation="vertical" >    
+		        <LinearLayout    
+		            android:id="@+id/viewGroup_banner"    
+		            android:layout_width="fill_parent"    
+		            android:layout_height="wrap_content"    
+		            android:layout_alignParentBottom="true"   
+		            android:layout_marginBottom="10dp"    
+		            android:gravity="center_horizontal"    
+		            android:orientation="horizontal" >    
+		        </LinearLayout>    
+		    </RelativeLayout>
+		</FrameLayout>
+    <!-- 
             <LinearLayout
-                android:id="@+id/home_content"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="vertical"
-                android:padding="0.0dip" >
-                <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1.0dip"
-                android:gravity="center"
-                android:lineSpacingExtra="5.0dip"
-                android:text="@string/group_copyright"
-                android:textColor="@color/home_no_network_hint"
-                android:textSize="@dimen/home_no_network_hint_comment_size" />
+                android:layout_height="fill_parent"
+                android:orientation="vertical" >
+                <com.brains.framework.widget.JazzyViewPager
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/viewPager_ad"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dip" >
+                </com.brains.framework.widget.JazzyViewPager>
             </LinearLayout>
-        </ScrollView>
-        
+     -->
+        </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
     </FrameLayout>
 </LinearLayout>

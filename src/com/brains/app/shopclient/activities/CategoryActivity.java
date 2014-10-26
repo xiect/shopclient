@@ -2,12 +2,13 @@ package com.brains.app.shopclient.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ListView;
 
 import com.brains.app.shopclient.R;
 import com.brains.framework.activities.base.BaseNormalActivity;
 
 
-/**
+/*
  * TAB 品类
  * @author xiect
  *
@@ -16,6 +17,7 @@ public class CategoryActivity extends BaseNormalActivity{
 	private final static String ACTION_CATEGORY = "brains.intent.action.ACTION_CATEGORY";
 
 	public static final String TAG = "CategoryActivity";
+	ListView listView;
 	
 	/**
 	 * 取得主页画面Intent
@@ -29,7 +31,8 @@ public class CategoryActivity extends BaseNormalActivity{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.layout_home);
+		setContentView(R.layout.fragment_main_category);
+		listView = (ListView) findViewById(R.id.category_main_list);
 		
 	}
 }

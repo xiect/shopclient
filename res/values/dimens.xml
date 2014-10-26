@@ -4,7 +4,12 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="startup_btn_padding_bottom">62.0dip</dimen>
-    
+    <dimen name="personal_user_head_height">127.0dip</dimen>
+    <dimen name="personal_user_img_view_width">70.0dip</dimen>
+    <dimen name="personal_user_img_view_height">70.0dip</dimen>
+    <dimen name="personal_user_photo_marginleft">22.0dip</dimen>
+        
+    <dimen name="login_selector_icon_delete">40.0dip</dimen>
 	<dimen name="bottom_tab_padding_drawable">4.0dip</dimen>   
 	<dimen name="bottom_tab_padding_up">3.0dip</dimen>
 	<dimen name="bottom_tab_padding_button">1.0dip</dimen>

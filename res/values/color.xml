@@ -8,6 +8,9 @@
     <color name="main_tab_bar_bg_color">#D3D3D3</color>        
 	<color name="font_gray">#ff888888</color>
     <color name="white">#FFFFFF</color> <!-- 白色 -->
+     <color name="my_personal_login_textcolor">#ff754614</color>
+    <color name="my_personal_login_shadow_color">#ff996b3d</color>
+    
     
     <color name="ivory">#FFFFF0</color> <!-- 象牙色 -->
     <color name="lightyellow">#FFFFE0</color> <!-- 亮黄色 -->

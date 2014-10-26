@@ -15,14 +15,14 @@
         android:theme="@style/applicationTheme" >
         
         <!-- 应用初始化 -->
-        <activity android:name=".activities.InstallAppActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" >
+        <activity android:name=".activities.InstallAppActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <!-- 引导画面 -->
-        <activity android:name=".activities.GuideActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" >
+        <activity android:name=".activities.GuideActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="brains.intent.action.ACTION_GUIDE" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -74,13 +74,21 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        
+        
         <activity android:name=".activities.TabMainActivity" android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="brains.intent.action.ACTION_TABMAIN" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-       
+        <!-- 登录画面 -->
+        <activity android:name=".activities.LoginActivity" android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="brains.intent.action.ACTION_LOGIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

@@ -1,20 +1,25 @@
 package com.brains.app.shopclient.activities.fragment;
 
 import com.brains.app.shopclient.R;
+import com.brains.app.shopclient.activities.LoginActivity;
 
 import android.support.v4.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * 我的：个人中心
@@ -22,9 +27,12 @@ import android.widget.TextView;
  *
  */
 public class MyFragment extends Fragment {
+	private final int REQUEST_CODE_LOGIN = 1;
 	private ListView menuList;
 	private View view;
 	private final String TAG = "MyFragment";
+	private Button btnLogin;
+	private Context ctx;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -32,12 +40,25 @@ public class MyFragment extends Fragment {
 		view = inflater.inflate(R.layout.fragment_main_my, container,false);
 		TextView tvTitle = (TextView) view.findViewById(R.id.tv_title);
 		tvTitle.setText(R.string.tab_my);
-
+		ctx = getActivity();
 		initView();
 		return view;
 	}
 
+	private OnClickListener btnLoginListener = new OnClickListener(){
+		@Override
+		public void onClick(View v) {
+			Log.d(TAG,"btnLogin clicked");
+			Intent intent = LoginActivity.makeIntent();
+			getActivity().startActivityForResult(intent, REQUEST_CODE_LOGIN);
+		}
+	};
+	
 	private void initView() {
+		
+		btnLogin = (Button) this.view.findViewById(R.id.personal_click_for_login);
+		btnLogin.setOnClickListener(btnLoginListener);
+		
 		menuList = (ListView)this.view.findViewById(R.id.menu_list_view);
 		String[] menuTitles = new String[]{
 				getString(R.string.person_menu_query_order),
@@ -88,6 +109,15 @@ public class MyFragment extends Fragment {
 			}
 		} );
 	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		Toast toast = Toast.makeText(ctx, "result:" + resultCode,Toast.LENGTH_SHORT);
+		toast.show();
+	}
+	
+	
 }
 
 class PersonMenuAdapter extends BaseAdapter {
