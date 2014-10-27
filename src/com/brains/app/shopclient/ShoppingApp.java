@@ -3,6 +3,8 @@ package com.brains.app.shopclient;
 import java.io.File;
 
 import com.brains.app.shopclient.common.Api;
+import com.brains.app.shopclient.common.Util;
+import com.brains.app.shopclient.db.dao.PrefDAO;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.cache.memory.impl.UsingFreqLimitedMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -21,11 +23,14 @@ public class ShoppingApp extends Application {
 	private static final String TAG = "ShoppingApp";
 	public Api mApi;
 	private DisplayImageOptions categoryLoadOption;
+	public PrefDAO mPrefDAO;
 	
 	/**
 	 * 实例化
 	 */
 	public void onCreate() {
+		mPrefDAO = new PrefDAO(this);
+		
 		super.onCreate();
 		initImageLoader();
 		
@@ -75,8 +80,17 @@ public class ShoppingApp extends Application {
 	 * 实现通过Toast 显示短暂错误信息
 	 * @param msg
 	 */
+	public void showErrorWithToast(int resId){
+		 Toast toast = Toast.makeText(this,resId, Toast.LENGTH_LONG);
+	     toast.show();
+	}
+	
+	/**
+	 * 实现通过Toast 显示短暂错误信息
+	 * @param msg
+	 */
 	public void showErrorWithToast(String msg){
-		 Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
+		 Toast toast = Toast.makeText(this,msg, Toast.LENGTH_LONG);
 	     toast.show();
 	}
 	/**
@@ -86,5 +100,32 @@ public class ShoppingApp extends Application {
 	public void showMsgWithToast(String msg){
 		 Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
 	     toast.show();
+	}
+	
+	public void showMsgWithToast(int resId){
+		 Toast toast = Toast.makeText(this, resId, Toast.LENGTH_LONG);
+	     toast.show();
+	}
+	
+	/**
+	 * 持久化用户名密码
+	 * @param username
+	 * @param password
+	 */
+	public void saveUserInfo(String username,String password){
+		mPrefDAO.saveUserNameAndPassword(username, password);
+	}
+	
+	/**
+	 * 是否已经登录
+	 * @return
+	 */
+	public boolean isLogin(){
+		String name = mPrefDAO.getUserName();
+		String password = mPrefDAO.getUserPassword();
+		if(!Util.isEmpty(name) && !Util.isEmpty(password)){
+			return true;
+		}
+		return false;
 	}
 }
