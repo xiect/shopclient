@@ -1,5 +1,6 @@
 package com.brains.app.shopclient.activities.fragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.brains.app.shopclient.R;
@@ -20,12 +21,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
@@ -38,19 +43,39 @@ public class CategoryFragment extends BaseFragment {
 	private ListView listView;
 	// 获得品类数据Task
 	private GenericTask mCategoryTask;
-	private List<Category> mCategoryList;
+	private List<Category> mCategoryList = new ArrayList<Category>(1);
 	private static final String TAG = "CategoryFragment";
 	private CategoryListAdapter mCategoryListAdapter;
+	private LinearLayout mLlErrorArea;
+	private ProgressBar mProgressBar;
+	private Button mBtnReload;
+	
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
 		fragmentView = inflater.inflate(R.layout.fragment_main_category, container,false);
-		listView = (ListView)fragmentView.findViewById(R.id.category_main_list);
-		inflater.inflate(R.layout.fragment_main_category, container,false);
+		findView();
 		lazyLoad();
 		return fragmentView;
+	}
+	
+	private void findView(){
+		mProgressBar = (ProgressBar)fragmentView.findViewById(R.id.top_refresh_progressBar);
+		mBtnReload = (Button) fragmentView.findViewById(R.id.loading_error_but);
+		mBtnReload.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				doGetCategoryList();
+			}
+		});
+		
+		listView = (ListView)fragmentView.findViewById(R.id.category_main_list);
+		mCategoryListAdapter = new CategoryListAdapter(app,mCategoryList);
+		listView.setAdapter(mCategoryListAdapter);
+		registerOnClickListener(listView);
+		mLlErrorArea = (LinearLayout)fragmentView.findViewById(R.id.main_loading_error_tips);
 	}
 	
 	@Override
@@ -86,16 +111,21 @@ public class CategoryFragment extends BaseFragment {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-//			if(isGetMore && mProgressBarMore != null){
-//				mProgressBarMore.setVisibility(View.VISIBLE);	
-//			}
+			mLlErrorArea.setVisibility(View.GONE);
+			mProgressBar.setVisibility(View.VISIBLE);
 		}
 
 		@Override
 		protected TaskResult _doInBackground(TaskParams... params) {
 			try {
+				try {
+					Thread.sleep(4000);
+				} catch (InterruptedException e) {
+				}
 				// 获得网络数据
-				mCategoryList = app.mApi.getCategoryList();
+				List<Category> tempList = app.mApi.getCategoryList();
+				mCategoryList.addAll(tempList);
+				tempList = null;
 				return TaskResult.OK;
 			} catch (AppException e) {
 				message = e.getMessage();
@@ -109,7 +139,7 @@ public class CategoryFragment extends BaseFragment {
 			super.onPostExecute(result);
 			
 
-			// 初次加载的场合
+			// 加载的场合
 			if (TaskResult.OK == result && mCategoryList != null
 					&& mCategoryList.size() > 0) {
 				// 显示画面
@@ -130,20 +160,24 @@ public class CategoryFragment extends BaseFragment {
 	private void showViewWithNoData() {
 		Log.e(TAG, "showViewWithNoData");
 		isPrepared = false;
-		listView = (ListView)fragmentView.findViewById(R.id.category_main_list);
+		// 隐藏列表
 		listView.setVisibility(View.GONE);
-		LinearLayout layout = (LinearLayout)fragmentView.findViewById(R.id.main_loading_error_tips);
-		layout.setVisibility(View.VISIBLE);
+		// 隐藏loading
+		mProgressBar.setVisibility(View.GONE);
+		// 显示错误画面
+		mLlErrorArea.setVisibility(View.VISIBLE);
 	}
 	
 	private void showViewWithData() {
 		Log.e(TAG, "showViewWithData");
+		mProgressBar.setVisibility(View.GONE);
 		isPrepared = true;
-		listView = (ListView)fragmentView.findViewById(R.id.category_main_list);
-		listView.setVisibility(View.VISIBLE);	
-		mCategoryListAdapter = new CategoryListAdapter(app,mCategoryList);
-		listView.setAdapter(mCategoryListAdapter);
-		registerOnClickListener(listView);
+		
+		// 隐藏错误画面
+		mLlErrorArea.setVisibility(View.GONE);
+		listView.setVisibility(View.VISIBLE);
+		// 数据更新后刷新列表
+		mCategoryListAdapter.notifyDataSetChanged();
 	}
 	
 	private void registerOnClickListener(ListView listView) {

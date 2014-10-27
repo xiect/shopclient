@@ -99,9 +99,17 @@ public class Api implements java.io.Serializable {
 		retList.add(category2);
 		retList.add(category3);
 		
-		return null;
+		return retList;
 //		return Category.constructListFromJson(http.get(url).asJSONObject());
 	}
+	
+	public JSONObject login(String username, String password) throws AppException {
+//		http.setCredentials(username, password);
+		String url = remoteDomain + "/phoneapp/control/login?userLoginId=" + username
+				+ "&password=" + password;
+		return http.get(url).asJSONObject();
+	}
+	
 //
 //	/**
 //	 * 系统公告列表获的。
