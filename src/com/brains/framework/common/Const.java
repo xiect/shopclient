@@ -7,11 +7,12 @@ package com.brains.framework.common;
  */
 public interface Const {
 	
-	//String REMOTE_SERVER_HOST = "http://58.220.232.43:8180";
+//	String REMOTE_SERVER_HOST = "http://192.168.1.104:8080";
 	
-	String REMOTE_SERVER_HOST = "http://192.168.2.146:8080";
+	String REMOTE_SERVER_HOST = "http://proem.meibu.net:8085";
 	 
-	String SUCCESS = "success";
+	String SUCCESS = "0";
+	String RESULT_FLAG = "status";
 	
 	long GPS_UPDATE_INTERVAL = 60;
 	
