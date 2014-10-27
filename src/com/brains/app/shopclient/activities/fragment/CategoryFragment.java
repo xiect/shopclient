@@ -119,7 +119,7 @@ public class CategoryFragment extends BaseFragment {
 		protected TaskResult _doInBackground(TaskParams... params) {
 			try {
 				try {
-					Thread.sleep(4000);
+					Thread.sleep(1000);
 				} catch (InterruptedException e) {
 				}
 				// 获得网络数据

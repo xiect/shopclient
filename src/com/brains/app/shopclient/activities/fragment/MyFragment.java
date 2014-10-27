@@ -2,6 +2,7 @@ package com.brains.app.shopclient.activities.fragment;
 
 import com.brains.app.shopclient.R;
 import com.brains.app.shopclient.activities.LoginActivity;
+import com.brains.app.shopclient.common.Util;
 
 import android.support.v4.app.Fragment;
 import android.content.Context;
@@ -18,6 +19,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,25 +28,42 @@ import android.widget.Toast;
  * @author xiect
  *
  */
-public class MyFragment extends Fragment {
+public class MyFragment extends BaseFragment {
 	private final int REQUEST_CODE_LOGIN = 1;
 	private ListView menuList;
-	private View view;
 	private final String TAG = "MyFragment";
 	private Button btnLogin;
-	private Context ctx;
-
+	
+	private RelativeLayout mHeader4LoginArea;
+	private RelativeLayout mHeader4NotLoginArea;
+	private TextView mTvUserName;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		view = inflater.inflate(R.layout.fragment_main_my, container,false);
-		TextView tvTitle = (TextView) view.findViewById(R.id.tv_title);
-		tvTitle.setText(R.string.tab_my);
-		ctx = getActivity();
+		super.onCreateView(inflater, container, savedInstanceState);
+		fragmentView = inflater.inflate(R.layout.fragment_main_my, container,false);
+		findViews();
 		initView();
-		return view;
+		return fragmentView;
 	}
 
+	private void findViews(){
+		TextView tvTitle = (TextView) fragmentView.findViewById(R.id.tv_title);
+		tvTitle.setText(R.string.tab_my);
+		mHeader4LoginArea = (RelativeLayout)fragmentView.findViewById(R.id.personal_for_login_info);
+		mHeader4NotLoginArea = (RelativeLayout)fragmentView.findViewById(R.id.personal_for_not_login);
+		mTvUserName = (TextView)fragmentView.findViewById(R.id.who_and_say_hello);
+		// 已登录判断
+		if(app.isLogin()){
+			mHeader4LoginArea.setVisibility(View.VISIBLE);
+			mHeader4NotLoginArea.setVisibility(View.GONE);
+			mTvUserName.setText(app.mPrefDAO.getUserName());
+		}else{
+			mHeader4LoginArea.setVisibility(View.GONE);
+			mHeader4NotLoginArea.setVisibility(View.VISIBLE);
+		}
+	}
+	
 	private OnClickListener btnLoginListener = new OnClickListener(){
 		@Override
 		public void onClick(View v) {
@@ -56,10 +75,10 @@ public class MyFragment extends Fragment {
 	
 	private void initView() {
 		
-		btnLogin = (Button) this.view.findViewById(R.id.personal_click_for_login);
+		btnLogin = (Button) this.fragmentView.findViewById(R.id.personal_click_for_login);
 		btnLogin.setOnClickListener(btnLoginListener);
 		
-		menuList = (ListView)this.view.findViewById(R.id.menu_list_view);
+		menuList = (ListView)this.fragmentView.findViewById(R.id.menu_list_view);
 		String[] menuTitles = new String[]{
 				getString(R.string.person_menu_query_order),
 				getString(R.string.person_menu_account),
@@ -113,8 +132,13 @@ public class MyFragment extends Fragment {
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		Toast toast = Toast.makeText(ctx, "result:" + resultCode,Toast.LENGTH_SHORT);
-		toast.show();
+		Util.sysLog("xxx", "=========onActivityResult:" + resultCode);
+	}
+
+	@Override
+	protected void lazyLoad() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

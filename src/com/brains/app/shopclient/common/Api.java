@@ -15,6 +15,7 @@ import android.location.Location;
 import android.util.Log;
 
 import com.brains.app.shopclient.bean.Category;
+import com.brains.app.shopclient.bean.User;
 import com.brains.framework.common.Const;
 import com.brains.framework.exception.AppException;
 import com.brains.framework.http.HttpClient;
@@ -84,15 +85,15 @@ public class Api implements java.io.Serializable {
 		
 		Category category1 = new Category();
 		category1.setName("手机");
-		category1.setName("电子产品手机电池电池电池电池电池电池");
+		category1.setDesc("电子产品手机电池电池电池电池电池电池");
 		category1.setImgSrc("http://p.zdmimg.com/201410/24/5449c05168659.jpg_v1.jpg");
 		Category category2 = new Category();
 		category2.setName("口酒");
-		category2.setName("使用天然原料的Burt's Bees 小蜜蜂品牌护手霜");
+		category2.setDesc("使用天然原料的Burt's Bees 小蜜蜂品牌护手霜");
 		category2.setImgSrc("http://p.zdmimg.com/201410/26/544cbe4370f4b.jpg_v1.jpg");
 		Category category3 = new Category();
 		category3.setName("滤网");
-		category3.setName("百人城利口酒，20ml餐后一口闷~Berentzen百人");
+		category3.setDesc("百人城利口酒，20ml餐后一口闷~Berentzen百人");
 		category3.setImgSrc("http://p.zdmimg.com/201410/26/544cc76903683.jpg_v1.jpg");
 		List<Category> retList = new ArrayList<Category>();
 		retList.add(category1);
@@ -103,11 +104,13 @@ public class Api implements java.io.Serializable {
 //		return Category.constructListFromJson(http.get(url).asJSONObject());
 	}
 	
-	public JSONObject login(String username, String password) throws AppException {
-//		http.setCredentials(username, password);
-		String url = remoteDomain + "/phoneapp/control/login?userLoginId=" + username
-				+ "&password=" + password;
-		return http.get(url).asJSONObject();
+	public User login(String username, String password) throws AppException {
+		Util.sysLog("xxx", "username:"+ username + "\tpassword" + password);
+		http.setCredentials(username, password);
+		String url = remoteDomain + "/vsisfront/appLogin/appLoginIn.do";
+//		String url = remoteDomain + "/webServerTest/TestServlet";
+		
+		return User.constructFromJson(http.get(url).asJSONObject());
 	}
 	
 //

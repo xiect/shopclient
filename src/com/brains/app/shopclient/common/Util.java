@@ -1,5 +1,7 @@
 package com.brains.app.shopclient.common;
 
+import android.util.Log;
+
 import com.brains.framework.common.BaseUtil;
 
 /**
@@ -35,5 +37,14 @@ public class Util extends BaseUtil {
 		}else{
 			return str;
 		}
+	}
+	
+	/**
+	 * 统一日志入口
+	 * @param tag
+	 * @param message
+	 */
+	public static void sysLog(String tag,String message){
+		Log.e(tag,message);
 	}
 }
