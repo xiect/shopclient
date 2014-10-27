@@ -48,7 +48,6 @@
 		<FrameLayout 
 		    android:layout_width="fill_parent"  
 		    android:layout_height="100dp"  
-		    android:background="@color/skyblue"
 		    android:orientation="vertical" >  
 		      
 		   <android.support.v4.view.ViewPager    
