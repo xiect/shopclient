@@ -32,14 +32,15 @@
 
             <RelativeLayout
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent" >
+                android:layout_height="fill_parent"
+                android:id="@+id/rl_oading_area">
                 <ProgressBar
                     android:id="@+id/top_refresh_progressBar"
                     style="@android:style/Widget.ProgressBar.Small.Inverse"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:visibility="gone" />
+                   />
             </RelativeLayout>
 
             <RelativeLayout
