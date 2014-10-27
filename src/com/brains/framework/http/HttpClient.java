@@ -64,6 +64,7 @@ import org.apache.http.protocol.HTTP;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 
+import com.brains.app.shopclient.common.Util;
 import com.brains.framework.common.Const;
 import com.brains.framework.exception.AppException;
 
@@ -164,6 +165,7 @@ public class HttpClient {
 		mPassword = password;
 		mClient.getCredentialsProvider().setCredentials(mAuthScope,
 				new UsernamePasswordCredentials(username, password));
+		Util.sysLog("xxx","222:" + mClient.getCredentialsProvider().getCredentials(mAuthScope).toString()); 
 		isAuthenticationEnabled = true;
 	}
 	/**
@@ -233,9 +235,9 @@ public class HttpClient {
 		
 		// Setup BasicAuth
 		BasicScheme basicScheme = new BasicScheme();
-		mAuthScope = new AuthScope(Const.REMOTE_SERVER_HOST, AuthScope.ANY_PORT);
+		mAuthScope = new AuthScope(null, AuthScope.ANY_PORT);
 
-		// mClient.setAuthSchemes(authRegistry);
+		//		 mClient.setAuthSchemes(authRegistry);
 		mClient.setCredentialsProvider(new BasicCredentialsProvider());
 
 		// Generate BASIC scheme object and stick it to the local
@@ -265,7 +267,9 @@ public class HttpClient {
 				AuthScope authScope = new AuthScope(targetHost.getHostName(),
 						targetHost.getPort());
 				Credentials creds = credsProvider.getCredentials(authScope);
+				Util.sysLog("xxx", "xxxxxxxx111");
 				if (creds != null) {
+					Util.sysLog("xxx", "xxxxxxxx2222"+creds.toString());
 					authState.setAuthScheme(new BasicScheme());
 					authState.setCredentials(creds);
 				}
