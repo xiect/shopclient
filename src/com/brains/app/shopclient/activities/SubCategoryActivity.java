@@ -190,7 +190,14 @@ public class SubCategoryActivity extends BaseNormalActivity{
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				startActivity(LoginActivity.makeIntent());
+				if(arg2 < mCategoryList.size()){
+					Category category = mCategoryList.get(arg2);
+					String id = category.getId();
+					if(!Util.isEmpty(id)){
+						startActivity(SearchActivity.makeIntent(id,""));
+						overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+					}
+				}
 			}
 		});
 	}
