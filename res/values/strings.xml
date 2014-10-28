@@ -8,23 +8,10 @@
     <string name="title_activity_message_detail">通知详细</string>
     <string name="title_activity_score_choose">请打分</string>
     <string name="error_choose_category_please">请选择有效分类</string>
-    <!-- JazzyViewPager -->
-    <string-array name="jazzy_effects">
-        <item>Standard</item>
-        <item>Tablet</item>
-        <item>CubeIn</item>
-        <item>CubeOut</item>
-        <item>FlipVertical</item>
-        <item>FlipHorizontal</item>
-        <item>Stack</item>
-        <item>ZoomIn</item>
-        <item>ZoomOut</item>
-        <item>RotateUp</item>
-        <item>RotateDown</item>
-        <item>Accordion</item>
-    </string-array>
-    <!-- JazzyViewPager -->
     
+    
+    <string name="sort_button_price_desc">价格从高到低</string>
+    <string name="sort_button_price_asc">价格从低到高</string>
     <string name="msg_logoff_not_login">当前还没登录呢</string>
     <string name="msg_logoff_success">注销成功</string>
     <string name="msg_no_data">没有数据</string>
