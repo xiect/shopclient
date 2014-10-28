@@ -91,6 +91,13 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+		<!-- 二级品类画面 -->
+        <activity android:name=".activities.SubCategoryActivity" android:screenOrientation="portrait" android:hardwareAccelerated="false">
+            <intent-filter>
+                <action android:name="brains.intent.action.ACTION_SUBCATEGORY" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

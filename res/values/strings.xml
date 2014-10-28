@@ -7,7 +7,7 @@
     <string name="title_activity_message">通知公告</string>
     <string name="title_activity_message_detail">通知详细</string>
     <string name="title_activity_score_choose">请打分</string>
-    <string name="title_activity_shop_select">门店选择</string>
+    <string name="error_choose_category_please">请选择有效分类</string>
     <!-- JazzyViewPager -->
     <string-array name="jazzy_effects">
         <item>Standard</item>
@@ -25,9 +25,9 @@
     </string-array>
     <!-- JazzyViewPager -->
     
-    
-    
-     <string name="msg_no_data">没有数据</string>
+    <string name="msg_logoff_not_login">当前还没登录呢</string>
+    <string name="msg_logoff_success">注销成功</string>
+    <string name="msg_no_data">没有数据</string>
     <string name="user_name">用户名：</string>
     <string name="verification_code">验证码：</string>
     <string name="user_password">密    码：</string>
@@ -56,6 +56,7 @@
     <string name="person_menu_query_order">订单查询</string>
     <string name="person_menu_account">帐户管理</string>
     <string name="person_menu_about">关于</string>
+    <string name="person_menu_logoff">注销</string>
     <string name="person_menu_exit">退出</string>
     
     <string name="title_activity_guide">向导画面</string>
