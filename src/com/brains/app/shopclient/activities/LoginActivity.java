@@ -152,10 +152,9 @@ public class LoginActivity extends BaseNormalActivity {
 				if(TaskResult.FAILED == result && message != null && message.length() > 0){
 					Log.d(TAG, "layout_no_data");
 					app.showErrorWithToast(message);
-					save4Result(Activity.RESULT_FIRST_USER,null,message);
 				}else{
 					Log.d(TAG, "layout_no_data");
-					save4Result(Activity.RESULT_OK,null,null);
+					app.showErrorWithToast("这位客官遇到点小麻烦，请重新登录!");
 				}
 			}
 			
