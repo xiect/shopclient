@@ -147,6 +147,8 @@ public class LoginActivity extends BaseNormalActivity {
 				// 返回成功
 				// 保存用户名密码
 				app.saveUserInfo(mUserName,mPassword);
+				// 保存别名
+				app.mPrefDAO.saveNikeName(mLoginResult.getNikeName());
 				save4Result(Activity.RESULT_OK,mLoginResult,null);
 			} else {
 				if(TaskResult.FAILED == result && message != null && message.length() > 0){

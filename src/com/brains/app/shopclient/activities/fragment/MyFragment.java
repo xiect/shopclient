@@ -1,10 +1,12 @@
 package com.brains.app.shopclient.activities.fragment;
 
 import com.brains.app.shopclient.R;
+import com.brains.app.shopclient.ShoppingApp;
 import com.brains.app.shopclient.activities.LoginActivity;
 import com.brains.app.shopclient.common.Util;
 
 import android.support.v4.app.Fragment;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -53,11 +55,18 @@ public class MyFragment extends BaseFragment {
 		mHeader4LoginArea = (RelativeLayout)fragmentView.findViewById(R.id.personal_for_login_info);
 		mHeader4NotLoginArea = (RelativeLayout)fragmentView.findViewById(R.id.personal_for_not_login);
 		mTvUserName = (TextView)fragmentView.findViewById(R.id.who_and_say_hello);
+		showTopHeaderView();
+	}
+	
+	/**
+	 * 显示顶部登录区域
+	 */
+	private void showTopHeaderView(){
 		// 已登录判断
 		if(app.isLogin()){
 			mHeader4LoginArea.setVisibility(View.VISIBLE);
 			mHeader4NotLoginArea.setVisibility(View.GONE);
-			mTvUserName.setText(app.mPrefDAO.getUserName());
+			mTvUserName.setText(app.mPrefDAO.getNikeName());
 		}else{
 			mHeader4LoginArea.setVisibility(View.GONE);
 			mHeader4NotLoginArea.setVisibility(View.VISIBLE);
@@ -70,8 +79,22 @@ public class MyFragment extends BaseFragment {
 			Log.d(TAG,"btnLogin clicked");
 			Intent intent = LoginActivity.makeIntent();
 			getActivity().startActivityForResult(intent, REQUEST_CODE_LOGIN);
+			getActivity().overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out); 
 		}
 	};
+	
+	/**
+	 * 注销操作
+	 */
+	private void doLogoff(){
+		if(app.isLogin()){
+			app.doLogOff();
+			showTopHeaderView();
+			app.showMsgWithToast(R.string.msg_logoff_success);
+		}else{
+			app.showMsgWithToast(R.string.msg_logoff_not_login);
+		}
+	}
 	
 	private void initView() {
 		
@@ -83,13 +106,15 @@ public class MyFragment extends BaseFragment {
 				getString(R.string.person_menu_query_order),
 				getString(R.string.person_menu_account),
 				getString(R.string.person_menu_about),
-				getString(R.string.person_menu_exit),
+				getString(R.string.person_menu_logoff),
+				getString(R.string.person_menu_exit)
 		};
 
 		int[] menuIcons = new int[]{
 				R.drawable.person_order,
 				R.drawable.person_account_center,
 				R.drawable.person_about_icon,
+				R.drawable.person_exit_icon,
 				R.drawable.person_exit_icon
 		};
 
@@ -99,14 +124,14 @@ public class MyFragment extends BaseFragment {
 		menuList.setCacheColorHint(Color.TRANSPARENT);
 		menuList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 
-			private static final int MENU_ORDER = 0;   // 订单查询
-			private static final int MENU_ACCOUNT = 1; // 账号管理
-			private static final int MENU_ABOUT   = 2; // 关于
-			private static final int MENU_EXIT    = 3; // 退出
+			private static final int MENU_ORDER = 0;   		// 订单查询
+			private static final int MENU_ACCOUNT = 1; 		// 账号管理
+			private static final int MENU_ABOUT   = 2; 		// 关于
+			private static final int MENU_LOGOFF    = 3; 	// 注销
+			private static final int MENU_EXIT    = 4; 		// 退出
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3) {
-
 				switch(position){
 				case MENU_ORDER:
 					// 设置
@@ -118,6 +143,10 @@ public class MyFragment extends BaseFragment {
 					break;
 				case MENU_ABOUT:
 					// 关于
+					break;
+				case MENU_LOGOFF:
+					// 注销
+					doLogoff();
 					break;
 				case MENU_EXIT:
 					// 退出
@@ -133,6 +162,11 @@ public class MyFragment extends BaseFragment {
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		Util.sysLog("xxx", "=========onActivityResult:" + resultCode);
+		if(requestCode == REQUEST_CODE_LOGIN && resultCode == Activity.RESULT_OK){
+			// 登录成功的场合
+			// 隐藏登录按钮 显示 用户名称
+			showTopHeaderView();
+		}
 	}
 
 	@Override

@@ -1,23 +1,13 @@
-package com.brains.app.shopclient.activities.fragment;
+package com.brains.app.shopclient.activities;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.brains.app.shopclient.R;
-import com.brains.app.shopclient.activities.SubCategoryActivity;
-import com.brains.app.shopclient.adapter.CategoryListAdapter;
-import com.brains.app.shopclient.bean.Category;
-
-import com.brains.framework.exception.AppException;
-import com.brains.framework.task.GenericTask;
-import com.brains.framework.task.TaskParams;
-import com.brains.framework.task.TaskResult;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -25,36 +15,74 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.AdapterView.OnItemClickListener;
 
-/**
- * 品类画面
+import com.brains.app.shopclient.R;
+import com.brains.app.shopclient.adapter.CategoryListAdapter;
+import com.brains.app.shopclient.bean.Category;
+import com.brains.app.shopclient.common.Util;
+import com.brains.framework.activities.base.BaseNormalActivity;
+import com.brains.framework.exception.AppException;
+import com.brains.framework.task.GenericTask;
+import com.brains.framework.task.TaskParams;
+import com.brains.framework.task.TaskResult;
+
+
+/*
+ * 二级品类
  * @author xiect
  *
  */
-public class CategoryFragment extends BaseFragment {
-	private ListView listView;
+public class SubCategoryActivity extends BaseNormalActivity{
+	private final static String ACTION_CATEGORY = "brains.intent.action.ACTION_SUBCATEGORY";
+
+	public static final String TAG = "SubCategoryActivity";
+	public static final String EXTRA_CATEGORY_ID = "CATEGORY_ID";
+	private ListView mListView;
+	
 	// 获得品类数据Task
 	private GenericTask mCategoryTask;
 	private List<Category> mCategoryList = new ArrayList<Category>(1);
-	private static final String TAG = "CategoryFragment";
 	private CategoryListAdapter mCategoryListAdapter;
 	private LinearLayout mLlErrorArea;
 	private ProgressBar mProgressBar;
 	private Button mBtnReload;
+	private String mCategoryId;// 主类Id
 	
+	/**
+	 * 取得二级品类画面Intent
+	 * @param categoryId 一级品类Id
+	 * @return
+	 */
+	public static Intent makeIntent(String categoryId) {
+		Intent intent = new Intent().setAction(ACTION_CATEGORY);
+		intent.putExtra(EXTRA_CATEGORY_ID, categoryId);
+		return intent;
+	}
 	
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		super.onCreateView(inflater, container, savedInstanceState);
-		fragmentView = inflater.inflate(R.layout.fragment_main_category, container,false);
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.fragment_main_category);
 		findView();
-		lazyLoad();
-		return fragmentView;
+		
+		Intent intent = getIntent();
+		if(intent != null ){
+			Bundle bundle = intent.getExtras();
+			if(bundle != null){
+				mCategoryId = bundle.getString(EXTRA_CATEGORY_ID);
+			}
+		}
+		if(Util.isEmpty(mCategoryId)){
+			app.showErrorWithToast(R.string.error_choose_category_please);
+			this.finish();
+		}else{
+			// 访问网络获取二级分类
+			doGetCategoryList();
+		}
 	}
 	
 	private void findView(){
-		mProgressBar = (ProgressBar)fragmentView.findViewById(R.id.top_refresh_progressBar);
-		mBtnReload = (Button) fragmentView.findViewById(R.id.loading_error_but);
+		mProgressBar = (ProgressBar)findViewById(R.id.top_refresh_progressBar);
+		mBtnReload = (Button) findViewById(R.id.loading_error_but);
 		mBtnReload.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -62,24 +90,16 @@ public class CategoryFragment extends BaseFragment {
 			}
 		});
 		
-		listView = (ListView)fragmentView.findViewById(R.id.category_main_list);
+		mListView = (ListView) findViewById(R.id.category_main_list);
 		mCategoryListAdapter = new CategoryListAdapter(app,mCategoryList);
-		listView.setAdapter(mCategoryListAdapter);
-		registerOnClickListener(listView);
-		mLlErrorArea = (LinearLayout)fragmentView.findViewById(R.id.main_loading_error_tips);
+		mListView.setAdapter(mCategoryListAdapter);
+		registerOnClickListener(mListView);
+		mLlErrorArea = (LinearLayout)findViewById(R.id.main_loading_error_tips);
 	}
 	
-	@Override
-	public  void lazyLoad(){
-		Log.e(TAG," isPrepared :" + isPrepared +"\tisVisible"+isVisible);
-		if(!isPrepared && isVisible){
-			Log.e(TAG," call doGetCategoryList===lazyLoad");
-			doGetCategoryList();
-		}else{
-			Log.e(TAG," call donothing===lazyLoad");
-		}
-	}
-	
+	/**
+	 * 获取子分类
+	 */
 	private void doGetCategoryList(){
 		if (mCategoryTask != null
 				&& mCategoryTask.getStatus() == GenericTask.Status.RUNNING) {
@@ -114,7 +134,7 @@ public class CategoryFragment extends BaseFragment {
 				} catch (InterruptedException e) {
 				}
 				// 获得网络数据
-				List<Category> tempList = app.mApi.getCategoryList();
+				List<Category> tempList = app.mApi.getSubCategoryList(mCategoryId);
 				mCategoryList.addAll(tempList);
 				tempList = null;
 				return TaskResult.OK;
@@ -128,8 +148,6 @@ public class CategoryFragment extends BaseFragment {
 		@Override
 		protected void onPostExecute(TaskResult result) {
 			super.onPostExecute(result);
-			
-
 			// 加载的场合
 			if (TaskResult.OK == result && mCategoryList != null
 					&& mCategoryList.size() > 0) {
@@ -141,17 +159,16 @@ public class CategoryFragment extends BaseFragment {
 					app.showErrorWithToast(message);
 				}else{
 					Log.d(TAG, "layout_no_data");
-					showViewWithNoData();
 				}
+				showViewWithNoData();
 			}
 		}
 	}
 	
 	private void showViewWithNoData() {
 		Log.e(TAG, "showViewWithNoData");
-		isPrepared = false;
 		// 隐藏列表
-		listView.setVisibility(View.GONE);
+		mListView.setVisibility(View.GONE);
 		// 隐藏loading
 		mProgressBar.setVisibility(View.GONE);
 		// 显示错误画面
@@ -161,11 +178,9 @@ public class CategoryFragment extends BaseFragment {
 	private void showViewWithData() {
 		Log.e(TAG, "showViewWithData");
 		mProgressBar.setVisibility(View.GONE);
-		isPrepared = true;
-		
 		// 隐藏错误画面
 		mLlErrorArea.setVisibility(View.GONE);
-		listView.setVisibility(View.VISIBLE);
+		mListView.setVisibility(View.VISIBLE);
 		// 数据更新后刷新列表
 		mCategoryListAdapter.notifyDataSetChanged();
 	}
@@ -175,11 +190,7 @@ public class CategoryFragment extends BaseFragment {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				if(arg2 < mCategoryList.size()){
-					String categoryId = mCategoryList.get(arg2).getId();
-					getActivity().startActivity(SubCategoryActivity.makeIntent(categoryId));
-					getActivity().overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out); 
-				}
+				startActivity(LoginActivity.makeIntent());
 			}
 		});
 	}

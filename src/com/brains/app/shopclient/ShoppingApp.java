@@ -15,6 +15,9 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 
 import android.app.Application;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 import android.widget.Toast;
 import android.graphics.Bitmap;
@@ -124,8 +127,29 @@ public class ShoppingApp extends Application {
 		String name = mPrefDAO.getUserName();
 		String password = mPrefDAO.getUserPassword();
 		if(!Util.isEmpty(name) && !Util.isEmpty(password)){
+			Util.sysLog(TAG, "是否已经登录:YES");
+			return true;
+		}
+		Util.sysLog(TAG, "是否已经登录:NO");
+		return false;
+	}
+	
+	/**
+	 * 网络是否可用
+	 * @return
+	 */
+	public boolean isNetworkAvailable() {
+		ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo activeNetInfo = connectivityManager.getActiveNetworkInfo();
+		if(activeNetInfo != null && activeNetInfo.isAvailable()){
 			return true;
 		}
 		return false;
+	}	
+	
+	public void doLogOff(){
+		// 将用户名 密码至空
+		mPrefDAO.saveUserNameAndPassword("", "");
+		mPrefDAO.saveNikeName("");
 	}
 }

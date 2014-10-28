@@ -73,7 +73,7 @@ public class Api implements java.io.Serializable {
 	// Api 远程调用方法
 	// ===============
 	/**
-	 * 考评单下一级列表。
+	 * 获取品类列表。
 	 * 
 	 * @param kpdId
 	 * @param kpdSubId
@@ -81,27 +81,21 @@ public class Api implements java.io.Serializable {
 	 */
 	public List<Category> getCategoryList()
 			throws AppException {
-		String url = remoteDomain + "/phoneapp/control/queryInstDetailItemList";
-		
-		Category category1 = new Category();
-		category1.setName("手机");
-		category1.setDesc("电子产品手机电池电池电池电池电池电池");
-		category1.setImgSrc("http://p.zdmimg.com/201410/24/5449c05168659.jpg_v1.jpg");
-		Category category2 = new Category();
-		category2.setName("口酒");
-		category2.setDesc("使用天然原料的Burt's Bees 小蜜蜂品牌护手霜");
-		category2.setImgSrc("http://p.zdmimg.com/201410/26/544cbe4370f4b.jpg_v1.jpg");
-		Category category3 = new Category();
-		category3.setName("滤网");
-		category3.setDesc("百人城利口酒，20ml餐后一口闷~Berentzen百人");
-		category3.setImgSrc("http://p.zdmimg.com/201410/26/544cc76903683.jpg_v1.jpg");
-		List<Category> retList = new ArrayList<Category>();
-		retList.add(category1);
-		retList.add(category2);
-		retList.add(category3);
-		
-		return retList;
-//		return Category.constructListFromJson(http.get(url).asJSONObject());
+		String url = remoteDomain + "/vsisfront/appLogin/getParentType.do";
+		return Category.constructListFromJson(http.get(url).asJSONObject());
+	}
+	
+	/**
+	 * 获取二级品类列表。
+	 * 
+	 * @param kpdId
+	 * @param kpdSubId
+	 * @return List<KpResult>
+	 */
+	public List<Category> getSubCategoryList(String categoryId)
+			throws AppException {
+		String url = remoteDomain + "/vsisfront/appLogin/getSecondType.do";
+		return Category.constructListFromJson(http.post(url,createParams(new BasicNameValuePair("parentId", categoryId))).asJSONObject());
 	}
 	
 	public User login(String username, String password) throws AppException {
