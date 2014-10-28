@@ -16,9 +16,28 @@ public class PrefDAO extends BasePrefDAO {
 	
 	private final String KEY_NAME 		= "key_name";
 	private final String KEY_PASSWORD 	= "key_password";
+	private final String KEY_NIKE_NAME 	= "key_nikename";
 	
 	public PrefDAO(Context context){
 		super(context);
+	}
+	
+	/**
+	 * ユーザー情報を保存する
+	 * @param name ユーザー名
+	 * @param passworユーザーパスワード
+	 */
+	public void saveNikeName(String name){
+		mEditor.putString(KEY_NIKE_NAME, name);
+		mEditor.commit();
+	}
+	
+	/**
+	 *  get nikename
+	 * @return
+	 */
+	public String getNikeName(){
+		return mSettings.getString(KEY_NIKE_NAME, "");
 	}
 	
 	/**
