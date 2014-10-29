@@ -1,16 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
-    
-  <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1.0dip"
-                android:gravity="center"
-                android:lineSpacingExtra="5.0dip"
-                android:text="brand"
-                android:textColor="@color/home_no_network_hint"
-                android:textSize="@dimen/home_no_network_hint_comment_size" />
-</LinearLayout>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" android:background="@color/white" >
+
+    <RelativeLayout
+        android:id="@+id/common_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <include
+            android:id="@+id/common_title_1"
+            layout="@layout/title"
+            android:visibility="gone" />
+
+        <include
+            android:id="@+id/common_title_2"
+            layout="@layout/app_head_search_category" />
+    </RelativeLayout>
+
+        <FrameLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" android:layout_below="@id/common_title" >
+            <ListView
+                android:id="@+id/category_main_list"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:cacheColorHint="#00000000"
+                android:paddingLeft="8.0dip"
+                android:divider="@color/transparent"
+                android:dividerHeight="1.0dip"
+                android:paddingRight="8.0dip"
+                android:background="@android:color/white"
+                android:scrollbars="none" />
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/rl_oading_area">
+                <ProgressBar
+                    android:id="@+id/top_refresh_progressBar"
+                    style="@android:style/Widget.ProgressBar.Small.Inverse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                   />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+                <include
+                    android:id="@+id/main_loading_error_tips"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    layout="@layout/loading_error_tips" />
+            </RelativeLayout>
+        </FrameLayout>
+  
+
+</RelativeLayout>

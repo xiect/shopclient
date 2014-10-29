@@ -35,17 +35,20 @@
 
             <ImageView
                 android:id="@+id/iv_search"
+                android:contentDescription="@string/none"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:duplicateParentState="true"
                 android:layout_marginLeft="10.0dip"
                 android:src="@drawable/icon_search" />
 
-            <AutoCompleteTextView
+            <TextView
                 android:id="@+id/homeActivity_autoComplete"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:duplicateParentState="true"
                 android:layout_marginLeft="10.0dip"
                 android:layout_marginRight="2.0dip"
                 android:layout_toRightOf="@id/iv_search"
@@ -62,9 +65,11 @@
                 android:textColor="@color/search_font_dark_grey"
                 android:textSize="14.0dip" />
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/homeActivity_voice"
                 android:layout_width="12.0dip"
+                android:duplicateParentState="true"
+                android:contentDescription="@string/none"
                 android:layout_height="20.0dip"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"

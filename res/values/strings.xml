@@ -10,7 +10,9 @@
     <string name="error_choose_category_please">请选择有效分类</string>
     
     
+    <string name="sort_button_default">商品默认排序</string>
     <string name="sort_button_price_desc">价格从高到低</string>
+    
     <string name="sort_button_price_asc">价格从低到高</string>
     <string name="msg_logoff_not_login">当前还没登录呢</string>
     <string name="msg_logoff_success">注销成功</string>
