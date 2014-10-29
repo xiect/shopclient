@@ -17,4 +17,9 @@ public interface Const {
 	long GPS_UPDATE_INTERVAL = 60;
 	
 	float GPS_MIN_DISPLACEMENT = 8;
+	
+	// 商品排序
+	String SORT_DEFAULT = "0";    // 默认排序
+	String SORT_PRICE_ASC = "1";  // 升序
+	String SORT_PRICE_DESC = "2"; // 降序
 }

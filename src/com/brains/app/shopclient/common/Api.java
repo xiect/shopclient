@@ -14,7 +14,9 @@ import org.json.JSONObject;
 import android.location.Location;
 import android.util.Log;
 
+import com.brains.app.shopclient.bean.Brand;
 import com.brains.app.shopclient.bean.Category;
+import com.brains.app.shopclient.bean.Product;
 import com.brains.app.shopclient.bean.User;
 import com.brains.framework.common.Const;
 import com.brains.framework.exception.AppException;
@@ -72,6 +74,18 @@ public class Api implements java.io.Serializable {
 	// ===============
 	// Api 远程调用方法
 	// ===============
+	
+	
+	/**
+	 * 获取品牌列表。
+	 * @return List<KpResult>
+	 */
+	public List<Brand> getBrandList()
+			throws AppException {
+		String url = remoteDomain + "/vsisfront/appLogin/selectBusiness.do";
+		return Brand.constructListFromJson(http.get(url).asJSONObject());
+	}
+	
 	/**
 	 * 获取品类列表。
 	 * 
@@ -105,6 +119,22 @@ public class Api implements java.io.Serializable {
 //		String url = remoteDomain + "/webServerTest/TestServlet";
 		
 		return User.constructFromJson(http.get(url).asJSONObject());
+	}
+	
+	/**
+	 * 商品查询
+	 * 
+	 * @param keyword
+	 * @param categoryId
+	 * @param brandId
+	 * @param sort
+	 * @return Response
+	 */
+	public List<Product> getSerachList(String keyword,String categoryId,String brandId,String sort) throws AppException {
+		String url = remoteDomain + "/phoneapp/control/querySysMessage";
+		return Product.constructListFromJson(http.post(url,
+				createParams(new BasicNameValuePair("maxId", keyword)))
+				.asJSONObject());
 	}
 	
 //

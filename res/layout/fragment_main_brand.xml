@@ -22,7 +22,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" android:layout_below="@id/common_title" >
             <ListView
-                android:id="@+id/category_main_list"
+                android:id="@+id/brand_main_list"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:cacheColorHint="#00000000"
