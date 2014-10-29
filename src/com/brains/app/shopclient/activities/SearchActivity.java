@@ -4,8 +4,15 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
+import android.view.animation.TranslateAnimation;
+import android.widget.Button;
+import android.widget.ImageButton;
+
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -33,8 +40,10 @@ public class SearchActivity extends BaseNormalActivity{
 	private ListView mListView;
 	private List mDataList;
 	private int markCurrentPos;
-	private View markSelected;
-	
+	private ImageButton markSelected;
+	private int[] startPointArr = new int[3];
+	private EditText mTxtKeyword;
+	private Button mBtnSearch; // 搜索按钮
 	/**
 	 * 取得商品检索画面Intent
 	 * @return
@@ -74,57 +83,99 @@ public class SearchActivity extends BaseNormalActivity{
 	}
 	
 	private void findView(){
+		mTxtKeyword = (EditText)findViewById(R.id.homeActivity_autoComplete);
+		mBtnSearch = (Button) findViewById(R.id.btn_search_btn);
 		mTvSortDefault = (RelativeLayout)findViewById(R.id.search_default_sort_button);
 		mTvSortDesc = (RelativeLayout)findViewById(R.id.search_price_desc_button);
 		mTvSortAsc = (RelativeLayout)findViewById(R.id.search_price_ase_button);
+		markSelected = (ImageButton)findViewById(R.id.v_seleted_mark);
+		DisplayMetrics dm = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(dm);
+		app.showErrorWithToast("screen width:"+ dm.widthPixels);
+		
+		int oneOfthree = dm.widthPixels / 3;
+		int markW = oneOfthree / 3;
+		markW = oneOfthree - markW;
+		int offset = (oneOfthree - markW) / 2 ;
+		Util.sysLog(TAG, "oneOfthree:" + oneOfthree + "\t markW:" + markW + "\t offset:" + offset);
+		LayoutParams param = markSelected.getLayoutParams();
+		param.width = markW;
+		markSelected.setLayoutParams(param);
+		markSelected.setX(offset);
+		
+		startPointArr[0] = 0;
+		startPointArr[1] = oneOfthree ;
+		startPointArr[2] = oneOfthree * 2 ;
+		markCurrentPos = 0; // 当前位置取得
+		
+		// bunding event
 		mTvSortDefault.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				app.showErrorWithToast("mTvSortAsc clicked!");
 				mTvSortDesc.setSelected(false);
-				mTvSortAsc.setSelected(true);
+				mTvSortAsc.setSelected(false);
+				mTvSortDefault.setSelected(true);
+				slideToCurrentButton(startPointArr[0]);
 			}
 		});
 		
 		mTvSortAsc.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				app.showErrorWithToast("mTvSortAsc clicked!");
 				mTvSortDesc.setSelected(false);
 				mTvSortAsc.setSelected(true);
+				mTvSortDefault.setSelected(false);
+				slideToCurrentButton(startPointArr[2]);
 			}
 		});
 		
 		mTvSortDesc.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				app.showErrorWithToast("mTvSortDesc clicked!");
 				mTvSortDesc.setSelected(true);
 				mTvSortAsc.setSelected(false);
+				mTvSortDefault.setSelected(false);
+				slideToCurrentButton(startPointArr[1]);
 			}
 		});
-		
-//		v_seleted_mark
-		markSelected = findViewById(R.id.v_seleted_mark);
-		int width = mTvSortDefault.getWidth();
-		int height = markSelected.getHeight();
-		
-		markSelected.measure(width, height);
-		markCurrentPos = markSelected.getLeft(); // 当前位置取得
+		mBtnSearch.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(checkInput()){
+					// 执行查询操作(keyword)
+					
+				}else{
+					// 提示错误信息
+					app.showErrorWithToast(R.string.msg_please_input_keyword);
+				}
+			}
+		});
+	}
+	
+	/**
+	 * keyword 输入校验
+	 */
+	private boolean checkInput(){
+		mKeyWord = mTxtKeyword.getText().toString();
+		Util.sysLog(TAG, "mTxtKeyword==> "+mKeyWord);
+		if(Util.isEmpty(mKeyWord)){
+			return false;
+		}
+		return true;
 	}
 	
     /**
      * 划动顶部菜单
      * @param view
      */
-    private void slideToCurrentButton(View view){
-//		int xEnd = view.getLeft();
-//		Util.sysLog(TAG,"xStart:" + markCurrentPos + " xEnd:" + xEnd );
-//        TranslateAnimation animation = new TranslateAnimation(markCurrentPos, xEnd, 0, 0);  
-//        animation.setDuration(100);  
-//        animation.setFillAfter(true);  
-//        markSelected.startAnimation(animation); 
-//        markCurrentPos = xEnd;
+    private void slideToCurrentButton(int targetPos){
+		int xEnd = targetPos;
+		Util.sysLog(TAG,"xStart:" + markCurrentPos + " xEnd:" + xEnd );
+        TranslateAnimation animation = new TranslateAnimation(markCurrentPos, xEnd, 0, 0);  
+        animation.setDuration(100);  
+        animation.setFillAfter(true);  
+        markSelected.startAnimation(animation); 
+        markCurrentPos = xEnd;
     }
     
 	/**
