@@ -1,44 +1,48 @@
 package com.brains.app.shopclient.activities.fragment;
 
 import com.brains.app.shopclient.R;
+import com.brains.app.shopclient.activities.SearchActivity;
+import com.brains.app.shopclient.common.Util;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends BaseFragment {
 	private static final int LOOP_INTERVAL = 3000;
 	public static final int  SCROLL_WHAT = 0;
 	
-	PullToRefreshScrollView mPullRefreshScrollView;
-	ScrollView mScrollView;
-	Context ctx;
-	ViewPager viewPagerBanner;
+	private PullToRefreshScrollView mPullRefreshScrollView;
+	private ScrollView mScrollView;
+	private RelativeLayout rlSearchHeader;
 	
-	ImageView[] imageViews;
-	ImageView[] tips;
+	private ViewPager viewPagerBanner;
 	
-	float startX,startY;
+	private ImageView[] imageViews;
+	private ImageView[] tips;
 	
-	Handler bannerHandler;
+	private float startX,startY;
+	
+	private Handler bannerHandler;
 	
 	private class BannerHandler extends Handler {
         @Override
@@ -71,9 +75,24 @@ public class HomeFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_main_home, container,false);
+		super.onCreateView(inflater, container, savedInstanceState);
+		fragmentView = inflater.inflate(R.layout.fragment_main_home, container,false);
+		rlSearchHeader = (RelativeLayout) fragmentView.findViewById(R.id.home_title_search);
+//		rlSearchHeader.setOnTouchListener(new OnTouchListener() {
+//			@Override
+//			public boolean onTouch(View v, MotionEvent event) {
+//				app.showErrorWithToast("fffffffffffff2222");
+//				return true;
+//			}
+//		});
+		rlSearchHeader.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				ctx.startActivity(SearchActivity.makeIntent());
+			}
+		});
 		
-		mPullRefreshScrollView = (PullToRefreshScrollView) view.findViewById(R.id.pull_refresh_scrollview);
+		mPullRefreshScrollView = (PullToRefreshScrollView) fragmentView.findViewById(R.id.pull_refresh_scrollview);
 		mPullRefreshScrollView.setOnRefreshListener(new OnRefreshListener<ScrollView>() {
 			@Override
 			public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
@@ -105,7 +124,7 @@ public class HomeFragment extends Fragment {
 		imageViews = new ImageView[]{
 				view1,view2,view3,view4
 		};
-		ViewGroup group = (ViewGroup)view.findViewById(R.id.viewGroup_banner); 
+		ViewGroup group = (ViewGroup)fragmentView.findViewById(R.id.viewGroup_banner); 
 		tips = new ImageView[imageViews.length];
 		for(int i=0; i<tips.length; i++){  
 			ImageView imageView = new ImageView(ctx);  
@@ -194,7 +213,7 @@ public class HomeFragment extends Fragment {
 //		});
 		
 		bannerHandler = new BannerHandler();
-		return view;
+		return fragmentView;
 	}
 	
 	private class GetDataTask extends AsyncTask<Void, Void, String[]> {
@@ -241,5 +260,12 @@ public class HomeFragment extends Fragment {
 	
 	private void startAutoScroll(){
 		sendBannerMessage();
+	}
+
+
+	@Override
+	protected void lazyLoad() {
+		// TODO Auto-generated method stub
+		
 	}
 }

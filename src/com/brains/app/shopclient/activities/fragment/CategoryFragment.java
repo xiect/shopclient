@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.brains.app.shopclient.R;
+import com.brains.app.shopclient.activities.SearchActivity;
 import com.brains.app.shopclient.activities.SubCategoryActivity;
 import com.brains.app.shopclient.adapter.CategoryListAdapter;
 import com.brains.app.shopclient.bean.Category;
@@ -23,6 +24,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.AdapterView.OnItemClickListener;
 
 /**
@@ -40,7 +42,7 @@ public class CategoryFragment extends BaseFragment {
 	private LinearLayout mLlErrorArea;
 	private ProgressBar mProgressBar;
 	private Button mBtnReload;
-	
+	private RelativeLayout rlSearchHeader;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,6 +56,13 @@ public class CategoryFragment extends BaseFragment {
 	
 	private void findView(){
 		mProgressBar = (ProgressBar)fragmentView.findViewById(R.id.top_refresh_progressBar);
+		rlSearchHeader = (RelativeLayout)fragmentView.findViewById(R.id.home_title_search);
+		rlSearchHeader.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				ctx.startActivity(SearchActivity.makeIntent());
+			}
+		});
 		mBtnReload = (Button) fragmentView.findViewById(R.id.loading_error_but);
 		mBtnReload.setOnClickListener(new OnClickListener() {
 			@Override
