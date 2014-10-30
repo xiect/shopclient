@@ -104,6 +104,13 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        
+        <activity android:name=".activities.AboutActivity" android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="brains.intent.action.ACTION_ABOUT" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
