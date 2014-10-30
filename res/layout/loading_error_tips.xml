@@ -26,6 +26,7 @@
         android:visibility="gone" />
 
     <TextView
+        android:id="@+id/tv_loading_error_but_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
