@@ -120,24 +120,28 @@ public class Api implements java.io.Serializable {
 	 * @param sort
 	 * @return Response
 	 */
-	public List<Product> getSerachList(String keyword,String categoryId,String brandId,String sort) throws AppException {
-		String url = remoteDomain + "/phoneapp/control/querySysMessage";
-		List<Product> retList = new ArrayList<Product>();
-		Product item  = null;
-		for(int i = 0; i < 10; i++){
-			item = new Product();
-			item.setName("Iphone 6");
-			item.setId(String.valueOf(i));
-			item.setDesc("超级垃圾的手机 会弯的噢");
-			item.setPrice("5600");
-			item.setImgSrc("http://p.zdmimg.com/201410/19/544323c8a5705.jpg_n4.jpg");
-			retList.add(item);
-		}
-		return retList;
-//		
-//		return Product.constructListFromJson(http.post(url,
-//				createParams(new BasicNameValuePair("maxId", keyword)))
-//				.asJSONObject());
+	public List<Product> getSerachList(String keyword,String categoryId,String brandId,String sort,int pageNum) throws AppException {
+		String url = remoteDomain + "/vsisfront/appLogin/selectProduct.do";
+//		List<Product> retList = new ArrayList<Product>();
+//		Product item  = null;
+//		for(int i = 0; i < 10; i++){
+//			item = new Product();
+//			item.setName("Iphone 6");
+//			item.setId(String.valueOf(i));
+//			item.setDesc("超级垃圾的手机 会弯的噢");
+//			item.setPrice("5600");
+//			item.setImgSrc("http://p.zdmimg.com/201410/19/544323c8a5705.jpg_n4.jpg");
+//			retList.add(item);
+//		}
+//		return retList;
+		
+		return Product.constructListFromJson(http.post(url,
+				createParams(new BasicNameValuePair("sort", sort),
+						new BasicNameValuePair("typeId", categoryId),
+						new BasicNameValuePair("name", keyword),
+						new BasicNameValuePair("businessId", brandId),
+						new BasicNameValuePair("page", String.valueOf(pageNum))))
+				.asJSONObject());
 	}
 	
 //

@@ -46,7 +46,7 @@ public class Category {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public static List<Category> constructListFromJson(JSONObject json) {
+	public static List<Category> constructListFromJson(JSONObject json) throws AppException {
 		List<Category> categoryList = new ArrayList<Category>();
 		Category category = null;
 		JSONObject jsonObj = null;
@@ -64,8 +64,8 @@ public class Category {
 					categoryList.add(category);
 				}
 			}
-		} catch (JSONException e) {
-			new AppException(e);
+		} catch (Exception e) {
+			throw new AppException(e);
 		}
 		
 		return categoryList;

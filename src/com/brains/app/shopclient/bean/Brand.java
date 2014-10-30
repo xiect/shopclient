@@ -41,7 +41,7 @@ public class Brand {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public static List<Brand> constructListFromJson(JSONObject json) {
+	public static List<Brand> constructListFromJson(JSONObject json) throws AppException {
 		List<Brand> brandList = new ArrayList<Brand>();
 		Brand brand = null;
 		JSONObject jsonObj = null;
@@ -54,13 +54,13 @@ public class Brand {
 					brand = new Brand();
 					brand.setId(jsonObj.getString("id"));
 					brand.setName(jsonObj.getString("name"));
-					brand.setDesc(jsonObj.getString("desc"));
+					brand.setDesc(jsonObj.getString("businessTell"));
 					brand.setImgSrc(jsonObj.getString("imgSrc"));
 					brandList.add(brand);
 				}
 			}
-		} catch (JSONException e) {
-			new AppException(e);
+		} catch (Exception e) {
+			throw new AppException(e);
 		}
 		
 		return brandList;

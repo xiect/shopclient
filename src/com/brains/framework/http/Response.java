@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.brains.app.shopclient.common.Util;
 import com.brains.framework.exception.AppException;
 import com.brains.framework.common.Const;
 
@@ -71,6 +72,7 @@ public class Response implements Serializable {
     	String message = "";
         try {
         	String temp = responseText;
+        	Util.sysLog("json",temp); 
         	if(temp.length() > 4){
         		jsonObj = new JSONObject(temp);
         		if(Const.SUCCESS.equals(jsonObj.getString("status"))){

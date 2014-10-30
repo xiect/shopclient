@@ -43,6 +43,7 @@ public class HomeFragment extends BaseFragment {
 	private float startX,startY;
 	
 	private Handler bannerHandler;
+	private LinearLayout mErrorView;
 	
 	private class BannerHandler extends Handler {
         @Override
@@ -78,13 +79,6 @@ public class HomeFragment extends BaseFragment {
 		super.onCreateView(inflater, container, savedInstanceState);
 		fragmentView = inflater.inflate(R.layout.fragment_main_home, container,false);
 		rlSearchHeader = (RelativeLayout) fragmentView.findViewById(R.id.home_title_search);
-//		rlSearchHeader.setOnTouchListener(new OnTouchListener() {
-//			@Override
-//			public boolean onTouch(View v, MotionEvent event) {
-//				app.showErrorWithToast("fffffffffffff2222");
-//				return true;
-//			}
-//		});
 		rlSearchHeader.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -100,24 +94,27 @@ public class HomeFragment extends BaseFragment {
 			}
 		});
 		
+		// 网络错误画面
+		mErrorView = (LinearLayout)fragmentView.findViewById(R.id.home_load_failed);
+		mErrorView.setVisibility(View.GONE);
 		
 		// banner ad
 		viewPagerBanner = (ViewPager)mPullRefreshScrollView.findViewById(R.id.viewPager_banner);
 		ctx = getActivity();
 		ImageView view1 = new ImageView(ctx);
-		view1.setBackgroundResource(R.drawable.test_a_red);
+		view1.setBackgroundResource(R.drawable.baner_1);
 		view1.setTag("1");
 		view1.setOnClickListener(bannerClickListen);
 		ImageView view2 = new ImageView(ctx);
-		view2.setBackgroundResource(R.drawable.test_b_red);
+		view2.setBackgroundResource(R.drawable.baner_2);
 		view2.setTag("2");
 		view2.setOnClickListener(bannerClickListen);
 		ImageView view3 = new ImageView(ctx);
-		view3.setBackgroundResource(R.drawable.test_c_red);
+		view3.setBackgroundResource(R.drawable.baner_3);
 		view3.setTag("3");
 		view3.setOnClickListener(bannerClickListen);
 		ImageView view4 = new ImageView(ctx);
-		view4.setBackgroundResource(R.drawable.test_d_red);
+		view4.setBackgroundResource(R.drawable.baner_4);
 		view4.setTag("4");
 		view4.setOnClickListener(bannerClickListen);
 		
@@ -168,8 +165,6 @@ public class HomeFragment extends BaseFragment {
 				container.addView(tempView);
 				return tempView;
 			}
-			
-			
 		});
 		
 		
@@ -242,15 +237,15 @@ public class HomeFragment extends BaseFragment {
 	
 	@Override
 	public void onResume() {
-//		viewPagerBanner.startAutoScroll();
 		super.onResume();
+		startAutoScroll();
 	}
 
 	
 	@Override
 	public void onPause() {
-//		viewPagerBanner.stopAutoScroll();
 		super.onPause();
+		stopAutoScroll();
 	}
 	
 	

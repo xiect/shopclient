@@ -2,8 +2,11 @@ package com.brains.app.shopclient.activities;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -13,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.animation.TranslateAnimation;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 
@@ -20,7 +24,9 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -43,7 +49,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
  * @author xiect
  *
  */
-public class SearchActivity extends BaseNormalActivity{
+public class SearchActivity extends BaseNormalActivity implements OnClickListener {
 	private final static String ACTION_SEARCH = "brains.intent.action.ACTION_SEARCH";
 	public static final String TAG = "SearchActivity";
 	private static final String EXTRA_CATEGORY_ID = "CATEGORY_ID";
@@ -56,6 +62,8 @@ public class SearchActivity extends BaseNormalActivity{
 	private String mBrandId; //  品牌ID
 	private String mSearchMod; //  检索模式
 	private String mSortMod;  //  排序模式
+	private int mCurrentPageNo; // 当前页数
+	protected ProgressBar loadMoreGIFBtn;
 	
 	private RelativeLayout mTvSortDefault;
 	private RelativeLayout mTvSortDesc;
@@ -69,8 +77,14 @@ public class SearchActivity extends BaseNormalActivity{
 	private Button mBtnSearch; // 搜索按钮
 	private SearchTask mSearchTask;
 	private RelativeLayout mLoading;
+	private LinearLayout mNetErrorView;
+	private View mListFooter;
+	private ProgressDialog  progressDialog;
 	private TextView mTvNoData;
 	private ProductListAdapter mListViewAdapter;
+	private InputMethodManager mImm;
+	
+	private boolean isGetMore; // 是否加载更多
 	
 	/**
 	 * 取得商品检索画面Intent
@@ -78,6 +92,8 @@ public class SearchActivity extends BaseNormalActivity{
 	 */
 	public static Intent makeIntent() {
 		Intent intent = new Intent().setAction(ACTION_SEARCH);
+		intent.putExtra(EXTRA_SEARCH_MOD, EXTRA_KEYWORD);
+		
 		return intent;
 	}
 	
@@ -136,11 +152,21 @@ public class SearchActivity extends BaseNormalActivity{
 				mSearchMod = bundle.getString(EXTRA_SEARCH_MOD);
 			}
 		}
+		
+		mImm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+		// 显示或者隐藏输入法
+		mImm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+		
 		mSortMod = Const.SORT_DEFAULT;
 		// 初始话参数校验
 		doinitParamCheck();
-		// 取得查询一览数据
-		doGetProductList();
+		if(EXTRA_KEYWORD.equals(mSearchMod) && !checkInput()){
+			// keyword 且没有指定 关键字
+		}else{
+			mImm.showSoftInput(mTxtKeyword, 0);
+			// 取得查询一览数据
+			doGetProductList();
+		}
 	}
 	
 	/**
@@ -170,6 +196,7 @@ public class SearchActivity extends BaseNormalActivity{
 	private void findView(){
 		mLoading = (RelativeLayout) findViewById(R.id.rl_oading_area);
 		mTvNoData = (TextView)findViewById(R.id.tv_hint_no_data);
+		mNetErrorView = (LinearLayout) findViewById(R.id.main_loading_error_tips);
 		
 		mTxtKeyword = (EditText)findViewById(R.id.homeActivity_autoComplete);
 		mBtnSearch = (Button) findViewById(R.id.btn_search_btn);
@@ -179,7 +206,13 @@ public class SearchActivity extends BaseNormalActivity{
 		markSelected = (ImageButton)findViewById(R.id.v_seleted_mark);
 		DisplayMetrics dm = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(dm);
-		app.showErrorWithToast("screen width:"+ dm.widthPixels);
+		
+		
+		Button btnReload = (Button)findViewById(R.id.loading_error_but);
+//		TextView tvReloadDesc = (TextView)findViewById(R.id.tv_loading_error_but_desc);
+//		btnReload.setVisibility(View.GONE);
+//		tvReloadDesc.setVisibility(View.GONE);
+		btnReload.setOnClickListener(this);
 		
 		int oneOfthree = dm.widthPixels / 3;
 		int markW = oneOfthree / 3;
@@ -202,6 +235,10 @@ public class SearchActivity extends BaseNormalActivity{
 		mListView.setAdapter(mListViewAdapter);
 		// 注册事件
 		registerOnClickListener(mListView); 
+		mListFooter = View.inflate(this, R.layout.listview_footer, null);
+	    mListView.addFooterView(mListFooter, null, true);
+		loadMoreGIFBtn = (ProgressBar) mListFooter.findViewById(R.id.rectangleProgressBar);
+		
 		
 		// bunding event
 		mTvSortDefault.setOnClickListener(new OnClickListener() {
@@ -211,6 +248,7 @@ public class SearchActivity extends BaseNormalActivity{
 				mTvSortAsc.setSelected(false);
 				mTvSortDefault.setSelected(true);
 				slideToCurrentButton(startPointArr[0]);
+				doSort(Const.SORT_DEFAULT);
 			}
 		});
 		
@@ -221,6 +259,7 @@ public class SearchActivity extends BaseNormalActivity{
 				mTvSortAsc.setSelected(true);
 				mTvSortDefault.setSelected(false);
 				slideToCurrentButton(startPointArr[2]);
+				doSort(Const.SORT_PRICE_ASC);
 			}
 		});
 		
@@ -231,6 +270,7 @@ public class SearchActivity extends BaseNormalActivity{
 				mTvSortAsc.setSelected(false);
 				mTvSortDefault.setSelected(false);
 				slideToCurrentButton(startPointArr[1]);
+				doSort(Const.SORT_PRICE_DESC);
 			}
 		});
 		mBtnSearch.setOnClickListener(new OnClickListener() {
@@ -239,6 +279,9 @@ public class SearchActivity extends BaseNormalActivity{
 				if(checkInput()){
 					// 执行查询操作(keyword)
 					mSearchMod = EXTRA_KEYWORD;
+					if (mImm.isActive( ) ) {     
+						mImm.hideSoftInputFromWindow( v.getApplicationWindowToken() ,0 );   
+			        } 
 					doGetProductList();
 				}else{
 					// 提示错误信息
@@ -246,6 +289,17 @@ public class SearchActivity extends BaseNormalActivity{
 				}
 			}
 		});
+	}
+	
+	
+	/**
+	 * 重新排序
+	 */
+	private void doSort(String sort){
+		mSortMod = sort;
+		mCurrentPageNo = 1;
+		isGetMore = false;
+		doGetProductList();
 	}
 	
 	private void registerOnClickListener(ListView listView) {
@@ -262,6 +316,10 @@ public class SearchActivity extends BaseNormalActivity{
 //						startActivity(SearchActivity.makeIntent4Category(id);
 //						overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
 					}
+				}else{
+					Util.sysLog(TAG, "pos:==>" + arg2);
+					isGetMore = true;
+					doGetProductList();
 				}
 			}
 		});
@@ -293,8 +351,20 @@ public class SearchActivity extends BaseNormalActivity{
         markCurrentPos = xEnd;
     }
     
+	private void showViewWithNetError() {
+		Log.e(TAG, "showViewWithNoData");
+		mNetErrorView.setVisibility(View.VISIBLE);
+		// 隐藏列表
+		mListView.setVisibility(View.GONE);
+		// 显示无数据画面
+		mTvNoData.setVisibility(View.GONE);
+	}
+    
+    
 	private void showViewWithNoData() {
 		Log.e(TAG, "showViewWithNoData");
+		// 网络错误失败画面隐藏
+		mNetErrorView.setVisibility(View.GONE);
 		// 隐藏列表
 		mListView.setVisibility(View.GONE);
 		// 显示无数据画面
@@ -303,6 +373,8 @@ public class SearchActivity extends BaseNormalActivity{
 	
 	private void showViewWithData() {
 		Log.e(TAG, "showViewWithData");
+		// 网络错误失败画面隐藏
+		mNetErrorView.setVisibility(View.GONE);
 		// 隐藏错误画面
 		mTvNoData.setVisibility(View.GONE);
 		mListView.setVisibility(View.VISIBLE);
@@ -330,18 +402,23 @@ public class SearchActivity extends BaseNormalActivity{
 	 */
 	private class SearchTask extends GenericTask {
 		private String message;
+		private List<Product> tempList;
 		
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
 			mLoading.setVisibility(View.VISIBLE);
+			mTvNoData.setVisibility(View.GONE);
+			mNetErrorView.setVisibility(View.GONE);
 		}
 
 		@Override
 		protected TaskResult _doInBackground(TaskParams... params) {
 			try {
-				List<Product> tempList = app.mApi.getSerachList(mKeyWord, mCategoryId, mBrandId, mSortMod);
-				mDataList.addAll(tempList);
+				if(!isGetMore){
+					mCurrentPageNo = 1;
+				}
+				tempList = app.mApi.getSerachList(mKeyWord, mCategoryId, mBrandId, mSortMod,mCurrentPageNo);
 			} catch (AppException e) {
 				message = e.getMessage();
 				e.printStackTrace();
@@ -355,25 +432,65 @@ public class SearchActivity extends BaseNormalActivity{
 			super.onPostExecute(result);
 			// 隐藏loading
 			mLoading.setVisibility(View.GONE);
-			// 加载的场合
-			if (TaskResult.OK == result && mDataList != null
-					&& mDataList.size() > 0) {
-				// 显示画面
-				showViewWithData();
-			} else {
-				if(TaskResult.FAILED == result && message != null && message.length() > 0){
-					Log.d(TAG, "layout_no_data");
-					app.showErrorWithToast(message);
-				}else{
-					Log.d(TAG, "layout_no_data");
-				}
-				showViewWithNoData();
+			if(isGetMore){
+				// 加载更多的场合
+				if (TaskResult.OK == result && tempList != null
+						&& tempList.size() > 0) {
+					mDataList.addAll(tempList);
+					// 判断是否要显示更多按钮
+					if(Const.PAGE_COUNT == tempList.size()){
+						// 显示更多按钮
+						loadMoreGIFBtn.setVisibility(View.VISIBLE);
+					}else{
+						loadMoreGIFBtn.setVisibility(View.GONE);
+					}
+					// 显示画面
+					showViewWithData();
+				} else {
+					if(TaskResult.FAILED == result && message != null && message.length() > 0){
+						Log.d(TAG, "layout_no_data");
+						app.showErrorWithToast(message);
+						showViewWithNetError();
+					}else{
+						Log.d(TAG, "layout_no_data");
+						showViewWithNoData();
+					}
+				}  
+			}else{
+				if (TaskResult.OK == result && tempList != null
+						&& tempList.size() > 0) {
+					mDataList.clear();
+					mDataList.addAll(tempList);
+					// 判断是否要显示更多按钮
+					if(Const.PAGE_COUNT == tempList.size()){
+						// 显示更多按钮
+						loadMoreGIFBtn.setVisibility(View.VISIBLE);
+					}else{
+						loadMoreGIFBtn.setVisibility(View.GONE);
+					}
+					// 显示List画面
+					showViewWithData();
+				} else {
+					if(TaskResult.FAILED == result && message != null && message.length() > 0){
+						Log.d(TAG, "layout_no_data");
+						// 显示网络失败画面
+						app.showErrorWithToast(message);
+						showViewWithNetError();
+					}else{
+						// 显示无结果集画面
+						Log.d(TAG, "layout_no_data");
+						showViewWithNoData();
+					}
+				}  
 			}
 		}
 	}
-	
-	
-	
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		
+	}
 }
 
 

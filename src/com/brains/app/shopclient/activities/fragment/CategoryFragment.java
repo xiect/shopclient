@@ -81,7 +81,7 @@ public class CategoryFragment extends BaseFragment {
 	@Override
 	public  void lazyLoad(){
 		Log.e(TAG," isPrepared :" + isPrepared +"\tisVisible"+isVisible);
-		if(!isPrepared && isVisible){
+		if(!isPrepared && isVisible && isCreatedView){
 			Log.e(TAG," call doGetCategoryList===lazyLoad");
 			doGetCategoryList();
 		}else{
@@ -118,10 +118,6 @@ public class CategoryFragment extends BaseFragment {
 		@Override
 		protected TaskResult _doInBackground(TaskParams... params) {
 			try {
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-				}
 				// 获得网络数据
 				List<Category> tempList = app.mApi.getCategoryList();
 				mCategoryList.addAll(tempList);

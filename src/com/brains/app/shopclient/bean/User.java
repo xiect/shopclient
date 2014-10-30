@@ -47,7 +47,7 @@ public class User {
 			user.tel = jsonUser.getString("telephone");
 			jsonUser = null;
 			json = null;
-		}catch(JSONException e){
+		}catch(Exception e){
 			throw new AppException(e);
 		}
 		return user;

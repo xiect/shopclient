@@ -22,4 +22,5 @@ public interface Const {
 	String SORT_DEFAULT = "0";    // 默认排序
 	String SORT_PRICE_ASC = "1";  // 升序
 	String SORT_PRICE_DESC = "2"; // 降序
+	int PAGE_COUNT = 20; //  每页显示的件数
 }

@@ -7,6 +7,7 @@ import com.brains.app.shopclient.R;
 import com.brains.app.shopclient.activities.SearchActivity;
 import com.brains.app.shopclient.adapter.BrandListAdapter;
 import com.brains.app.shopclient.bean.Brand;
+import com.brains.app.shopclient.common.Util;
 
 import com.brains.framework.exception.AppException;
 import com.brains.framework.task.GenericTask;
@@ -81,12 +82,12 @@ public class BrandFragment extends BaseFragment {
 	
 	@Override
 	public  void lazyLoad(){
-		Log.e(TAG," isPrepared :" + isPrepared +"\tisVisible"+isVisible);
-		if(!isPrepared && isVisible){
-			Log.e(TAG," call doGetBrandList===lazyLoad");
+		Util.sysLog(TAG," isPrepared :" + isPrepared +"\tisVisible"+isVisible);
+		if(!isPrepared && isVisible && isCreatedView){
+			Util.sysLog(TAG," call doGetBrandList===lazyLoad");
 			doGetBrandList();
 		}else{
-			Log.e(TAG," call donothing===lazyLoad");
+			Util.sysLog(TAG," call donothing===lazyLoad");
 		}
 	}
 	
@@ -119,10 +120,6 @@ public class BrandFragment extends BaseFragment {
 		@Override
 		protected TaskResult _doInBackground(TaskParams... params) {
 			try {
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-				}
 				// 获得网络数据
 				List<Brand> tempList = app.mApi.getBrandList();
 				mBrandList.addAll(tempList);
@@ -139,7 +136,8 @@ public class BrandFragment extends BaseFragment {
 		protected void onPostExecute(TaskResult result) {
 			super.onPostExecute(result);
 			
-
+			// 隐藏loading
+			mProgressBar.setVisibility(View.GONE);
 			// 加载的场合
 			if (TaskResult.OK == result && mBrandList != null
 					&& mBrandList.size() > 0) {
@@ -158,19 +156,16 @@ public class BrandFragment extends BaseFragment {
 	}
 	
 	private void showViewWithNoData() {
-		Log.e(TAG, "showViewWithNoData");
+		Util.sysLog(TAG, "showViewWithNoData");
 		isPrepared = false;
 		// 隐藏列表
 		listView.setVisibility(View.GONE);
-		// 隐藏loading
-		mProgressBar.setVisibility(View.GONE);
 		// 显示错误画面
 		mLlErrorArea.setVisibility(View.VISIBLE);
 	}
 	
 	private void showViewWithData() {
-		Log.e(TAG, "showViewWithData");
-		mProgressBar.setVisibility(View.GONE);
+		Util.sysLog(TAG, "showViewWithData");
 		isPrepared = true;
 		
 		// 隐藏错误画面
@@ -187,7 +182,7 @@ public class BrandFragment extends BaseFragment {
 					long arg3) {
 				if(arg2 < mBrandList.size()){
 					String brandId = mBrandList.get(arg2).getId();
-					getActivity().startActivity(SearchActivity.makeIntent());
+					getActivity().startActivity(SearchActivity.makeIntent4Brand(brandId));
 					getActivity().overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out); 
 				}
 			}

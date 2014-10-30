@@ -51,7 +51,7 @@ public class Product {
 	public void setImgSrc(String imgSrc) {
 		this.imgSrc = imgSrc;
 	}
-	public static List<Product> constructListFromJson(JSONObject json) {
+	public static List<Product> constructListFromJson(JSONObject json) throws AppException {
 		List<Product> productList = new ArrayList<Product>();
 		Product product = null;
 		JSONObject jsonObj = null;
@@ -65,12 +65,13 @@ public class Product {
 					product.setId(jsonObj.getString("id"));
 					product.setName(jsonObj.getString("name"));
 					product.setDesc(jsonObj.getString("desc"));
+					product.setPrice(jsonObj.getString("price"));
 					product.setImgSrc(jsonObj.getString("imgSrc"));
 					productList.add(product);
 				}
 			}
-		} catch (JSONException e) {
-			new AppException(e);
+		} catch (Exception e) {
+			throw new AppException(e);
 		}
 		
 		return productList;

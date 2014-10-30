@@ -501,7 +501,7 @@ public class HttpClient {
 					Log.d("xiect",param.getName()+" value:" + param.getValue());
 				}
 				String string = URLEncodedUtils.format(postParams, HTTP.UTF_8).replace("+", "%20").replace("*", "%2A").replace("%7E", "~");
-				Log.d("xiect","post value:" + string);
+				Util.sysLog("xiect","post value:" + string);
 				StringEntity stringEntity = new StringEntity(string,HTTP.UTF_8);
 				stringEntity.setContentType(URLEncodedUtils.CONTENT_TYPE);
 				entity = stringEntity;

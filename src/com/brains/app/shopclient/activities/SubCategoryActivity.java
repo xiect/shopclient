@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.brains.app.shopclient.R;
@@ -46,7 +47,7 @@ public class SubCategoryActivity extends BaseNormalActivity{
 	private ProgressBar mProgressBar;
 	private Button mBtnReload;
 	private String mCategoryId;// 主类Id
-	
+	private RelativeLayout rlSearchHeader;
 	/**
 	 * 取得二级品类画面Intent
 	 * @param categoryId 一级品类Id
@@ -95,6 +96,14 @@ public class SubCategoryActivity extends BaseNormalActivity{
 		mListView.setAdapter(mCategoryListAdapter);
 		registerOnClickListener(mListView);
 		mLlErrorArea = (LinearLayout)findViewById(R.id.main_loading_error_tips);
+		
+		rlSearchHeader = (RelativeLayout)findViewById(R.id.home_title_search);
+		rlSearchHeader.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(SearchActivity.makeIntent());
+			}
+		});
 	}
 	
 	/**

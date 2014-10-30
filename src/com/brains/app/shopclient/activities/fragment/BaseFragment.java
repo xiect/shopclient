@@ -15,7 +15,9 @@ public abstract class BaseFragment extends Fragment {
 	protected ShoppingApp app;
 	protected boolean isVisible;
 	protected boolean isPrepared;
+	protected boolean isCreatedView;
 	protected View fragmentView;
+	
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -24,7 +26,7 @@ public abstract class BaseFragment extends Fragment {
 		Log.e("BASE","ctx class name:"+ctx.getClass().getName());
 		app = (ShoppingApp)getActivity().getApplicationContext();
 		Log.e("BASE","ctx class name2222:");
-//		isPrepared = true;
+		isCreatedView = true;
 		return null;
 	}
 
@@ -50,4 +52,13 @@ public abstract class BaseFragment extends Fragment {
 	protected void onInvisible(){
 		
 	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		isCreatedView = false;
+		isPrepared = false;
+	}
+	
+	
 }
