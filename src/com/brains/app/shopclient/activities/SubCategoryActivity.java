@@ -129,10 +129,6 @@ public class SubCategoryActivity extends BaseNormalActivity{
 		@Override
 		protected TaskResult _doInBackground(TaskParams... params) {
 			try {
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-				}
 				// 获得网络数据
 				List<Category> tempList = app.mApi.getSubCategoryList(mCategoryId);
 				mCategoryList.addAll(tempList);
@@ -194,7 +190,7 @@ public class SubCategoryActivity extends BaseNormalActivity{
 					Category category = mCategoryList.get(arg2);
 					String id = category.getId();
 					if(!Util.isEmpty(id)){
-						startActivity(SearchActivity.makeIntent(id,""));
+						startActivity(SearchActivity.makeIntent4Category(id));
 						overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
 					}
 				}

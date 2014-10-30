@@ -1,19 +1,9 @@
 package com.brains.app.shopclient.common;
 
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
-
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import android.location.Location;
-import android.util.Log;
-
 import com.brains.app.shopclient.bean.Brand;
 import com.brains.app.shopclient.bean.Category;
 import com.brains.app.shopclient.bean.Product;
@@ -132,9 +122,22 @@ public class Api implements java.io.Serializable {
 	 */
 	public List<Product> getSerachList(String keyword,String categoryId,String brandId,String sort) throws AppException {
 		String url = remoteDomain + "/phoneapp/control/querySysMessage";
-		return Product.constructListFromJson(http.post(url,
-				createParams(new BasicNameValuePair("maxId", keyword)))
-				.asJSONObject());
+		List<Product> retList = new ArrayList<Product>();
+		Product item  = null;
+		for(int i = 0; i < 10; i++){
+			item = new Product();
+			item.setName("Iphone 6");
+			item.setId(String.valueOf(i));
+			item.setDesc("超级垃圾的手机 会弯的噢");
+			item.setPrice("5600");
+			item.setImgSrc("http://p.zdmimg.com/201410/19/544323c8a5705.jpg_n4.jpg");
+			retList.add(item);
+		}
+		return retList;
+//		
+//		return Product.constructListFromJson(http.post(url,
+//				createParams(new BasicNameValuePair("maxId", keyword)))
+//				.asJSONObject());
 	}
 	
 //

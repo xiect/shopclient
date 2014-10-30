@@ -31,6 +31,7 @@
 	    
 	    
 	    <View android:id="@+id/product_list_tabs_underline" android:background="#ffe1e1e1" android:layout_width="fill_parent" android:layout_height="6.0px"/>
+	    <TextView android:id="@+id/tv_hint_no_data" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="fill_parent" android:gravity="center_vertical|center_horizontal" android:text="@string/no_search_result" />
 		<ListView android:id="@+id/lv_result_list" android:layout_width="fill_parent" android:layout_height="fill_parent"/>
        </LinearLayout>
        <RelativeLayout
@@ -46,6 +47,17 @@
                    />
                 <TextView android:gravity="center_vertical" android:id="@+id/tv" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_toRightOf="@id/top_refresh_progressBar"  android:layout_marginLeft="4.0dip" android:text="加载中..." />
        </RelativeLayout>
+       
+       	<RelativeLayout
+               android:layout_width="fill_parent"
+               android:layout_height="fill_parent" >
+               <include
+                   android:id="@+id/main_loading_error_tips"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_centerInParent="true"
+                   layout="@layout/loading_error_tips" />
+           </RelativeLayout>
    </FrameLayout>
 </RelativeLayout>    
  

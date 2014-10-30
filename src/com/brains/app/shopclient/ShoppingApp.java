@@ -3,6 +3,7 @@ package com.brains.app.shopclient;
 import java.io.File;
 
 import com.brains.app.shopclient.common.Api;
+import com.brains.app.shopclient.common.CrashHandler;
 import com.brains.app.shopclient.common.Util;
 import com.brains.app.shopclient.db.dao.PrefDAO;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
@@ -32,11 +33,16 @@ public class ShoppingApp extends Application {
 	 * 实例化
 	 */
 	public void onCreate() {
-		mPrefDAO = new PrefDAO(this);
-		
 		super.onCreate();
+		mPrefDAO = new PrefDAO(this);
 		initImageLoader();
-		
+
+		CrashHandler crashHandler = CrashHandler.getInstance();  
+		// 注册crashHandler  
+		crashHandler.init(getApplicationContext());  
+//		// 发送以前没发送的报告(可选)  
+//		crashHandler.sendPreviousReportsToServer();
+
 		Log.d(TAG, "实例化远程调用接口");
 		mApi = new Api();
 	}

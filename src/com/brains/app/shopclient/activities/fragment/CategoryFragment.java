@@ -138,7 +138,8 @@ public class CategoryFragment extends BaseFragment {
 		protected void onPostExecute(TaskResult result) {
 			super.onPostExecute(result);
 			
-
+			// 隐藏loading
+			mProgressBar.setVisibility(View.GONE);
 			// 加载的场合
 			if (TaskResult.OK == result && mCategoryList != null
 					&& mCategoryList.size() > 0) {
@@ -161,15 +162,12 @@ public class CategoryFragment extends BaseFragment {
 		isPrepared = false;
 		// 隐藏列表
 		listView.setVisibility(View.GONE);
-		// 隐藏loading
-		mProgressBar.setVisibility(View.GONE);
 		// 显示错误画面
 		mLlErrorArea.setVisibility(View.VISIBLE);
 	}
 	
 	private void showViewWithData() {
 		Log.e(TAG, "showViewWithData");
-		mProgressBar.setVisibility(View.GONE);
 		isPrepared = true;
 		
 		// 隐藏错误画面

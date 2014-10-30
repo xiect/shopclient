@@ -8,7 +8,7 @@
     <string name="title_activity_message_detail">通知详细</string>
     <string name="title_activity_score_choose">请打分</string>
     <string name="error_choose_category_please">请选择有效分类</string>
-    
+    <string name="error_choose_brand_please">请选择有效商户</string>
     
     <string name="sort_button_default">商品默认排序</string>
     <string name="sort_button_price_desc">价格从高到低</string>
