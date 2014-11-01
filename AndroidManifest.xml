@@ -9,6 +9,7 @@
         android:targetSdkVersion="19" />
 	<uses-permission android:name="android.permission.INTERNET" />  
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />  
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application
         android:allowBackup="true"
         android:name=".ShoppingApp"
@@ -98,16 +99,24 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <!-- 商品查询画面 -->
         <activity android:name=".activities.SearchActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="brains.intent.action.ACTION_SEARCH" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
+        <!-- 关于画面 -->
         <activity android:name=".activities.AboutActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="brains.intent.action.ACTION_ABOUT" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!-- 商品详细画面 -->
+        <activity android:name=".activities.ProductDetailActivity" android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="brains.intent.action.ACTION_ITEM_DETAIL" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
