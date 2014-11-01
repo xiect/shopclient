@@ -1,5 +1,6 @@
 package com.brains.framework.common;
 
+import com.brains.app.shopclient.common.Util;
 import com.brains.framework.annotations.SuppressDebugLog;
 
 import android.content.Context;
@@ -112,7 +113,7 @@ public class BaseUtil
         }
 
         output += s;
-        Log.d( getAppTag(), output );
+        Util.sysLog(getAppTag(), output );
     }
 
 

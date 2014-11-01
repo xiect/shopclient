@@ -1,9 +1,6 @@
 package com.brains.app.shopclient.activities;
 
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,20 +10,21 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
-
 import com.brains.app.shopclient.R;
 import com.brains.app.shopclient.bean.User;
 import com.brains.app.shopclient.common.Util;
-import com.brains.app.shopclient.db.dao.PrefDAO;
 import com.brains.framework.activities.base.BaseNormalActivity;
-import com.brains.framework.common.Const;
 import com.brains.framework.exception.AppException;
 import com.brains.framework.task.GenericTask;
 import com.brains.framework.task.TaskParams;
 import com.brains.framework.task.TaskResult;
 
 
+/**
+ * 登录画面
+ * @author xiect
+ *
+ */
 public class LoginActivity extends BaseNormalActivity {
 	private final static String ACTION_LOGIN = "brains.intent.action.ACTION_LOGIN";
 

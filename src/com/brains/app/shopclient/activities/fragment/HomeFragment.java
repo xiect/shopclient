@@ -1,8 +1,8 @@
 package com.brains.app.shopclient.activities.fragment;
 
 import com.brains.app.shopclient.R;
+import com.brains.app.shopclient.activities.ProductDetailActivity;
 import com.brains.app.shopclient.activities.SearchActivity;
-import com.brains.app.shopclient.common.Util;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
@@ -16,10 +16,8 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
@@ -27,6 +25,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
+/**
+ * 首页画面
+ * @author xiect
+ *
+ */
 public class HomeFragment extends BaseFragment {
 	private static final int LOOP_INTERVAL = 3000;
 	public static final int  SCROLL_WHAT = 0;
@@ -62,7 +65,8 @@ public class HomeFragment extends BaseFragment {
 	OnClickListener bannerClickListen = new OnClickListener(){
 		@Override
 		public void onClick(View v) {
-			Log.e("BANNER", "onClick=====view=>=" + v.getTag());
+			startActivity(ProductDetailActivity.makeIntent("111"));
+			getActivity().overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
 		}
 	};
 	

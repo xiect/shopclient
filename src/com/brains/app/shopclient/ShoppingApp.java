@@ -3,6 +3,7 @@ package com.brains.app.shopclient;
 import java.io.File;
 
 import com.brains.app.shopclient.common.Api;
+import com.brains.app.shopclient.common.CartManager;
 import com.brains.app.shopclient.common.CrashHandler;
 import com.brains.app.shopclient.common.Util;
 import com.brains.app.shopclient.db.dao.PrefDAO;
@@ -28,15 +29,20 @@ public class ShoppingApp extends Application {
 	public Api mApi;
 	private DisplayImageOptions categoryLoadOption;
 	public PrefDAO mPrefDAO;
+	public CartManager cart;
 	
 	/**
 	 * 实例化
 	 */
 	public void onCreate() {
 		super.onCreate();
+		
+		Util.sysLog(TAG, "===>app onCreate");
+		
 		mPrefDAO = new PrefDAO(this);
+		// 初始化图片下载对象
 		initImageLoader();
-
+		// 错误处理
 		CrashHandler crashHandler = CrashHandler.getInstance();  
 		// 注册crashHandler  
 		crashHandler.init(getApplicationContext());  

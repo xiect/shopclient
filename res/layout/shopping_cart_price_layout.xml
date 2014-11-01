@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout android:id="@+id/shoping_cart_user_no_login_tips" android:clickable="true" android:layout_width="fill_parent" android:layout_height="55.0dip"
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:pricetext="http://schemas.android.com/apk/res/com.jingdong.app.mall">
+  xmlns:android="http://schemas.android.com/apk/res/android">
     <RelativeLayout android:id="@+id/cart_select_all_layout" android:layout_width="44.0dip" android:layout_height="55.0dip" android:layout_centerVertical="true">
         <ImageButton android:id="@+id/cart_select_all_button" android:background="@drawable/cart_product_select_on" android:padding="5.0dip" android:layout_width="21.0dip" android:layout_height="21.0dip" android:layout_marginLeft="11.0dip" android:layout_alignParentLeft="true" android:layout_centerVertical="true" />
     </RelativeLayout>

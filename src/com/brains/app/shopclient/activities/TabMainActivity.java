@@ -1,15 +1,17 @@
 package com.brains.app.shopclient.activities;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import com.brains.app.shopclient.R;
+import com.brains.app.shopclient.ShoppingApp;
 import com.brains.app.shopclient.activities.fragment.BrandFragment;
 import com.brains.app.shopclient.activities.fragment.CartFragment;
 import com.brains.app.shopclient.activities.fragment.CategoryFragment;
 import com.brains.app.shopclient.activities.fragment.HomeFragment;
 import com.brains.app.shopclient.activities.fragment.MyFragment;
 import com.brains.app.shopclient.adapter.MainFragmentPagerAdapter;
+import com.brains.app.shopclient.common.CartManager;
+import com.brains.app.shopclient.common.Util;
 
 
 import android.content.Intent;
@@ -32,6 +34,7 @@ import android.widget.RadioGroup;
  */
 public class TabMainActivity extends FragmentActivity {
 
+	private static final String TAG = "TabMainActivity";
 	private ViewPager mViewPager;
 	private PagerAdapter mAdapter;
 	private ArrayList<Fragment> fragmentList;
@@ -103,7 +106,11 @@ public class TabMainActivity extends FragmentActivity {
 			}
 		});
 
-		
+		// 应数据库初始化是在install activity中进行的。
+		// 现在主画面初始话App 中的 Cart对象
+		Util.sysLog(TAG, "== 初始化 购物车 ==");
+		ShoppingApp app = (ShoppingApp) getApplicationContext();
+		app.cart = new CartManager(app);
 	}
 	
 	private void bindingEventListenner(){

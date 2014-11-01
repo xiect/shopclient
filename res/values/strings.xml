@@ -10,7 +10,12 @@
     <string name="error_choose_category_please">请选择有效分类</string>
     <string name="error_choose_brand_please">请选择有效商户</string>
     
-    
+    <string name="product_add_shopcar_label">加入购物车</string>
+    <string name="product_add_favorite_label">加入收藏夹</string>
+    <string name="product_comment_label">用户评价</string>
+    <string name="product_description_label">商品介绍</string>
+    <string name="product_send_time_label">送达时间：</string>
+    <string name="other_images_label">其它图片</string>
     <string name="list_button_more">更多</string>
     <string name="sort_button_default">商品默认排序</string>
     <string name="sort_button_price_desc">价格从高到低</string>

@@ -64,7 +64,6 @@ public class HomeActivity extends BaseNormalActivity implements OnPageChangeList
 		mScrollView = mPullRefreshScrollView.getRefreshableView();
 		
 		viewPagerBanner = (ViewPager)mPullRefreshScrollView.findViewById(R.id.viewPager_banner);
-//		jazzyViewPager.setTransitionEffect(TransitionEffect.FlipHorizontal);
 		ImageView view1 = new ImageView(this);
 		view1.setBackgroundResource(R.drawable.test_a_red);
 		ImageView view2 = new ImageView(this);

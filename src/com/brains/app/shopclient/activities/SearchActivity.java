@@ -3,10 +3,8 @@ package com.brains.app.shopclient.activities;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -32,8 +30,8 @@ import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.brains.app.shopclient.R;
-import com.brains.app.shopclient.bean.Product;
 import com.brains.app.shopclient.common.Util;
+import com.brains.app.shopclient.db.entity.Product;
 import com.brains.framework.activities.base.BaseNormalActivity;
 import com.brains.framework.common.Const;
 import com.brains.framework.exception.AppException;
@@ -79,7 +77,7 @@ public class SearchActivity extends BaseNormalActivity implements OnClickListene
 	private RelativeLayout mLoading;
 	private LinearLayout mNetErrorView;
 	private View mListFooter;
-	private ProgressDialog  progressDialog;
+
 	private TextView mTvNoData;
 	private ProductListAdapter mListViewAdapter;
 	private InputMethodManager mImm;
@@ -309,14 +307,14 @@ public class SearchActivity extends BaseNormalActivity implements OnClickListene
 					long arg3) {
 				if(arg2 < mDataList.size()){
 					Product product = mDataList.get(arg2);
-					String id = product.getId();
+					String id = product.getItemId();
 					if(!Util.isEmpty(id)){
 						// 商品详细画面迁移
-						// TODO XIECT
-//						startActivity(SearchActivity.makeIntent4Category(id);
-//						overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+						startActivity(ProductDetailActivity.makeIntent(id));
+						overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
 					}
 				}else{
+					// 加载更多
 					Util.sysLog(TAG, "pos:==>" + arg2);
 					isGetMore = true;
 					doGetProductList();
