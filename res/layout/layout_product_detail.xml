@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:background="@color/body_background"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+   <include android:id="@id/common_title" layout="@layout/app_head_common"/>
+    <FrameLayout 
+    	android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+    >
+    <ScrollView 
+    	android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+    	android:fillViewport="true"
+    	android:scrollbars="none"
+    >
+    <LinearLayout 
+    	android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+    	android:orientation="vertical"
+    >
+    		<LinearLayout 
+		    	android:layout_width="fill_parent"
+		    	android:layout_height="wrap_content"
+		    	android:orientation="vertical"
+		    	android:background="@drawable/panel_bg"
+		    	android:layout_margin="10dp"
+		    	>
+		    	<!-- 商品图片 -->
+		    	<RelativeLayout 
+		    		android:layout_width="fill_parent"
+		    		android:layout_height="wrap_content"
+		    		android:padding="4dip"
+		    	>	
+		    		<FrameLayout 
+		    			android:layout_width="72.0dip"
+		    			android:layout_height="72.0dip"
+		    		>
+		    		<ImageView 
+		    			android:id="@+id/product_image"
+		    			android:layout_width="72.0dip"
+		    			android:layout_height="72.0dip"
+		    			/>
+		    			<ProgressBar 
+		    				android:id="@+id/loading"
+		    				android:layout_width="wrap_content"
+		    				android:layout_height="wrap_content"
+		    				android:layout_gravity="center"
+		    			/>
+		    		</FrameLayout>
+		    		
+		    		<ImageView 
+		    			android:id="@+id/tail"
+		    			android:layout_width="wrap_content"
+		    			android:layout_height="wrap_content"
+		    			android:src="@drawable/arrow"
+		    			android:layout_alignParentRight="true"
+		    			android:layout_centerVertical="true"
+		    		/>
+		    		<TextView 
+		    			android:id="@+id/product_other_image_text"
+		    			android:text="@string/other_images_label"
+		    			android:layout_width="wrap_content"
+		    			android:layout_height="wrap_content"
+		    			android:layout_toLeftOf="@id/tail"
+		    			android:layout_centerVertical="true"
+		    			android:clickable="true"
+		    			android:background="@drawable/b2c_wrap_view_selector"
+		    			style="@style/normalText"
+		    		/>
+		    </RelativeLayout>
+	    	<View 
+	    		android:layout_width="fill_parent"
+	    		android:layout_height="2dp"
+	    		android:background="@android:color/darker_gray"
+	    	/>
+	    	<!-- 商品信息 -->
+		    <RelativeLayout 
+		    	android:layout_width="fill_parent"
+		    	android:layout_height="wrap_content"
+		    	android:padding="5dip">
+		    	<!-- 商品名称 -->
+		    	<TextView 
+		    		android:id="@+id/product_name_text"
+		    		android:layout_width="fill_parent"
+		    		android:layout_height="wrap_content"
+		    		android:text="iphone6"
+		    		style="@style/normalText.Blue"
+		    	/>
+		    	<!-- 商品价格 -->
+		    	<TextView 
+		    		android:id="@+id/product_price_text"
+		    		android:layout_width="wrap_content"
+		    		android:layout_height="wrap_content"
+		    		android:layout_below="@id/product_name_text"
+		    		android:layout_alignParentRight="true"
+		    		android:paddingTop="5dp"
+		    		android:gravity="center"
+		    		android:text="6000"
+		    		android:background="@drawable/b2c_red_button_selector"
+		    		style="@style/normalText.White"
+		    	/>
+		    	<!-- 是否有存货 -->
+		    	<TextView 
+		    		android:id="@+id/product_has_storge_text"
+		    		android:layout_width="wrap_content"
+		    		android:layout_height="wrap_content"
+		    		android:layout_below="@id/product_name_text"
+		    		android:text="有货"
+		    		style="@style/normalText.Red"
+		    		android:paddingTop="5dp"
+		    	/>
+		    	<!-- 配送方式 -->
+		    	<TextView 
+		    		android:id="@+id/product_delivery_text"
+		    		android:layout_width="wrap_content"
+		    		android:layout_height="wrap_content"
+		    		android:layout_below="@id/product_name_text"
+		    		android:layout_toRightOf="@id/product_has_storge_text"
+		    		android:paddingLeft="20dp"
+		    		android:paddingTop="5dp"
+		    		android:text="顺风快递"
+		    		android:visibility="gone"
+		    		style="@style/normalText.Red"
+		    	/>
+		    	<!-- 送达时间 -->
+		    	<TextView 
+		    		android:id="@+id/product_send_time_label"
+		    		android:text="@string/product_send_time_label"
+		    		android:layout_below="@id/product_has_storge_text"
+		    		android:layout_width="wrap_content"
+		    		android:layout_height="wrap_content"
+		    		android:paddingTop="5dp"
+		    		android:visibility="gone"
+		    		style="@style/normalText"
+		    	/>
+		    	<TextView 
+		    		android:id="@+id/product_send_time_text"
+		    		android:layout_below="@id/product_has_storge_text"
+		    		android:layout_toRightOf="@id/product_send_time_label"
+		    		android:layout_width="wrap_content"
+		    		android:text="今天下午"
+		    		android:layout_height="wrap_content"
+		    		android:visibility="gone"
+		    		android:paddingTop="5dp"
+		    	/>
+		    	<!-- 商品介绍 -->
+		    	<TextView 
+		    		android:id="@+id/product_description_text"
+		    		android:layout_width="fill_parent"
+		    		android:layout_height="wrap_content"
+		    		android:text="超级棒，谁用谁知道 超级棒，谁用谁知道 超级棒，谁用谁知道 超级棒，谁用谁知道"
+		    		android:layout_below="@id/product_send_time_label"
+		    	/>
+		    </RelativeLayout>	
+    	</LinearLayout>
+    	<!-- 可配置选项  商品为可配置时可见 -->
+    	<LinearLayout 
+    		android:id="@+id/product_config"
+    		android:orientation="vertical"
+    		android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:layout_margin="5dip"
+    		android:background="@drawable/panel_bg"
+    		android:visibility="gone"
+    	>
+    	</LinearLayout>
+    	
+    	
+    	<!-- 虚拟商品 可配置商品 -->
+    	<TextView 
+    		android:id="@+id/product_pro_label"
+    		android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:layout_marginLeft="10dp"
+    		android:text="请选择商品属性:"
+    		android:visibility="gone"
+    		android:padding="4dp"
+    		style="@style/normalText"
+    	/>
+    	
+    	<LinearLayout 
+    		android:id="@+id/product_container"
+    		android:orientation="vertical"
+    		android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:layout_margin="10dp"
+    		android:padding="10dp"
+    		android:background="@drawable/panel_bg"
+    		android:visibility="gone"
+    	></LinearLayout>
+    	
+    	<!-- 商品介绍  商品参数  用户评价-->
+    	<LinearLayout 
+    			android:layout_marginTop="30dp"
+		    	android:layout_width="fill_parent"
+		    	android:layout_height="wrap_content"
+		    	android:orientation="vertical"
+		    	android:background="@drawable/panel_bg"
+		    	android:layout_margin="10dp"
+		    	>
+		    <!-- 商品介绍 -->	
+		    <RelativeLayout 
+		    	android:id="@+id/product_descrip_view"
+		    	android:layout_width="fill_parent"
+		    	android:layout_height="wrap_content"
+		    	android:padding="10dp"
+		    	android:clickable="true"
+		    	android:background="@drawable/b2c_wrap_view_selector"
+		    >
+		    	<TextView 
+		    		android:text="@string/product_description_label"
+		    		android:layout_width="wrap_content"
+		    		android:layout_height="wrap_content"
+		    		android:layout_centerVertical="true"
+		    		style="@style/BigText"
+		    	/>
+		    	<ImageView 
+		    		android:src="@drawable/arrow"
+		    		android:layout_width="wrap_content"
+		    		android:layout_height="wrap_content"
+		    		android:layout_centerVertical="true"
+		    		android:layout_alignParentRight="true"
+		    	/>
+		    </RelativeLayout>
+		    <View 
+	    		android:layout_width="fill_parent"
+	    		android:layout_height="1px"
+	    		android:layout_margin="2dip"
+	    		android:background="@android:color/darker_gray"
+	    	/>
+		     <!-- 商品参数 -->	
+		    <!-- <RelativeLayout 
+		    	android:id="@+id/product_parameter_view"
+		    	android:layout_width="fill_parent"
+		    	android:layout_height="wrap_content"
+		    	android:clickable="true"
+		    	android:padding="10dp"
+		    	android:background="@drawable/b2c_wrap_view_selector"
+		    >
+		    	<TextView 
+		    		android:text="@string/product_paramter_label"
+		    		android:layout_width="wrap_content"
+		    		android:layout_height="wrap_content"
+		    		android:layout_centerVertical="true"
+		    		style="@style/BigText"
+		    	/>
+		    	<ImageView 
+		    		android:src="@drawable/arrow"
+		    		android:layout_width="wrap_content"
+		    		android:layout_height="wrap_content"
+		    		android:layout_centerVertical="true"
+		    		android:layout_alignParentRight="true"
+		    	/>
+		    </RelativeLayout> -->	
+	    	<!-- 用户评价 -->
+	    	<RelativeLayout 
+		    	android:id="@+id/product_comment_view"
+		    	android:layout_width="fill_parent"
+		    	android:layout_height="wrap_content"
+		    	android:padding="10dp"
+		    	android:clickable="true"
+		    	android:background="@drawable/b2c_wrap_view_selector"
+		    >
+		    	<TextView 
+		    		android:text="@string/product_comment_label"
+		    		android:layout_width="wrap_content"
+		    		android:layout_height="wrap_content"
+		    		android:layout_centerVertical="true"
+		    		style="@style/BigText"
+		    	/>
+		    	<ImageView 
+		    		android:src="@drawable/arrow"
+		    		android:layout_width="wrap_content"
+		    		android:layout_height="wrap_content"
+		    		android:layout_centerVertical="true"
+		    		android:layout_alignParentRight="true"
+		    	/>
+		    </RelativeLayout>	
+		</LinearLayout>
+		<LinearLayout 
+				android:orientation="horizontal"
+				android:layout_width="fill_parent" 
+				android:layout_height="wrap_content"
+				android:gravity="center" 
+				android:layout_marginTop="10px"
+				android:layout_marginBottom="10px">
+<!-- 				<com.brains.b2c.util.CircleNumberView -->
+<!-- 					android:layout_width="20px" android:layout_height="20px" -->
+<!-- 					android:layout_gravity="top" android:visibility="invisible" /> -->
+				<!-- 收藏 -->
+				<TextView android:id="@+id/product_favorite_add_text"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:text="@string/product_add_favorite_label" android:padding="10dip"
+					android:clickable="true"
+					style="@style/blue_button"
+					android:layout_margin="5dp" />
+				<!-- 加入购物车 -->
+				<TextView android:id="@+id/product_shopcar_add_text"
+					android:layout_width="wrap_content" android:layout_height="wrap_content" android:padding="10dip"
+					android:text="@string/product_add_shopcar_label" android:clickable="true" style="@style/blue_button"
+					android:layout_margin="5dp"/>
+<!-- 				<com.brains.b2c.util.CircleNumberView -->
+<!-- 					android:id="@+id/cnv_count" android:layout_width="20px" -->
+<!-- 					android:layout_height="20px" android:layout_gravity="top" -->
+<!-- 					android:layout_marginLeft="-15px" /> -->
+			</LinearLayout>
+    </LinearLayout>
+    </ScrollView>
+    </FrameLayout>
+</LinearLayout>
