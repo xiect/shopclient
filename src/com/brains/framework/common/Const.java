@@ -23,4 +23,7 @@ public interface Const {
 	String SORT_PRICE_ASC = "1";  // 升序
 	String SORT_PRICE_DESC = "2"; // 降序
 	int PAGE_COUNT = 20; //  每页显示的件数
+	int MAX_NUM = 100;
+	String BTN_OK = "完成";
+	String BTN_EDIT = "编辑";
 }

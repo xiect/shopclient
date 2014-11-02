@@ -18,22 +18,24 @@ public class CartManager {
 	public List<Product> cartItemList = new ArrayList<Product>();
 	private Context context;
 	private CartDao dao;
+	private int totalNum; // 总件数
 	
 	public CartManager(Context ctx){
 		context = ctx;
 		dao = new CartDao(ctx);
-		List<Product> retList = new ArrayList<Product>();
-		Product item  = null;
-		for(int i = 0; i < 10; i++){
-			item = new Product();
-			item.setName("Iphone 6");
-			item.setItemId(String.valueOf(i));
-			item.setDesc("超级垃圾的手机 会弯的噢");
-			item.setPrice("5600");
-			item.setImgSrc("http://p.zdmimg.com/201410/19/544323c8a5705.jpg_n4.jpg");
-			retList.add(item);
-		}
-		cartItemList =  retList;
+//		List<Product> retList = new ArrayList<Product>();
+//		Product item  = null;
+//		for(int i = 0; i < 10; i++){
+//			item = new Product();
+//			item.setName("Iphone 6");
+//			item.setItemId(String.valueOf(i));
+//			item.setDesc("超级垃圾的手机 会弯的噢");
+//			item.setPrice("5600");
+//			item.setNum(i);
+//			item.setImgSrc("http://p.zdmimg.com/201410/19/544323c8a5705.jpg_n4.jpg");
+//			retList.add(item);
+//		}
+//		cartItemList =  retList;
 	}
 	
 	/**
@@ -63,11 +65,85 @@ public class CartManager {
 	 * @return
 	 */
 	public boolean isCartEmpty(){
-		List<Product> list = dao.findAll();
-		if(list != null && list.size() > 0 ){
-			return true;
+//		List<Product> list = dao.findAll();
+		if(cartItemList != null && cartItemList.size() > 0 ){
+			return false;
 		}
-		return false;
+		return true;
 	}
 	
+	/**
+	 * 购物车数据刷新
+	 */
+	public void reloadData(){
+		cartItemList.clear();
+		List<Product> list = dao.findAll();
+		cartItemList.addAll(list);
+		list.clear();
+		list = null;
+	}
+	
+	/**
+	 * 总计金额
+	 * @return
+	 */
+	public String calTotalAmount(){
+		String retVal = "";
+		float count = 0f;
+		int total = 0;
+	
+		for(Product item:cartItemList){
+			total += item.getNum();
+			count += item.getNum() * Util.conver2Price(item.getPrice());
+		}
+		totalNum = total;
+		retVal = String.valueOf(count);
+		return retVal;
+	}
+	
+	/**
+	 * 获取选中的商品数量
+	 * @return
+	 */
+	public int getSelectedProductNum(){
+		int selectedNum = 0;
+		for(Product item :cartItemList){
+			if(item.isSelected()){
+				selectedNum++;
+			}
+		}
+		return selectedNum;
+	}
+	
+	/**
+	 * 获取购物车商品总件数
+	 * 依赖 calTotalAmount
+	 * @return
+	 */
+	public int getTotalNum(){
+		return totalNum;
+	}
+	
+	/**
+	 * 设置购物车中商品选择状态
+	 * @param checked
+	 */
+	public void setCheckedAll(boolean checked){
+		Product item = null;
+		for(int i = 0; i < cartItemList.size(); i++){
+			item = cartItemList.get(i);
+			item.setSelected(checked);
+		}
+	}
+	
+	/**
+	 * 删除已选择的商品
+	 */
+	public void deleteSelectedProduct(){
+		for(Product item:cartItemList){
+			if(item.isSelected()){
+				dao.delete(item);
+			}
+		}
+	}
 }

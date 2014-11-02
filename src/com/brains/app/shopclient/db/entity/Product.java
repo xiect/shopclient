@@ -54,6 +54,16 @@ public class Product extends LogicalEntity<Product> implements Parcelable{
 	private String imgSrc;
 	private int num;
 
+	private boolean isSelected = true;
+	
+
+	public boolean isSelected() {
+		return isSelected;
+	}
+
+	public void setSelected(boolean isSelected) {
+		this.isSelected = isSelected;
+	}
 
 	public int getNum() {
 		return num;
@@ -187,6 +197,7 @@ public class Product extends LogicalEntity<Product> implements Parcelable{
 					item.setName(jsonObj.getString("name"));
 					item.setDesc(jsonObj.getString("desc"));
 					item.setImgSrc(jsonObj.getString("imgSrc"));
+					item.isSelected = true;
 					list.add(item);
 				}
 			}

@@ -171,11 +171,13 @@ public class MyFragment extends BaseFragment {
 
 	@Override
 	protected void lazyLoad() {
-		// TODO Auto-generated method stub
-		
+		Util.sysLog(TAG, "lazyLoad");
+		if(isVisible && isCreatedView){
+			Util.sysLog(TAG, "判定是否登录显示登录区域");
+			// 判定是否登录显示登录区域
+			showTopHeaderView();			
+		}
 	}
-	
-	
 }
 
 class PersonMenuAdapter extends BaseAdapter {

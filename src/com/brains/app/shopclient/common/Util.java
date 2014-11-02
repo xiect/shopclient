@@ -47,4 +47,41 @@ public class Util extends BaseUtil {
 	public static void sysLog(String tag,String message){
 		Log.e(tag,message);
 	}
+	
+	/**
+	 * 将数据格式化RMB表示
+	 * @param rmb
+	 * @return
+	 */
+	public static String formatRmb(String rmb){
+		
+		return "￥"+rmb; 
+	}
+	
+	/**
+	 * 将数据格式化商品数量表示
+	 * @param num
+	 * @return
+	 */
+	public static String formatCount(int num){
+		
+		return "数量："+num; 
+	}
+	
+	/**
+	 * 取得价格
+	 * @param price
+	 * @return
+	 */
+	public static float conver2Price(String price){
+		float p = 0f;
+		if(!isEmpty(price)){
+			try{
+				p = Float.valueOf(price);
+			}catch(Exception e){
+				p = 0f;
+			}
+		}
+		return p;
+	}
 }

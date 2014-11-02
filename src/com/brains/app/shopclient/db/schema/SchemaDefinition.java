@@ -64,7 +64,16 @@ public class SchemaDefinition extends AbstractSchemaDefinition
 
     @Override
     public void init_db_data(SQLiteDatabase db, Context context){
-        db.execSQL("insert into friends (name, age, favorite_flag) values ('山田太郎', 30, 1);");
+        db.execSQL("insert into t_card (itemId, name, desc,imgSrc,price,num) values ('1001','商品名称A', '商品描述A','http://p.zdmimg.com/201410/19/544323c8a5705.jpg_n4.jpg','3100.89', 1);");
+        db.execSQL("insert into t_card (itemId, name, desc,imgSrc,price,num) values ('1002','商品名称B', '商品描述B','http://p.zdmimg.com/201410/19/544323c8a5705.jpg_n4.jpg','3200.89', 2);");
+        db.execSQL("insert into t_card (itemId, name, desc,imgSrc,price,num) values ('1003','商品名称C', '商品描述C','http://p.zdmimg.com/201410/19/544323c8a5705.jpg_n4.jpg','3300.89', 3);");
+        db.execSQL("insert into t_card (itemId, name, desc,imgSrc,price,num) values ('1004','商品名称D', '商品描述D','http://p.zdmimg.com/201410/19/544323c8a5705.jpg_n4.jpg','3400.89', 4);");
+        db.execSQL("insert into t_card (itemId, name, desc,imgSrc,price,num) values ('1005','商品名称E', '商品描述E','http://p.zdmimg.com/201410/19/544323c8a5705.jpg_n4.jpg','3500.89', 5);");
+        db.execSQL("insert into t_card (itemId, name, desc,imgSrc,price,num) values ('1006','商品名称F', '商品描述F','http://p.zdmimg.com/201410/19/544323c8a5705.jpg_n4.jpg','3600.89', 6);");
+        db.execSQL("insert into t_card (itemId, name, desc,imgSrc,price,num) values ('1007','商品名称G', '商品描述G','http://p.zdmimg.com/201410/19/544323c8a5705.jpg_n4.jpg','3700.89', 7);");
+        db.execSQL("insert into t_card (itemId, name, desc,imgSrc,price,num) values ('1008','商品名称H', '商品描述F','http://p.zdmimg.com/201410/19/544323c8a5705.jpg_n4.jpg','3800.89', 8);");
+        db.execSQL("insert into t_card (itemId, name, desc,imgSrc,price,num) values ('1009','商品名称I', '商品描述I','http://p.zdmimg.com/201410/19/544323c8a5705.jpg_n4.jpg','3900.89', 9);");
+        db.execSQL("insert into t_card (itemId, name, desc,imgSrc,price,num) values ('1010','商品名称J', '商品描述J','http://p.zdmimg.com/201410/19/544323c8a5705.jpg_n4.jpg','4000.89', 10);");
     }
 
 }
