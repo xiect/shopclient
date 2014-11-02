@@ -120,6 +120,14 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <!-- 商品详细画面 -->
+        <activity android:name=".activities.NewOderActivity" android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="brains.intent.action.ACTION_NEWORDER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
     </application>
 
 </manifest>
