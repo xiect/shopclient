@@ -20,7 +20,7 @@
     <string name="sort_button_default">商品默认排序</string>
     <string name="sort_button_price_desc">价格从高到低</string>
     <string name="sort_button_price_asc">价格从低到高</string>
-    
+    <string name="msg_product_not_selected">您还没选择商品呢</string>
     <string name="msg_please_input_keyword">请输入商品名称</string>
     <string name="msg_logoff_not_login">当前还没登录呢</string>
     <string name="msg_logoff_success">注销成功</string>
