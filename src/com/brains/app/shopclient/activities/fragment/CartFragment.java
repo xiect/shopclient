@@ -5,6 +5,7 @@ import java.util.List;
 import com.brains.app.shopclient.R;
 import com.brains.app.shopclient.ShoppingApp;
 import com.brains.app.shopclient.activities.LoginActivity;
+import com.brains.app.shopclient.activities.NewOderActivity;
 import com.brains.app.shopclient.common.Util;
 import com.brains.app.shopclient.db.entity.Product;
 import com.brains.framework.common.Const;
@@ -136,6 +137,7 @@ public class CartFragment extends BaseFragment {
 				int selectedNum = app.cart.getSelectedProductNum();
 				if(selectedNum > 0){
 					// TODO 订单画面迁移
+					ctx.startActivity(NewOderActivity.makeIntent());
 				}else{
 					app.showErrorWithToast(R.string.msg_product_not_selected);
 				}
