@@ -128,6 +128,14 @@
             </intent-filter>
         </activity>
         
+        <!-- 收件人信息编辑画面 -->
+        <activity android:name=".activities.ReceiverEditActivity" android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="brains.intent.action.ACTION_RECEIVER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
     </application>
 
 </manifest>
