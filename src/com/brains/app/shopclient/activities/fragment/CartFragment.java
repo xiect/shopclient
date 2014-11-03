@@ -135,9 +135,13 @@ public class CartFragment extends BaseFragment {
 			public void onClick(View v) {
 				Util.sysLog(TAG, "btnOrder btn click");
 				int selectedNum = app.cart.getSelectedProductNum();
-				if(selectedNum > 0){
-					// TODO 订单画面迁移
+				if(selectedNum == 1){
+					// 一件商品的场合 订单画面迁移
 					ctx.startActivity(NewOderActivity.makeIntent());
+				}else if(selectedNum > 1){
+					String msg = getResources().getString(R.string.msg_product_selected_one_please);
+					msg = String.format(msg, selectedNum);
+					app.showErrorWithToast(msg);
 				}else{
 					app.showErrorWithToast(R.string.msg_product_not_selected);
 				}

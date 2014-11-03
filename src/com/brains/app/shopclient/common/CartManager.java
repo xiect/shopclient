@@ -101,6 +101,7 @@ public class CartManager {
 		return retVal;
 	}
 	
+	
 	/**
 	 * 获取选中的商品数量
 	 * @return
@@ -113,6 +114,20 @@ public class CartManager {
 			}
 		}
 		return selectedNum;
+	}
+	
+	/**
+	 * 获取选中的商品
+	 * @return
+	 */
+	public List<Product> getSelectedProducts(){
+		List<Product> tempList = new ArrayList<Product>();
+		for(Product item :cartItemList){
+			if(item.isSelected()){
+				tempList.add(item);
+			}
+		}
+		return tempList;
 	}
 	
 	/**
