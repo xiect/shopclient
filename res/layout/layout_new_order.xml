@@ -32,6 +32,20 @@
                 </RelativeLayout>
             
             </RelativeLayout>
+            
+           	<RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:visibility="gone"
+                android:id="@+id/rl_loading_area">
+                <ProgressBar
+                    android:id="@+id/top_refresh_progressBar"
+                    style="@android:style/Widget.ProgressBar.Small.Inverse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                   />
+            </RelativeLayout>
     </FrameLayout>
     
     <RelativeLayout android:id="@+id/submit_order_layout" android:paddingLeft="@dimen/fill_order_marginleft" android:paddingTop="@dimen/fill_order_padding_submit" android:paddingRight="@dimen/fill_order_marginleft" android:paddingBottom="@dimen/fill_order_padding_submit" android:visibility="visible" android:layout_width="fill_parent" android:layout_height="wrap_content">
