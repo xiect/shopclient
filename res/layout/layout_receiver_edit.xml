@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/body_background"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/common_header"
+        layout="@layout/app_head_common" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dip"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dip" >
+
+                <TextView
+                    style="@style/normalText"
+                    android:layout_width="80dip"
+                    android:layout_height="wrap_content"
+                    android:text="@string/reciver_name" />
+
+                <EditText
+                    android:id="@+id/reciver_name"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dip" >
+
+                <TextView
+                    style="@style/normalText"
+                    android:layout_width="80dip"
+                    android:layout_height="wrap_content"
+                    android:text="@string/reciver_tel" />
+
+                <EditText
+                    android:id="@+id/reciver_tel"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:phoneNumber="true"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_margin="5dip" >
+
+                <TextView
+                    style="@style/normalText"
+                    android:layout_width="80dip"
+                    android:layout_height="wrap_content"
+                    android:text="@string/reciver_tel" />
+
+                <EditText
+                    android:id="@+id/reciver_zip_code"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:numeric="integer"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dip" >
+
+                <TextView
+                    style="@style/normalText"
+                    android:layout_width="80dip"
+                    android:layout_height="wrap_content"
+                    android:text="@string/reciver_add" />
+
+                <EditText
+                    android:id="@+id/reciver_add"
+                    android:layout_width="fill_parent"
+                    android:layout_height="150dip"
+                    android:gravity="top|left"
+              		android:maxLength="50"
+                    android:singleLine="false" />
+            </LinearLayout>
+            <Button android:textSize="20.0sp" android:textColor="@color/white" android:gravity="center" android:id="@+id/reveiver_comfirm_button" android:background="@drawable/free_register_bg" android:layout_width="fill_parent" android:layout_height="42.0dip" android:layout_marginLeft="13.299988dip" android:layout_marginTop="13.299988dip" android:layout_marginRight="13.299988dip" android:text="@string/btn_confirm" android:layout_below="@id/remember_user" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
