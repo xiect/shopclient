@@ -2,6 +2,7 @@ package com.brains.app.shopclient.db.dao;
 
 import android.content.Context;
 
+import com.brains.app.shopclient.common.Util;
 import com.brains.framework.db.dao.BasePrefDAO;
 
 
@@ -17,6 +18,12 @@ public class PrefDAO extends BasePrefDAO {
 	private final String KEY_NAME 		= "key_name";
 	private final String KEY_PASSWORD 	= "key_password";
 	private final String KEY_NIKE_NAME 	= "key_nikename";
+	
+	
+	private final String KEY_RECEIVER_NAME = "key_receiver_name";
+	private final String KEY_RECEIVER_TEL = "key_receiver_tel";
+	private final String KEY_RECEIVER_ZIPCODE = "key_receiver_zip_code";
+	private final String KEY_RECEIVER_ADD = "key_receiver_add";
 	
 	public PrefDAO(Context context){
 		super(context);
@@ -73,6 +80,37 @@ public class PrefDAO extends BasePrefDAO {
 	public void cleanUserInfo(){
 		mEditor.remove(KEY_NAME);
 		mEditor.remove(KEY_PASSWORD);
+		mEditor.commit();
+	}
+	
+	public String getReceiverName(){
+		String name = mSettings.getString(KEY_RECEIVER_NAME, "");
+		Util.sysLog("Pref", "receiver name:"+ name);
+		return name;
+	}
+	
+	public String getReceiverTel(){
+		return mSettings.getString(KEY_RECEIVER_TEL, "");
+	}
+	
+	public String getReceiverAdd(){
+		return mSettings.getString(KEY_RECEIVER_ADD, "");
+	}
+	
+	public String getReceiverZipCode(){
+		return mSettings.getString(KEY_RECEIVER_ZIPCODE, "");
+	}
+	
+	/**
+	 * ユーザー情報を保存する
+	 * @param name ユーザー名
+	 * @param passworユーザーパスワード
+	 */
+	public void saveReceiverInfo(String name,String tel,String zipCode,String add){
+		mEditor.putString(KEY_RECEIVER_NAME, name);
+		mEditor.putString(KEY_RECEIVER_TEL, tel);
+		mEditor.putString(KEY_RECEIVER_ZIPCODE, zipCode);
+		mEditor.putString(KEY_RECEIVER_ADD, add);
 		mEditor.commit();
 	}
 }
