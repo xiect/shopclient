@@ -1,6 +1,9 @@
 <resources>
-   
-    <string name="hello_world">Hello world!</string>
+   <string name="page_title_order_search">订单中心</string>
+   <string name="content_order_status">订单状态：</string>
+    <string name="content_order_money">订单金额</string>
+   <string name="btn_discuss">评价</string>
+	<string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_main">宏信龙门店考核系统</string>
     <string name="title_activity_item">查看考评明细</string>
