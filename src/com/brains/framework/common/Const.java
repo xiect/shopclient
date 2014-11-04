@@ -26,4 +26,7 @@ public interface Const {
 	int MAX_NUM = 100;
 	String BTN_OK = "完成";
 	String BTN_EDIT = "编辑";
+	
+	String ORDER_ONE_MONTH = "0";    		// 近一个月
+	String ORDER_ONE_MONTH_BEFORE = "1";    // 一个月之前
 }

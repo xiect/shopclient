@@ -57,6 +57,12 @@ public class TabMainActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.layout_tabs);
+
+		// 应数据库初始化是在install activity中进行的。
+		// 现在主画面初始话App 中的 Cart对象
+		Util.sysLog(TAG, "== 初始化 购物车 ==");
+		ShoppingApp app = (ShoppingApp) getApplicationContext();
+		app.cart = new CartManager(this);
 		
 //		mInflater = LayoutInflater.from(this);
 		mViewPager = (ViewPager) findViewById(R.id.id_viewpager);
@@ -105,12 +111,6 @@ public class TabMainActivity extends FragmentActivity {
 				
 			}
 		});
-
-		// 应数据库初始化是在install activity中进行的。
-		// 现在主画面初始话App 中的 Cart对象
-		Util.sysLog(TAG, "== 初始化 购物车 ==");
-		ShoppingApp app = (ShoppingApp) getApplicationContext();
-		app.cart = new CartManager(app);
 	}
 	
 	private void bindingEventListenner(){

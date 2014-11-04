@@ -65,8 +65,9 @@ public class HomeFragment extends BaseFragment {
 	OnClickListener bannerClickListen = new OnClickListener(){
 		@Override
 		public void onClick(View v) {
-			startActivity(ProductDetailActivity.makeIntent("111"));
-			getActivity().overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+			// TODO 
+//			startActivity(ProductDetailActivity.makeIntent());
+//			getActivity().overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
 		}
 	};
 	

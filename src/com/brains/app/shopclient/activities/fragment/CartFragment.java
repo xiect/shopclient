@@ -308,8 +308,8 @@ public class CartFragment extends BaseFragment {
 
 	@Override
 	protected void lazyLoad() {
-		Util.sysLog(TAG, "===> cart === lazyLoad===");
-		if(!isPrepared && isVisible && isCreatedView){
+		Util.sysLog(TAG, "===> cart === lazyLoad===isPrepared:" + isPrepared + "\t isVisible:" + isVisible + "\tisCreatedView:" + isCreatedView);
+		if(isVisible && isCreatedView){
 			Util.sysLog(TAG," call doGetBrandList===lazyLoad");
 			showLoginView();
 			// 从数据库加载购物车数据
@@ -342,6 +342,7 @@ public class CartFragment extends BaseFragment {
 		@Override
 		protected void onPostExecute(TaskResult result) {
 			super.onPostExecute(result);
+			Util.sysLog(TAG," call onPostExecute=");
 			if(TaskResult.OK == result){
 				// 显示购物车画面
 				showCartListView();
@@ -361,10 +362,12 @@ public class CartFragment extends BaseFragment {
 		@Override
 		protected TaskResult _doInBackground(TaskParams... params) {
 			try{
+				Util.sysLog(TAG," call _doInBackground=");
 				app.cart.reloadData();
 			}catch(Exception e){
+				e.printStackTrace();
 				message = e.getMessage();
-				Util.sysLog(TAG, message);
+				Util.sysLog(TAG, "error:=>"+message);
 				return TaskResult.FAILED;	
 			}
 			return TaskResult.OK;

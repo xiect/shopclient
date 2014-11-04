@@ -195,6 +195,9 @@ public class Product extends LogicalEntity<Product> implements Parcelable{
 					item = new Product();
 					item.setItemId(jsonObj.getString("id"));
 					item.setName(jsonObj.getString("name"));
+					if(jsonObj.has("price")){
+						item.setPrice(jsonObj.getString("price"));
+					}
 					item.setDesc(jsonObj.getString("desc"));
 					item.setImgSrc(jsonObj.getString("imgSrc"));
 					item.isSelected = true;

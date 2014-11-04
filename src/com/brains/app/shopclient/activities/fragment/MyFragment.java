@@ -3,6 +3,7 @@ package com.brains.app.shopclient.activities.fragment;
 import com.brains.app.shopclient.R;
 import com.brains.app.shopclient.ShoppingApp;
 import com.brains.app.shopclient.activities.LoginActivity;
+import com.brains.app.shopclient.activities.OrderSearchActivity;
 import com.brains.app.shopclient.common.Util;
 
 import android.support.v4.app.Fragment;
@@ -132,11 +133,11 @@ public class MyFragment extends BaseFragment {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3) {
+				Util.sysLog(TAG, "position:" + position);
 				switch(position){
 				case MENU_ORDER:
-					// 设置
-					// TODO 
-
+					// 订单查询
+					getActivity().startActivity(OrderSearchActivity.makeIntent());
 					break;
 				case MENU_ACCOUNT:
 					// 账号管理

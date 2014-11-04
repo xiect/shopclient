@@ -310,7 +310,7 @@ public class SearchActivity extends BaseNormalActivity implements OnClickListene
 					String id = product.getItemId();
 					if(!Util.isEmpty(id)){
 						// 商品详细画面迁移
-						startActivity(ProductDetailActivity.makeIntent(id));
+						startActivity(ProductDetailActivity.makeIntent(product));
 						overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
 					}
 				}else{

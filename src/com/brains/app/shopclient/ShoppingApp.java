@@ -154,6 +154,7 @@ public class ShoppingApp extends Application {
 		ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo activeNetInfo = connectivityManager.getActiveNetworkInfo();
 		if(activeNetInfo != null && activeNetInfo.isAvailable()){
+			Util.sysLog(TAG, "---> net work is available");
 			return true;
 		}
 		return false;

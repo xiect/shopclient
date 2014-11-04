@@ -107,6 +107,7 @@ public class CategoryFragment extends BaseFragment {
 	 */
 	private class GetCategoryListTask extends GenericTask {
 		String message = null;
+		List<Category> tempList;
 		
 		@Override
 		protected void onPreExecute() {
@@ -119,9 +120,7 @@ public class CategoryFragment extends BaseFragment {
 		protected TaskResult _doInBackground(TaskParams... params) {
 			try {
 				// 获得网络数据
-				List<Category> tempList = app.mApi.getCategoryList();
-				mCategoryList.addAll(tempList);
-				tempList = null;
+				tempList = app.mApi.getCategoryList();
 				return TaskResult.OK;
 			} catch (AppException e) {
 				message = e.getMessage();
@@ -137,8 +136,10 @@ public class CategoryFragment extends BaseFragment {
 			// 隐藏loading
 			mProgressBar.setVisibility(View.GONE);
 			// 加载的场合
-			if (TaskResult.OK == result && mCategoryList != null
-					&& mCategoryList.size() > 0) {
+			if (TaskResult.OK == result && tempList != null
+					&& tempList.size() > 0) {
+				mCategoryList.addAll(tempList);
+				tempList = null;
 				// 显示画面
 				showViewWithData();
 			} else {

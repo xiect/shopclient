@@ -134,12 +134,24 @@ public class Api implements java.io.Serializable {
 	}
 	
 	/**
+	 * 订单查询
+	 * @param flag
+	 * @return Response
+	 */
+	public List<Product> getOrderSerachList(String flag) throws AppException {
+		String url = remoteDomain + "/vsisfront/appLogin/selectProduct.do";
+		return Product.constructListFromJson(http.post(url,
+				createParams(new BasicNameValuePair("time", flag)))
+				.asJSONObject());
+	}
+	
+	/**
 	 * 获取品牌列表。
 	 * @return List<KpResult>
 	 */
 	public boolean doOder(String name,String tel,String add,String itemId,int num)
 			throws AppException {
-		String url = remoteDomain + "/vsisfront/appLogin/selectBusiness.do";
+		String url = remoteDomain + "/vsisfront/appLogin/addOrder.do";
 		http.post(url,createParams(new BasicNameValuePair("name", name),
 				new BasicNameValuePair("tel", tel),
 				new BasicNameValuePair("add", add),
