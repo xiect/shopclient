@@ -4,10 +4,9 @@ package com.brains.app.shopclient.common;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONObject;
-
 import com.brains.app.shopclient.bean.Brand;
 import com.brains.app.shopclient.bean.Category;
+import com.brains.app.shopclient.bean.Order;
 import com.brains.app.shopclient.bean.User;
 import com.brains.app.shopclient.db.entity.Product;
 import com.brains.framework.common.Const;
@@ -138,9 +137,9 @@ public class Api implements java.io.Serializable {
 	 * @param flag
 	 * @return Response
 	 */
-	public List<Product> getOrderSerachList(String flag) throws AppException {
-		String url = remoteDomain + "/vsisfront/appLogin/selectProduct.do";
-		return Product.constructListFromJson(http.post(url,
+	public List<Order> getOrderSerachList(String flag) throws AppException {
+		String url = remoteDomain + "/vsisfront/appLogin/selectOrder.do";
+		return Order.constructListFromJson(http.post(url,
 				createParams(new BasicNameValuePair("time", flag)))
 				.asJSONObject());
 	}

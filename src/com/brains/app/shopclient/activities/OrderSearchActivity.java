@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.brains.app.shopclient.R;
+import com.brains.app.shopclient.bean.Order;
 import com.brains.app.shopclient.common.Util;
 import com.brains.app.shopclient.db.entity.Product;
 import com.brains.framework.activities.base.BaseNormalActivity;
@@ -57,7 +58,7 @@ public class OrderSearchActivity extends BaseNormalActivity implements OnClickLi
 	private RelativeLayout mTvOneMonthBefore;
 	
 	private ListView mListView;
-	private List<Product> mDataList = new ArrayList<Product>();
+	private List<Order> mDataList = new ArrayList<Order>();
 	private int markCurrentPos;
 	private ImageButton markSelected;
 	private int[] startPointArr = new int[2];
@@ -174,8 +175,8 @@ public class OrderSearchActivity extends BaseNormalActivity implements OnClickLi
 					long arg3) {
 				// TODO CLICK
 				if(arg2 < mDataList.size()){
-					Product product = mDataList.get(arg2);
-					String id = product.getItemId();
+					Order order = mDataList.get(arg2);
+					String id = order.getId();
 					if(!Util.isEmpty(id)){
 						// 订单详细画面迁移
 						startActivity(OrderDetailActivity.makeIntent());
@@ -256,7 +257,7 @@ public class OrderSearchActivity extends BaseNormalActivity implements OnClickLi
 	 */
 	private class SearchTask extends GenericTask {
 		private String message;
-		private List<Product> tempList;
+		private List<Order> tempList;
 		
 		@Override
 		protected void onPreExecute() {
@@ -352,14 +353,14 @@ class OrderListAdapter extends BaseAdapter {
 
 	private LayoutInflater inflater;
 	private Context context;
-	private List<Product> dataList;
+	private List<Order> dataList;
 
 	/**
 	 * 订单列表适配器
 	 * @param context
 	 * @param datas
 	 */
-	public OrderListAdapter(Context context, List<Product> datas) {
+	public OrderListAdapter(Context context, List<Order> datas) {
 		super();
 		this.context = context;
 		this.dataList = datas;
@@ -397,11 +398,12 @@ class OrderListAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		Product product = dataList.get(position);
-		holder.title.setText(product.getName());
-		holder.desc.setText(product.getDesc());
-		holder.price.setText(product.getPrice());
-		String src = product.getImgSrc();
+		Order order = dataList.get(position);
+		holder.title.setText(order.getName());
+//		holder.desc.setText(order.getDesc());
+//		holder.price.setText(order.getPrice());
+		
+		String src = order.getImgSrc();
 		if(!StringUtil.isEmpty(src)){
 			ImageLoader.getInstance().displayImage(src, holder.imageView);
 		}

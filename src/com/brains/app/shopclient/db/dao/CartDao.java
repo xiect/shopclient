@@ -32,7 +32,7 @@ public class CartDao extends BaseDAO<Product>{
 	 */
 	public void save(Product item){
 		// 先将card中旧数据删除
-		item.delete(helper);
+		delete(item);
 		//  删除后将新数据保存到数据库中
 		item.save(helper);
 	}
