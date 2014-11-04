@@ -136,6 +136,20 @@
             </intent-filter>
         </activity>
         
+        <!-- 订单查询编辑画面 -->
+        <activity android:name=".activities.OrderSearchActivity" android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="brains.intent.action.ACTION_ORDER_SEARCH" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity> 
+        <!-- 订单详细画面 -->
+        <activity android:name=".activities.OrderDetailActivity" android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="brains.intent.action.ACTION_ORDER_DETAIL" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity> 
     </application>
 
 </manifest>
