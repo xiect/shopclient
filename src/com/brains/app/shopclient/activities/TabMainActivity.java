@@ -12,6 +12,7 @@ import com.brains.app.shopclient.activities.fragment.MyFragment;
 import com.brains.app.shopclient.adapter.MainFragmentPagerAdapter;
 import com.brains.app.shopclient.common.CartManager;
 import com.brains.app.shopclient.common.Util;
+import com.brains.framework.widget.BadgeView;
 
 
 import android.content.Intent;
@@ -38,7 +39,7 @@ public class TabMainActivity extends FragmentActivity {
 	private ViewPager mViewPager;
 	private PagerAdapter mAdapter;
 	private ArrayList<Fragment> fragmentList;
-	
+	private BadgeView cartBadge;
 	private RadioGroup mRadioGroup;
 	private RadioButton mTabHome, mTabCategory, mMark, mTabCart,mTabMy;
 	private int currentIndex = -1; //  默认 没有
@@ -74,6 +75,13 @@ public class TabMainActivity extends FragmentActivity {
 		mMark = (RadioButton) mRadioGroup.findViewWithTag("radio_button_mark");
 		mTabCart = (RadioButton) mRadioGroup.findViewWithTag("radio_button_cart");
 		mTabMy = (RadioButton) mRadioGroup.findViewWithTag("radio_button_my");
+
+	    // 购物车数量显示
+		cartBadge = new BadgeView(this, mTabCart);
+		app.setTabCart(cartBadge);
+		cartBadge.setText("11");
+		cartBadge.show();
+		
 		bindingEventListenner();
 		changeTabImage(0); // 默认首页
 		
@@ -97,6 +105,7 @@ public class TabMainActivity extends FragmentActivity {
 		mViewPager.setOnPageChangeListener(new OnPageChangeListener() {
 			@Override
 			public void onPageSelected(int position) {
+				Util.sysLog(TAG, "currentIndex:" + currentIndex + "\t position:" + position);
 				changeTabImage(position);
 				currentIndex = position;
 			}
@@ -138,6 +147,15 @@ public class TabMainActivity extends FragmentActivity {
 		mTabCart.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				Util.sysLog(TAG, "mTabCart click");
+				mViewPager.setCurrentItem(3, true);
+			}
+		});
+		
+		cartBadge.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Util.sysLog(TAG, "cartBadge click");
 				mViewPager.setCurrentItem(3, true);
 			}
 		});
@@ -178,34 +196,44 @@ public class TabMainActivity extends FragmentActivity {
 				final Drawable drawable5 = getResources().getDrawable(R.drawable.main_bottom_tab_personal_normal);
 				mTabMy.setCompoundDrawablesWithIntrinsicBounds(null,drawable5,null,null);
 				break;
+			default:
+				final Drawable drawable6 = getResources().getDrawable(R.drawable.main_bottom_tab_home_normal);
+				mTabHome.setCompoundDrawablesWithIntrinsicBounds(null,drawable6,null,null);
 			}
 			switch(index){
 			case 0:
 				final Drawable drawable1 = getResources().getDrawable(R.drawable.main_bottom_tab_home_focus);
-				mTabHome.setChecked(true);
+				mTabCart.setChecked(false);
+				mRadioGroup.check(mTabHome.getId());
 				mTabHome.setCompoundDrawablesWithIntrinsicBounds(null,drawable1,null,null);
 				break;
 			case 1:
 				final Drawable drawable2 = getResources().getDrawable(R.drawable.main_bottom_tab_category_focus);
-				mTabCategory.setChecked(true);
+				mTabCart.setChecked(false);
+				mRadioGroup.check(mTabCategory.getId());
 				mTabCategory.setCompoundDrawablesWithIntrinsicBounds(null,drawable2,null,null);
 				break;
 			case 2:
 				final Drawable drawable3 = getResources().getDrawable(R.drawable.main_bottom_tab_faxian_focus);
-				mMark.setChecked(true);
+				mTabCart.setChecked(false);
+				mRadioGroup.check(mMark.getId());
 				mMark.setCompoundDrawablesWithIntrinsicBounds(null,drawable3,null,null);
 				break;
 			case 3:
 				final Drawable drawable4 = getResources().getDrawable(R.drawable.main_bottom_tab_cart_focus);
+				mRadioGroup.clearCheck();
 				mTabCart.setChecked(true);
 				mTabCart.setCompoundDrawablesWithIntrinsicBounds(null,drawable4,null,null);
 				break;
 			case 4:
 				final Drawable drawable5 = getResources().getDrawable(R.drawable.main_bottom_tab_personal_focus);
-				mTabMy.setChecked(true);
+				mTabCart.setChecked(false);
+				mRadioGroup.check(mTabMy.getId());
 				mTabMy.setCompoundDrawablesWithIntrinsicBounds(null,drawable5,null,null);
 				break;
 			}
+			
+			Util.sysLog(TAG, "mTabCart status:" + mTabCart.isChecked());
 		}
 	}
 

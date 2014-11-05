@@ -7,6 +7,7 @@ import com.brains.app.shopclient.common.CartManager;
 import com.brains.app.shopclient.common.CrashHandler;
 import com.brains.app.shopclient.common.Util;
 import com.brains.app.shopclient.db.dao.PrefDAO;
+import com.brains.framework.widget.BadgeView;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.cache.memory.impl.UsingFreqLimitedMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -21,6 +22,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
+import android.widget.RadioButton;
 import android.widget.Toast;
 import android.graphics.Bitmap;
 
@@ -30,6 +32,14 @@ public class ShoppingApp extends Application {
 	private DisplayImageOptions categoryLoadOption;
 	public PrefDAO mPrefDAO;
 	public CartManager cart;
+	private BadgeView cartBadge;
+	
+	public void setTabCart(BadgeView tab){
+
+		if(tab != null){
+			cartBadge = tab;
+		}
+	}
 	
 	/**
 	 * 实例化
@@ -164,5 +174,16 @@ public class ShoppingApp extends Application {
 		// 将用户名 密码至空
 		mPrefDAO.saveUserNameAndPassword("", "");
 		mPrefDAO.saveNikeName("");
+	}
+	
+	/**
+	 * 
+	 */
+	public void setCartNum(){
+//		if(tabCart != null){
+//			BadgeView badge = new BadgeView(this, tabCart);
+//			badge.setText("1");
+//			badge.show();
+//		}
 	}
 }
