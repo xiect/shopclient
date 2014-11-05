@@ -258,7 +258,10 @@ public class NewOderActivity extends BaseNormalActivity{
 					itemId = item.getItemId();
 					num = item.getNum();
 				}
+				// 下单
 				app.mApi.doOder(name,tel,add,itemId,num);
+				// 下单后将该商品从购物车中移除
+				app.cart.deleteProduct(item);
 				return TaskResult.OK;
 			} catch (AppException e) {
 				message = e.getMessage();

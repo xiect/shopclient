@@ -43,6 +43,7 @@ public class TabMainActivity extends FragmentActivity {
 	private RadioGroup mRadioGroup;
 	private RadioButton mTabHome, mTabCategory, mMark, mTabCart,mTabMy;
 	private int currentIndex = -1; //  默认 没有
+	private ShoppingApp app;
 	
 	private final static String ACTION_TABMAIN = "brains.intent.action.ACTION_TABMAIN";
 	/**
@@ -62,8 +63,8 @@ public class TabMainActivity extends FragmentActivity {
 		// 应数据库初始化是在install activity中进行的。
 		// 现在主画面初始话App 中的 Cart对象
 		Util.sysLog(TAG, "== 初始化 购物车 ==");
-		ShoppingApp app = (ShoppingApp) getApplicationContext();
-		app.cart = new CartManager(this);
+		app = (ShoppingApp) getApplicationContext();
+		app.cart = new CartManager(app);
 		
 //		mInflater = LayoutInflater.from(this);
 		mViewPager = (ViewPager) findViewById(R.id.id_viewpager);
@@ -122,6 +123,14 @@ public class TabMainActivity extends FragmentActivity {
 		});
 	}
 	
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		// update cart badge
+		app.updateCartNum();
+	}
+
 	private void bindingEventListenner(){
 		mTabHome.setOnClickListener(new OnClickListener() {
 			@Override

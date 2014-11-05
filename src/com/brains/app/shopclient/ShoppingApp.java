@@ -177,13 +177,19 @@ public class ShoppingApp extends Application {
 	}
 	
 	/**
-	 * 
+	 * update cart badge
 	 */
-	public void setCartNum(){
-//		if(tabCart != null){
-//			BadgeView badge = new BadgeView(this, tabCart);
-//			badge.setText("1");
-//			badge.show();
-//		}
+	public void updateCartNum(){
+		Util.sysLog(TAG, "updateCartNum call");
+		if(cartBadge != null){
+			int num = cart.getAllItemCountRealTime();
+			Util.sysLog(TAG, "updateCartNum:" + num);
+			if(num > 0){
+				cartBadge.setText(String.valueOf(num));
+				cartBadge.show();
+			}else{
+				cartBadge.hide();	
+			}
+		}
 	}
 }

@@ -64,6 +64,7 @@ public class ProductDetailActivity extends BaseNormalActivity{
 		if(mItem == null){
 			Util.sysLog(TAG,"item is null");
 		}else{
+			mItem.setNum(1); // 默认买一件
 			Util.sysLog(TAG, "item name===>"+mItem.getName());
 		}
 		

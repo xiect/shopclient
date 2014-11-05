@@ -20,6 +20,37 @@ public class CartManager {
 	private CartDao dao;
 	private int totalNum; // 总件数
 	
+	/**
+	 * remove the item which num is zoro
+	 * @return
+	 */
+	public void deleteZoroProduct(){
+		List<Product> waitDelList = new ArrayList<Product>(5);
+		for(Product item:cartItemList){
+			if(item.getNum() <= 0){
+				// 从cart 中删除
+				deleteProduct(item);
+				waitDelList.add(item);
+			}
+		}
+		
+		if(waitDelList.size() > 0){
+			cartItemList.removeAll(waitDelList);
+		}
+	}
+	
+	/**
+	 * get count of all item in cart
+	 * @return
+	 */
+	public int getAllItemCountRealTime(){
+		List<Product> list = dao.findAll();
+		if(list != null){
+			return list.size();
+		}
+		return 0;
+	}
+	
 	public CartManager(Context ctx){
 		context = ctx;
 		dao = new CartDao(ctx);
@@ -43,8 +74,9 @@ public class CartManager {
 	 * @param item
 	 */
 	public void addProduct(Product item){
+		Util.sysLog("cart", "add 2 cart:" + item.getItemId());
 		Product p = dao.findById(item.getItemId());
-		if(p != null && Util.isEmpty(p.getItemId())){
+		if(p != null && !Util.isEmpty(p.getItemId())){
 			// cart 中存在该商品的场合,更新cart 中的商品数量
 			int num = p.getNum() + item.getNum();
 			item.setNum(num);
@@ -93,8 +125,10 @@ public class CartManager {
 		int total = 0;
 	
 		for(Product item:cartItemList){
-			total += item.getNum();
-			count += item.getNum() * Util.conver2Price(item.getPrice());
+			if(item.isSelected()){
+				total += item.getNum();
+				count += item.getNum() * Util.conver2Price(item.getPrice());	
+			}
 		}
 		totalNum = total;
 		retVal = String.valueOf(count);

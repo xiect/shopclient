@@ -47,6 +47,7 @@ import android.widget.TextView;
 public class CartFragment extends BaseFragment {
 	public static final String TAG = "CartFragment";
 	private static final int REQUEST_CODE = 1;
+	private static final int REQUEST_CODE_4_ORDER = 2;
 	private Button mBtnLogin;
 	
 	private LinearLayout llAreaNoLogin; 	// 未登陆按钮
@@ -66,6 +67,7 @@ public class CartFragment extends BaseFragment {
 	private FrameLayout footView;
 	private GenericTask mLoadCartTask; // 加载购物车数据
 	private boolean isCheckedAll = true;
+	private TextView mTvNoDataDesc;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,8 +75,22 @@ public class CartFragment extends BaseFragment {
 		super.onCreateView(inflater, container, savedInstanceState);
 		fragmentView = inflater.inflate(R.layout.fragment_main_cart, container,false);
 		findView();
-		lazyLoad();
+//		lazyLoad();
 		return fragmentView;
+	}
+	
+	/**
+	 * 更新支付金额View
+	 */
+	void updateAmount(){
+		Util.sysLog(TAG, "==更新支付金额View==");
+		// 设置商品总计金额
+		String totalAmount = app.cart.calTotalAmount();
+		tvTotal.setText(Util.formatRmb(totalAmount));
+		// 设置商品 总件数
+		String btnTitle = getResources().getString(R.string.settle_accounts_value);  
+		btnTitle = String.format(btnTitle, app.cart.getTotalNum());
+		btnOrder.setText(btnTitle);
 	}
 	
 	/**
@@ -85,11 +101,13 @@ public class CartFragment extends BaseFragment {
 		llAreaNoLogin = (LinearLayout)fragmentView.findViewById(R.id.shopping_cart_function_layout);
 		// 暂无数据画面
 		mNoDataView = (ScrollView) fragmentView.findViewById(R.id.shopping_cart_no_data);
+		mTvNoDataDesc = (TextView) fragmentView.findViewById(R.id.cart_no_data_state);
+		
 		// 网络错误画面
 		llAreaErrorView = (LinearLayout)fragmentView.findViewById(R.id.shopping_cart_load_error);
 		// 购物车列表
 		mListView = (ListView) fragmentView.findViewById(R.id.shopping_cart_list);
-		mAdapter = new CartListAdapter(ctx); 
+		mAdapter = new CartListAdapter(ctx,this); 
 		mListView.setAdapter(mAdapter);
 		// 顶部编辑按钮
 		btnHeaderEdit = (LinearLayout)fragmentView.findViewById(R.id.shopping_cart_delete_right);
@@ -126,6 +144,11 @@ public class CartFragment extends BaseFragment {
 				}else{
 					// 点击完成按钮
 					tvHeaderEditText.setText(R.string.shopping_cart_product_edit);
+					// 删除数量为0 的产品
+					app.cart.deleteZoroProduct();
+					// 更新badage
+					app.updateCartNum();
+					// 显示正常画面
 					doEditListComplete();
 				}
 			}
@@ -136,8 +159,13 @@ public class CartFragment extends BaseFragment {
 				Util.sysLog(TAG, "btnOrder btn click");
 				int selectedNum = app.cart.getSelectedProductNum();
 				if(selectedNum == 1){
-					// 一件商品的场合 订单画面迁移
-					ctx.startActivity(NewOderActivity.makeIntent());
+					if(app.isLogin()){
+						// 一件商品的场合 订单画面迁移
+						ctx.startActivity(NewOderActivity.makeIntent());
+					}else{
+						// 未登录的情况下 去登录画面
+						getActivity().startActivityForResult(LoginActivity.makeIntent(), REQUEST_CODE_4_ORDER);
+					}
 				}else if(selectedNum > 1){
 					String msg = getResources().getString(R.string.msg_product_selected_one_please);
 					msg = String.format(msg, selectedNum);
@@ -236,6 +264,7 @@ public class CartFragment extends BaseFragment {
 		Util.sysLog(TAG, "显示购物车列表画面");
 		if(app.cart.isCartEmpty()){
 			Util.sysLog(TAG, "购物车数据是空，显示空画面");
+			mTvNoDataDesc.setText(R.string.cart_empty_tip);
 			mNoDataView.setVisibility(View.VISIBLE);
 			mListView.setVisibility(View.GONE);
 			llAreaErrorView.setVisibility(View.GONE);
@@ -248,12 +277,15 @@ public class CartFragment extends BaseFragment {
 			llAreaErrorView.setVisibility(View.GONE);
 			footView.setVisibility(View.VISIBLE);
 			// 设置商品总计金额
-			String totalAmount = app.cart.calTotalAmount();
-			tvTotal.setText(Util.formatRmb(totalAmount));
-			// 设置商品 总件数
-			String btnTitle = getResources().getString(R.string.settle_accounts_value);  
-			btnTitle = String.format(btnTitle, app.cart.getTotalNum());
-			btnOrder.setText(btnTitle);
+			updateAmount();
+			
+//			// 设置商品总计金额
+//			String totalAmount = app.cart.calTotalAmount();
+//			tvTotal.setText(Util.formatRmb(totalAmount));
+//			// 设置商品 总件数
+//			String btnTitle = getResources().getString(R.string.settle_accounts_value);  
+//			btnTitle = String.format(btnTitle, app.cart.getTotalNum());
+//			btnOrder.setText(btnTitle);
 			
 		}
 		mAdapter.notifyDataSetChanged();
@@ -276,6 +308,7 @@ public class CartFragment extends BaseFragment {
 	private void showLoadingView(){
 		// 显示加载中
 		mNoDataView.setVisibility(View.VISIBLE);
+		mTvNoDataDesc.setText(R.string.cart_loading);
 		llAreaErrorView.setVisibility(View.GONE);
 	}
 	
@@ -300,10 +333,27 @@ public class CartFragment extends BaseFragment {
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
+		Util.sysLog(TAG, "onActivityResult requestCode:" + requestCode +"\t resultCode:" + resultCode);
 		if(requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK){
+			Util.sysLog(TAG, "onActivityResult cart page");
 			// 登录成功的场合，隐藏登录按钮
 			llAreaNoLogin.setVisibility(View.GONE);
+		}else if(requestCode == REQUEST_CODE_4_ORDER && resultCode == Activity.RESULT_OK){
+			Util.sysLog(TAG, "onActivityResult go new order pag");
+			// 登录成功的场合，隐藏登录按钮
+			llAreaNoLogin.setVisibility(View.GONE);
+			// go new order page
+			ctx.startActivity(NewOderActivity.makeIntent());
 		}
+		
+	}
+
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		Util.sysLog(TAG, "onResume");
+		lazyLoad();
 	}
 
 	@Override
@@ -383,7 +433,7 @@ class CartListAdapter extends BaseAdapter {
 	private Context context;
 	private List<Product> dataList;
 	private boolean isEdit;
-	
+	private CartFragment fragment; 
 	/**
 	 * 显示编辑列表
 	 */
@@ -402,9 +452,10 @@ class CartListAdapter extends BaseAdapter {
 	 * @param context
 	 * @param datas
 	 */
-	public CartListAdapter(Context context) {
+	public CartListAdapter(Context context,CartFragment frg) {
 		super();
 		this.context = context;
+		fragment = frg;
 		ShoppingApp app = (ShoppingApp)context.getApplicationContext();
 		this.dataList = app.cart.cartItemList;
 		inflater = (LayoutInflater) context
@@ -499,6 +550,9 @@ class CartListAdapter extends BaseAdapter {
 					if (item.getNum() <= 0) {
 						v.setEnabled(false);
 					}
+					if(fragment != null){
+						fragment.updateAmount();	
+					}
 				}
 			}
 		});
@@ -528,6 +582,9 @@ class CartListAdapter extends BaseAdapter {
 					if (item.getNum() >= Const.MAX_NUM) {
 						v.setEnabled(false);
 					}
+					if(fragment != null){
+						fragment.updateAmount();	
+					}
 				}
 			}
 		});
@@ -539,6 +596,9 @@ class CartListAdapter extends BaseAdapter {
 				if(position < dataList.size()){
 					Util.sysLog(CartFragment.TAG, "row:" + position + "\t ischecked:" + isChecked);
 					dataList.get(position).setSelected(isChecked);
+					if(fragment != null){
+						fragment.updateAmount();	
+					}
 				}
 			}
 		});

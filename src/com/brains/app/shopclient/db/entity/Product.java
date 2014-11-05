@@ -140,7 +140,7 @@ public class Product extends LogicalEntity<Product> implements Parcelable{
     	if( getId() != null){
     		values.put("id", getId());
     	}
-    	values.put("itemId", getName());
+    	values.put("itemId", getItemId());
     	values.put("name", getName());
     	values.put("desc", getDesc());
     	values.put("imgSrc",getImgSrc());
