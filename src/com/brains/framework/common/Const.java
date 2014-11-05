@@ -29,4 +29,14 @@ public interface Const {
 	
 	String ORDER_ONE_MONTH = "0";    		// 近一个月
 	String ORDER_ONE_MONTH_BEFORE = "1";    // 一个月之前
+	
+	String ORDER_STATUS_1 = "完成";
+	String ORDER_STATUS_2 = "完成";
+	String ORDER_STATUS_3 = "完成";
+	String ORDER_STATUS_4 = "完成";
+	String ORDER_STATUS_5 = "完成";
+	String ORDER_STATUS_6 = "完成";
+	String ORDER_STATUS_7 = "完成";
+	String ORDER_STATUS_8 = "完成";
+	String ORDER_STATUS_9 = "完成";
 }

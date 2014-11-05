@@ -88,7 +88,7 @@ public class OrderSearchActivity extends BaseNormalActivity implements OnClickLi
 		setContentView(R.layout.layout_order_search);
 		findView();
 		// 取得查询一览数据
-		doGetProductList();
+		doGetOrderList();
 	}
 	
 	private void findView(){
@@ -165,7 +165,7 @@ public class OrderSearchActivity extends BaseNormalActivity implements OnClickLi
 		mSortMod = sort;
 		mCurrentPageNo = 1;
 		isGetMore = false;
-		doGetProductList();
+		doGetOrderList();
 	}
 	
 	private void registerOnClickListener(ListView listView) {
@@ -173,20 +173,21 @@ public class OrderSearchActivity extends BaseNormalActivity implements OnClickLi
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
+				Util.sysLog(TAG, "onItemClick======");
 				// TODO CLICK
 				if(arg2 < mDataList.size()){
 					Order order = mDataList.get(arg2);
 					String id = order.getId();
 					if(!Util.isEmpty(id)){
 						// 订单详细画面迁移
-						startActivity(OrderDetailActivity.makeIntent());
+						startActivity(OrderDetailActivity.makeIntent(order));
 						overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
 					}
 				}else{
 					// 加载更多
 					Util.sysLog(TAG, "pos:==>" + arg2);
 					isGetMore = true;
-					doGetProductList();
+					doGetOrderList();
 				}
 			}
 		});
@@ -238,9 +239,9 @@ public class OrderSearchActivity extends BaseNormalActivity implements OnClickLi
 	}
 	
 	/**
-	 * 获取商品一览
+	 * 获取订单一览
 	 */
-	private void doGetProductList(){
+	private void doGetOrderList(){
 		if(mSearchTask != null &&
 				mSearchTask.getStatus() == GenericTask.Status.RUNNING) {
 			return;
@@ -387,22 +388,24 @@ class OrderListAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
 		if (convertView == null) {
-			convertView = inflater.inflate(R.layout.product_item, null);
+			convertView = inflater.inflate(R.layout.order_list_item, null);
 			holder = new ViewHolder();
-			holder.title = (TextView) convertView.findViewById(R.id.product_name_text);
-			holder.desc = (TextView) convertView.findViewById(R.id.product_description_text);
-			holder.price = (TextView) convertView.findViewById(R.id.product_price_text);
-			holder.imageView = (ImageView) convertView.findViewById(R.id.product_image);
-			
+			holder.tvName = (TextView) convertView.findViewById(R.id.order_product_item_name);
+			holder.tvStatus = (TextView) convertView.findViewById(R.id.order_item_status);
+			holder.tvOrderNum = (TextView) convertView.findViewById(R.id.order_item_Text);
+			holder.tvTotalPrice = (TextView) convertView.findViewById(R.id.order_item_totalPrice);
+			holder.tvOrderTime = (TextView) convertView.findViewById(R.id.order_item_subtime);
+			holder.imageView = (ImageView) convertView.findViewById(R.id.product_list_item_image);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
 		Order order = dataList.get(position);
-		holder.title.setText(order.getName());
-//		holder.desc.setText(order.getDesc());
-//		holder.price.setText(order.getPrice());
-		
+		holder.tvName.setText(order.getpName());
+		holder.tvStatus.setText(order.getState());
+		holder.tvOrderNum.setText(order.getPaymentNo());
+		holder.tvTotalPrice.setText(order.getTotalPrice());
+		holder.tvOrderTime.setText(order.getOrderTime());
 		String src = order.getImgSrc();
 		if(!StringUtil.isEmpty(src)){
 			ImageLoader.getInstance().displayImage(src, holder.imageView);
@@ -411,9 +414,11 @@ class OrderListAdapter extends BaseAdapter {
 	}
 
 	class ViewHolder {
-		private ImageView imageView;
-		private TextView title;
-		private TextView desc;
-		private TextView price;
+		private ImageView imageView; // product_list_item_image
+		private TextView tvName; // order_product_item_name
+		private TextView tvStatus; // order_item_status
+		private TextView tvOrderNum;   // order_item_Text
+		private TextView tvTotalPrice; // order_item_price_hint
+		private TextView tvOrderTime;  // order_item_subtime		
 	}
 }

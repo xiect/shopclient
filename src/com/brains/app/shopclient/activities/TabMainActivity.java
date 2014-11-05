@@ -64,7 +64,7 @@ public class TabMainActivity extends FragmentActivity {
 		// 现在主画面初始话App 中的 Cart对象
 		Util.sysLog(TAG, "== 初始化 购物车 ==");
 		app = (ShoppingApp) getApplicationContext();
-		app.cart = new CartManager(app);
+		app.cart = new CartManager();
 		
 //		mInflater = LayoutInflater.from(this);
 		mViewPager = (ViewPager) findViewById(R.id.id_viewpager);
@@ -128,7 +128,7 @@ public class TabMainActivity extends FragmentActivity {
 	protected void onResume() {
 		super.onResume();
 		// update cart badge
-		app.updateCartNum();
+		app.updateCartNum(this);
 	}
 
 	private void bindingEventListenner(){

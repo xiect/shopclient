@@ -145,9 +145,9 @@ public class CartFragment extends BaseFragment {
 					// 点击完成按钮
 					tvHeaderEditText.setText(R.string.shopping_cart_product_edit);
 					// 删除数量为0 的产品
-					app.cart.deleteZoroProduct();
+					app.cart.deleteZoroProduct(getActivity());
 					// 更新badage
-					app.updateCartNum();
+					app.updateCartNum(getActivity());
 					// 显示正常画面
 					doEditListComplete();
 				}
@@ -232,7 +232,7 @@ public class CartFragment extends BaseFragment {
 				public void onClick(DialogInterface dialog, int which) {
 					// 删除购物车中的商品
 					Util.sysLog(TAG, "删除购物车中的商品");
-					app.cart.deleteSelectedProduct();
+					app.cart.deleteSelectedProduct(getActivity());
 					showCartListView();
 				}
 			})
@@ -413,7 +413,7 @@ public class CartFragment extends BaseFragment {
 		protected TaskResult _doInBackground(TaskParams... params) {
 			try{
 				Util.sysLog(TAG," call _doInBackground=");
-				app.cart.reloadData();
+				app.cart.reloadData(getActivity());
 			}catch(Exception e){
 				e.printStackTrace();
 				message = e.getMessage();

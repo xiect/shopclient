@@ -16,7 +16,6 @@ import android.content.Context;
 public class CartManager {
 	
 	public List<Product> cartItemList = new ArrayList<Product>();
-	private Context context;
 	private CartDao dao;
 	private int totalNum; // 总件数
 	
@@ -24,12 +23,12 @@ public class CartManager {
 	 * remove the item which num is zoro
 	 * @return
 	 */
-	public void deleteZoroProduct(){
+	public void deleteZoroProduct(Context ctx){
 		List<Product> waitDelList = new ArrayList<Product>(5);
 		for(Product item:cartItemList){
 			if(item.getNum() <= 0){
 				// 从cart 中删除
-				deleteProduct(item);
+				deleteProduct(item,ctx);
 				waitDelList.add(item);
 			}
 		}
@@ -43,7 +42,8 @@ public class CartManager {
 	 * get count of all item in cart
 	 * @return
 	 */
-	public int getAllItemCountRealTime(){
+	public int getAllItemCountRealTime(Context ctx){
+		dao = new CartDao(ctx);
 		List<Product> list = dao.findAll();
 		if(list != null){
 			return list.size();
@@ -51,9 +51,9 @@ public class CartManager {
 		return 0;
 	}
 	
-	public CartManager(Context ctx){
-		context = ctx;
-		dao = new CartDao(ctx);
+	public CartManager(){
+		
+		
 //		List<Product> retList = new ArrayList<Product>();
 //		Product item  = null;
 //		for(int i = 0; i < 10; i++){
@@ -73,8 +73,9 @@ public class CartManager {
 	 * 加入一件商品
 	 * @param item
 	 */
-	public void addProduct(Product item){
+	public void addProduct(Product item,Context ctx){
 		Util.sysLog("cart", "add 2 cart:" + item.getItemId());
+		dao = new CartDao(ctx);
 		Product p = dao.findById(item.getItemId());
 		if(p != null && !Util.isEmpty(p.getItemId())){
 			// cart 中存在该商品的场合,更新cart 中的商品数量
@@ -88,7 +89,8 @@ public class CartManager {
 	 * 购物车中删除商品
 	 * @param item
 	 */
-	public void deleteProduct(Product item){
+	public void deleteProduct(Product item,Context ctx){
+		dao = new CartDao(ctx);
 		dao.delete(item);
 	}
 	
@@ -107,7 +109,8 @@ public class CartManager {
 	/**
 	 * 购物车数据刷新
 	 */
-	public void reloadData(){
+	public void reloadData(Context ctx){
+		dao = new CartDao(ctx);
 		cartItemList.clear();
 		List<Product> list = dao.findAll();
 		cartItemList.addAll(list);
@@ -188,7 +191,8 @@ public class CartManager {
 	/**
 	 * 删除已选择的商品
 	 */
-	public void deleteSelectedProduct(){
+	public void deleteSelectedProduct(Context ctx){
+		dao = new CartDao(ctx);
 		for(Product item:cartItemList){
 			if(item.isSelected()){
 				dao.delete(item);

@@ -84,4 +84,14 @@ public class Util extends BaseUtil {
 		}
 		return p;
 	}
+	
+	/**
+	 * 
+	 * @param code
+	 * @return
+	 */
+	public static String getOrderStatusDesc(String code){
+			String msg = "";
+			return msg;
+	};
 }

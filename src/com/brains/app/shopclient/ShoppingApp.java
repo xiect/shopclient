@@ -179,10 +179,10 @@ public class ShoppingApp extends Application {
 	/**
 	 * update cart badge
 	 */
-	public void updateCartNum(){
+	public void updateCartNum(Context ctx){
 		Util.sysLog(TAG, "updateCartNum call");
 		if(cartBadge != null){
-			int num = cart.getAllItemCountRealTime();
+			int num = cart.getAllItemCountRealTime(ctx);
 			Util.sysLog(TAG, "updateCartNum:" + num);
 			if(num > 0){
 				cartBadge.setText(String.valueOf(num));

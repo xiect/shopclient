@@ -158,7 +158,7 @@ public class Product extends LogicalEntity<Product> implements Parcelable{
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeString(itemId);
 		dest.writeString(name);
-		dest.writeString(name);
+		dest.writeString(desc);
 		dest.writeString(imgSrc);
 		dest.writeString(price);
 		dest.writeInt(num);

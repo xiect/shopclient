@@ -6,6 +6,10 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.brains.app.shopclient.db.entity.Product;
 import com.brains.framework.exception.AppException;
 
 /**
@@ -17,7 +21,7 @@ import com.brains.framework.exception.AppException;
  * @author xiect
  *
  */
-public class Order {
+public class Order implements Parcelable{ 
 	
 	private String id;
 	private String state;
@@ -179,5 +183,59 @@ public class Order {
 		}
 		
 		return orderList;
+	}
+
+	public Order(){
+
+	}
+	
+	
+    public Order(Parcel p){
+    	id = p.readString();
+    	state = p.readString();
+    	totalPrice = p.readString();
+    	orderTime = p.readString();
+    	tel = p.readString();
+    	name = p.readString();
+    	paymentNo = p.readString();
+    	remark = p.readString();
+    	imgSrc = p.readString();
+    	pName = p.readString();
+    }
+    
+	/**
+	 * Intent 传值
+	 */
+	public static final Parcelable.Creator<Order> CREATOR = new Parcelable.Creator<Order>(){
+		public Order createFromParcel(Parcel p) {
+			return new Order(p);
+		}
+
+		@Override
+		public Order[] newArray(int size) {
+			return new Order[size];
+		}
+	};
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(id);
+		dest.writeString(state);
+		dest.writeString(totalPrice);
+		dest.writeString(orderTime);
+		dest.writeString(tel);
+		
+		dest.writeString(name);
+		dest.writeString(paymentNo);
+		dest.writeString(remark);
+		dest.writeString(imgSrc);
+		dest.writeString(pName);
 	}
 }

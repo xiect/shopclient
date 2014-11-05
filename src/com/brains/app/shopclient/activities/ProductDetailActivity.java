@@ -86,7 +86,7 @@ public class ProductDetailActivity extends BaseNormalActivity{
 			@Override
 			public void onClick(View v) {
 				// 加入购物车
-				app.cart.addProduct(mItem);
+				app.cart.addProduct(mItem,ProductDetailActivity.this);
 				app.showMsgWithToast(R.string.msg_add2card_success);
 			}
 		});
