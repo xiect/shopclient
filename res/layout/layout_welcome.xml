@@ -3,10 +3,10 @@
   android:layout_width="fill_parent"
   android:layout_height="fill_parent" android:background="@drawable/wellcome_bg_red">
   
-    
+    <ImageView android:id="@+id/app_logo_img" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/app_logo" android:layout_centerInParent="true"/>
 
     
-    <TextView android:layout_alignParentBottom="true" android:layout_centerHorizontal="true" 
+    <TextView android:visibility="gone" android:layout_alignParentBottom="true" android:layout_centerHorizontal="true" 
         android:layout_height="wrap_content" android:layout_width="wrap_content" 
         android:layout_marginBottom="8dp" android:text="@string/group_copyright"/>
 </RelativeLayout>

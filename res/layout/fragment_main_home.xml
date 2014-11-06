@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/white"
@@ -9,7 +9,7 @@
         android:id="@+id/home_common_title"
         layout="@layout/app_head_search" />
 
-    <FrameLayout android:id="@+id/fl_home_content" android:layout_width="fill_parent" android:layout_height="fill_parent"  >       
+    <FrameLayout android:id="@+id/fl_home_content"  android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_below="@id/home_common_title" >       
          <LinearLayout
             android:id="@+id/home_load_failed"
             android:layout_width="fill_parent"
@@ -36,6 +36,9 @@
                 android:textColor="@color/home_no_network_hint"
                 android:textSize="@dimen/home_no_network_hint_comment_size" />
         </LinearLayout>
+        <RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent" android:id="@+id/rl_oading_area" android:visibility="gone">
+	                <ProgressBar  android:id="@+id/top_refresh_progressBar" style="@android:style/Widget.ProgressBar.Small.Inverse" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerInParent="true" />
+	    </RelativeLayout>
         <com.handmark.pulltorefresh.library.PullToRefreshScrollView
             xmlns:ptr="http://schemas.android.com/apk/res-auto"
             android:id="@+id/pull_refresh_scrollview"
@@ -43,33 +46,15 @@
             android:layout_height="fill_parent"
             ptr:ptrAnimationStyle="flip"
             ptr:ptrMode="pullFromStart" >
-            <FrameLayout
-                android:layout_width="fill_parent"
-                android:layout_height="100dp"
-                android:orientation="vertical" >
-
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/viewPager_banner"
-                    android:layout_width="fill_parent"
-                    android:layout_height="200dp" />
-
-                <RelativeLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:orientation="vertical" >
-
-                    <LinearLayout
-                        android:id="@+id/viewGroup_banner"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="10dp"
-                        android:gravity="center_horizontal"
-                        android:orientation="horizontal" >
-                    </LinearLayout>
-                </RelativeLayout>
-            </FrameLayout>
+ 				 <RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent" >
+                    <FrameLayout android:id="@+id/fl_banner_area" android:layout_width="fill_parent" android:layout_height="200dp" android:orientation="vertical" android:layout_alignParentTop="true" >
+		                <android.support.v4.view.ViewPager android:id="@+id/viewPager_banner" android:layout_width="fill_parent" android:layout_height="200dp" />
+		                <RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent" android:orientation="vertical" >
+		                    <LinearLayout android:id="@+id/viewGroup_banner" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_alignParentBottom="true" android:layout_marginBottom="10dp" android:gravity="center_horizontal" android:orientation="horizontal" > </LinearLayout>
+		                </RelativeLayout>
+		            </FrameLayout>
+		             <LinearLayout android:id="@+id/ll_recommend_group" android:layout_width="fill_parent" android:layout_height="wrap_content"  android:orientation="vertical" android:layout_below="@id/fl_banner_area"> </LinearLayout>
+                </RelativeLayout>           
         </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
-        
     </FrameLayout>
-</LinearLayout>
+</RelativeLayout>
