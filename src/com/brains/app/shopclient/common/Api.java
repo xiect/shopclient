@@ -4,8 +4,11 @@ package com.brains.app.shopclient.common;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONObject;
+
 import com.brains.app.shopclient.bean.Brand;
 import com.brains.app.shopclient.bean.Category;
+import com.brains.app.shopclient.bean.Home;
 import com.brains.app.shopclient.bean.Order;
 import com.brains.app.shopclient.bean.User;
 import com.brains.app.shopclient.db.entity.Product;
@@ -66,6 +69,15 @@ public class Api implements java.io.Serializable {
 	// Api 远程调用方法
 	// ===============
 	
+	/**
+	 * 获取品牌列表。
+	 * @return List<KpResult>
+	 */
+	public JSONObject getHomeList()
+			throws AppException {
+		String url = remoteDomain + "/vsisfront/appLogin/showImage.do";
+		return http.get(url).asJSONObject();
+	}
 	
 	/**
 	 * 获取品牌列表。

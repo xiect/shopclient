@@ -53,6 +53,16 @@ public class Product extends LogicalEntity<Product> implements Parcelable{
 	private String price;
 	private String imgSrc;
 	private int num;
+	private String url;
+	
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
 
 	private boolean isSelected = true;
 	

@@ -17,6 +17,7 @@ import com.brains.framework.widget.BadgeView;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -82,7 +83,9 @@ public class TabMainActivity extends FragmentActivity {
 		cartBadge = new BadgeView(this, mTabCart);
 		app.setTabCart(cartBadge);
 		cartBadge.setText("1");
-		cartBadge.setBackgroundResource(R.drawable.badge_ifaux);
+//		cartBadge.setBadgeMargin(15, 10);
+//		cartBadge.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
+//		cartBadge.setBackgroundResource(R.drawable.badge_ifaux);
 		cartBadge.show();
 		
 		bindingEventListenner();

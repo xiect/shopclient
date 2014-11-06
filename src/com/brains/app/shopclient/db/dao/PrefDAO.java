@@ -26,6 +26,8 @@ public class PrefDAO extends BasePrefDAO {
 	private final String KEY_RECEIVER_ZIPCODE = "key_receiver_zip_code";
 	private final String KEY_RECEIVER_ADD = "key_receiver_add";
 	private final String USER_FIRST_KBN = "key_user_first_kbn";
+	private final String HOME_JSON_DATA = "key_home_json_data";
+	
 	public PrefDAO(Context context){
 		super(context);
 	}
@@ -131,5 +133,22 @@ public class PrefDAO extends BasePrefDAO {
 			return false;
 		}
 		return true;
+	}
+	
+	/**
+	 * 首页数据缓存
+	 * @param jsonStr
+	 */
+	public void saveHomeData(String jsonStr){
+		mEditor.putString(HOME_JSON_DATA, jsonStr);
+		mEditor.commit();
+	}
+	
+	/**
+	 * 获取首页数据缓存
+	 * @param jsonStr
+	 */
+	public String getHomeData(){
+		return mSettings.getString(HOME_JSON_DATA, "");
 	}
 }

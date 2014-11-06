@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.brains.app.shopclient.R;
 import com.brains.app.shopclient.bean.Category;
+import com.brains.app.shopclient.common.Util;
 import com.brains.framework.util.StringUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -32,6 +33,7 @@ public class CategoryListAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
+		Util.sysLog("Cat", "count:" + dataList.size());
 		return dataList.size();
 	}
 
@@ -47,6 +49,7 @@ public class CategoryListAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+		Util.sysLog("Cat", "getView 4 position:" + position);
 		ViewHolder holder;
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.category_list_item, null);
