@@ -3,6 +3,7 @@ package com.brains.app.shopclient.db.dao;
 import android.content.Context;
 
 import com.brains.app.shopclient.common.Util;
+import com.brains.framework.common.Const;
 import com.brains.framework.db.dao.BasePrefDAO;
 
 
@@ -24,7 +25,7 @@ public class PrefDAO extends BasePrefDAO {
 	private final String KEY_RECEIVER_TEL = "key_receiver_tel";
 	private final String KEY_RECEIVER_ZIPCODE = "key_receiver_zip_code";
 	private final String KEY_RECEIVER_ADD = "key_receiver_add";
-	
+	private final String USER_FIRST_KBN = "key_user_first_kbn";
 	public PrefDAO(Context context){
 		super(context);
 	}
@@ -112,5 +113,23 @@ public class PrefDAO extends BasePrefDAO {
 		mEditor.putString(KEY_RECEIVER_ZIPCODE, zipCode);
 		mEditor.putString(KEY_RECEIVER_ADD, add);
 		mEditor.commit();
+	}
+	/**
+	 * 是否第一次打开应用
+	 * @param value
+	 */
+	public void setIsFirstOpen(String value){
+		mEditor.putString(USER_FIRST_KBN, value);
+		mEditor.commit();
+	}
+	/**
+	 * 是否第一次使用应用
+	 */
+	public boolean isFirstUse(){
+		String value = mSettings.getString(USER_FIRST_KBN,Const.USER_FIRST_NO);
+		if(!Util.isEmpty(value) && Const.USER_FIRST_YES.equals(value)){
+			return false;
+		}
+		return true;
 	}
 }

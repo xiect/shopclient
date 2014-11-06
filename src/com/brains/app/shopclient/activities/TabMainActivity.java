@@ -12,6 +12,7 @@ import com.brains.app.shopclient.activities.fragment.MyFragment;
 import com.brains.app.shopclient.adapter.MainFragmentPagerAdapter;
 import com.brains.app.shopclient.common.CartManager;
 import com.brains.app.shopclient.common.Util;
+import com.brains.framework.common.Const;
 import com.brains.framework.widget.BadgeView;
 
 
@@ -80,7 +81,8 @@ public class TabMainActivity extends FragmentActivity {
 	    // 购物车数量显示
 		cartBadge = new BadgeView(this, mTabCart);
 		app.setTabCart(cartBadge);
-		cartBadge.setText("11");
+		cartBadge.setText("1");
+		cartBadge.setBackgroundResource(R.drawable.badge_ifaux);
 		cartBadge.show();
 		
 		bindingEventListenner();
@@ -121,6 +123,9 @@ public class TabMainActivity extends FragmentActivity {
 				
 			}
 		});
+		
+		// 主画面显示完成后将是否初次使用标志设置下
+		app.mPrefDAO.setIsFirstOpen(Const.USER_FIRST_YES);
 	}
 	
 	
@@ -250,6 +255,7 @@ public class TabMainActivity extends FragmentActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		int currentIndex = mViewPager.getCurrentItem();
+		Util.sysLog(TAG, "onActivityResult:" + currentIndex);
 		fragmentList.get(currentIndex).onActivityResult(requestCode, resultCode, data);
 	}
 }

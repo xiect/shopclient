@@ -1,14 +1,16 @@
 package com.brains.app.shopclient.activities.fragment;
 
 import com.brains.app.shopclient.R;
-import com.brains.app.shopclient.ShoppingApp;
+import com.brains.app.shopclient.activities.AboutActivity;
 import com.brains.app.shopclient.activities.LoginActivity;
 import com.brains.app.shopclient.activities.OrderSearchActivity;
 import com.brains.app.shopclient.common.Util;
 
-import android.support.v4.app.Fragment;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -24,7 +26,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * 我的：个人中心
@@ -33,6 +34,7 @@ import android.widget.Toast;
  */
 public class MyFragment extends BaseFragment {
 	private final int REQUEST_CODE_LOGIN = 1;
+	private final int REQUEST_CODE_4_ORDER = 2;
 	private ListView menuList;
 	private final String TAG = "MyFragment";
 	private Button btnLogin;
@@ -85,6 +87,60 @@ public class MyFragment extends BaseFragment {
 	};
 	
 	/**
+	 * 确认对话框
+	 * @param msg
+	 * @param ctx
+	 */
+	private void showConfirmAlert(String msg,Context ctx) {
+		AlertDialog.Builder builder = new Builder(ctx);
+		builder.setTitle("提示")
+			.setMessage(msg)
+			.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// 退出应用
+					doExit();
+				}
+			})
+			.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+				}
+			});
+		AlertDialog dialog = builder.create();
+		dialog.show();
+	}
+	
+	/**
+	 * 订单查询
+	 */
+	private void doQueryOrder(){
+		if(app.isLogin()){
+			// already login,go to order center page 
+			getActivity().startActivity(OrderSearchActivity.makeIntent());
+			getActivity().overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+		}else{
+			// not login ,go to login page
+			getActivity().startActivityForResult(LoginActivity.makeIntent(), REQUEST_CODE_4_ORDER);
+		}
+	}
+	
+	/**
+	 * 退出操作
+	 */
+	private void menuExitClicked(){
+		String msg = getResources().getString(R.string.msg_confirm_eixt_system);
+		showConfirmAlert(msg,getActivity());
+	}	
+	
+	/**
+	 * 退出操作
+	 */
+	private void doExit(){
+		getActivity().finish();
+	}
+	
+	/**
 	 * 注销操作
 	 */
 	private void doLogoff(){
@@ -105,7 +161,7 @@ public class MyFragment extends BaseFragment {
 		menuList = (ListView)this.fragmentView.findViewById(R.id.menu_list_view);
 		String[] menuTitles = new String[]{
 				getString(R.string.person_menu_query_order),
-				getString(R.string.person_menu_account),
+//				getString(R.string.person_menu_account),
 				getString(R.string.person_menu_about),
 				getString(R.string.person_menu_logoff),
 				getString(R.string.person_menu_exit)
@@ -113,9 +169,9 @@ public class MyFragment extends BaseFragment {
 
 		int[] menuIcons = new int[]{
 				R.drawable.person_order,
+//				R.drawable.person_account_center,
 				R.drawable.person_account_center,
 				R.drawable.person_about_icon,
-				R.drawable.person_exit_icon,
 				R.drawable.person_exit_icon
 		};
 
@@ -126,10 +182,10 @@ public class MyFragment extends BaseFragment {
 		menuList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 
 			private static final int MENU_ORDER = 0;   		// 订单查询
-			private static final int MENU_ACCOUNT = 1; 		// 账号管理
-			private static final int MENU_ABOUT   = 2; 		// 关于
-			private static final int MENU_LOGOFF    = 3; 	// 注销
-			private static final int MENU_EXIT    = 4; 		// 退出
+//			private static final int MENU_ACCOUNT = 1; 		// 账号管理
+			private static final int MENU_ABOUT   = 1; 		// 关于
+			private static final int MENU_LOGOFF    = 2; 	// 注销
+			private static final int MENU_EXIT    = 3; 		// 退出
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3) {
@@ -137,13 +193,15 @@ public class MyFragment extends BaseFragment {
 				switch(position){
 				case MENU_ORDER:
 					// 订单查询
-					getActivity().startActivity(OrderSearchActivity.makeIntent());
+					doQueryOrder();
 					break;
-				case MENU_ACCOUNT:
-					// 账号管理
-					break;
+//				case MENU_ACCOUNT:
+//					// 账号管理
+//					break;
 				case MENU_ABOUT:
 					// 关于
+					getActivity().startActivity(AboutActivity.makeIntent());
+					getActivity().overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
 					break;
 				case MENU_LOGOFF:
 					// 注销
@@ -151,6 +209,7 @@ public class MyFragment extends BaseFragment {
 					break;
 				case MENU_EXIT:
 					// 退出
+					menuExitClicked();
 					break;
 				default:
 					Log.d(TAG,"menu  position ng:" + position);
@@ -162,11 +221,15 @@ public class MyFragment extends BaseFragment {
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		Util.sysLog("xxx", "=========onActivityResult:" + resultCode);
+		Util.sysLog("xxx", "=========onActivityResult: requestCode:" +requestCode +"\t result code:"+ resultCode);
 		if(requestCode == REQUEST_CODE_LOGIN && resultCode == Activity.RESULT_OK){
 			// 登录成功的场合
 			// 隐藏登录按钮 显示 用户名称
 			showTopHeaderView();
+		}else if(requestCode == REQUEST_CODE_4_ORDER && resultCode == Activity.RESULT_OK){
+			// 登录成功的场合,goto order center 
+			getActivity().startActivity(OrderSearchActivity.makeIntent());
+			getActivity().overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
 		}
 	}
 
@@ -182,7 +245,6 @@ public class MyFragment extends BaseFragment {
 }
 
 class PersonMenuAdapter extends BaseAdapter {
-
 	private LayoutInflater inflater;
 	private Context context;
 	private String[] data;

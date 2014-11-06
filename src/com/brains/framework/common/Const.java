@@ -30,6 +30,9 @@ public interface Const {
 	String ORDER_ONE_MONTH = "0";    		// 近一个月
 	String ORDER_ONE_MONTH_BEFORE = "1";    // 一个月之前
 	
+	String USER_FIRST_YES = "YES";
+	String USER_FIRST_NO = "N0";
+	
 	String ORDER_STATUS_1 = "完成";
 	String ORDER_STATUS_2 = "完成";
 	String ORDER_STATUS_3 = "完成";

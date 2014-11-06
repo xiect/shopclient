@@ -2,6 +2,7 @@ package com.brains.app.shopclient.activities;
 
 import com.brains.app.shopclient.R;
 import com.brains.app.shopclient.activities.lib.InstallAppUserBaseActivity;
+import com.brains.app.shopclient.db.dao.PrefDAO;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -69,6 +70,15 @@ public class InstallAppActivity extends InstallAppUserBaseActivity {
 	private void goHomePage(){
 		long endSec = System.currentTimeMillis();
 		Log.d("install","end:" + endSec);
+		Runnable targetPage = null;
+		PrefDAO dao = new PrefDAO(this);
+		if(dao.isFirstUse()){
+			// guide page
+			targetPage = new GuideThread();
+		}else{
+			// main page
+			targetPage = new HomeThread();
+		}
 		
 		// 启动初始化前后时差取得
 		long diffSec = endSec - mStartSec;
@@ -77,10 +87,10 @@ public class InstallAppActivity extends InstallAppUserBaseActivity {
 		long CONST_DEFY = 3000;
 		if(diffSec >= CONST_DEFY){
 			// 超出延时毫秒数的场合，直接跳转至首页
-			mHandler.post(new HomeThread());
+			mHandler.post(targetPage);
 		}else{
 			Log.d("install", "dely:" + (CONST_DEFY - diffSec));
-			mHandler.postDelayed(new HomeThread(), CONST_DEFY - diffSec);
+			mHandler.postDelayed(targetPage, CONST_DEFY - diffSec);
 		}
 	}
 	
@@ -96,10 +106,9 @@ public class InstallAppActivity extends InstallAppUserBaseActivity {
 	private class HomeThread implements Runnable{
 		@Override
 		public void run() {
-			Intent intent = GuideActivity.makeIntent();
+			Intent intent = TabMainActivity.makeIntent();
 			InstallAppActivity.this.startActivity(intent);
 			InstallAppActivity.this.finish();
 		}
 	}
-	
 }

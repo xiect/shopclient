@@ -4,12 +4,22 @@ package com.brains.app.shopclient.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
+import android.text.Selection;
+import android.text.Spannable;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+
 import com.brains.app.shopclient.R;
 import com.brains.app.shopclient.bean.User;
 import com.brains.app.shopclient.common.Util;
@@ -37,6 +47,8 @@ public class LoginActivity extends BaseNormalActivity {
     private EditText mTvPassword;
     private String mUserName;
     private String mPassword;
+    private TextView tvTitle;
+    private CheckBox chkSwitch;
 	
 	/**
 	 * 取得登录画面Intent
@@ -56,7 +68,9 @@ public class LoginActivity extends BaseNormalActivity {
 		mProgressBarArea = (RelativeLayout) findViewById(R.id.rl_loading_area);
 		mTvName = (EditText) findViewById(R.id.login_input_name);
 		mTvPassword = (EditText) findViewById(R.id.login_input_password);
-		
+		tvTitle = (TextView) findViewById(R.id.tv_title);
+		tvTitle.setText(R.string.page_title_login);
+		chkSwitch = (CheckBox) findViewById(R.id.login_switchBtn);
 		btnLogin = (Button) findViewById(R.id.login_comfirm_button);
 		btnLogin.setOnClickListener(new OnClickListener() {
 			@Override
@@ -71,6 +85,23 @@ public class LoginActivity extends BaseNormalActivity {
 			}
 		});
 
+		// password / normal text switch
+		chkSwitch.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				if(isChecked){
+					mTvPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+				}else{
+					mTvPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+				}
+				mTvPassword.invalidate();
+				CharSequence charSequence = mTvPassword.getText();
+                if (charSequence instanceof Spannable) {
+                    Spannable spanText = (Spannable) charSequence;
+                    Selection.setSelection(spanText, charSequence.length());
+                }
+			}
+		});
 	}
 	
 	/**

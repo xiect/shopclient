@@ -404,7 +404,7 @@ class OrderListAdapter extends BaseAdapter {
 		holder.tvName.setText(order.getpName());
 		holder.tvStatus.setText(order.getState());
 		holder.tvOrderNum.setText(order.getPaymentNo());
-		holder.tvTotalPrice.setText(order.getTotalPrice());
+		holder.tvTotalPrice.setText(Util.formatRmb(order.getTotalPrice()));
 		holder.tvOrderTime.setText(order.getOrderTime());
 		String src = order.getImgSrc();
 		if(!StringUtil.isEmpty(src)){
