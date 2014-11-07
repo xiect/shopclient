@@ -2,6 +2,8 @@ package com.brains.framework.db;
 
 import java.io.File;
 
+import com.brains.app.shopclient.common.Util;
+import com.brains.framework.common.Const;
 import com.brains.framework.common.FWUtil;
 import com.brains.framework.db.schema.AbstractSchemaDefinition;
 
@@ -17,7 +19,7 @@ public class DBHelper extends SQLiteOpenHelper
 {
 
     // データベース名
-    public static String DB_NAME = ""; // AP側から初期化される
+//	private static String DB_NAME = ""; // AP側から初期化される
 
     // データベースファイル名
     private static String DB_FULL_PATH = "";
@@ -28,16 +30,16 @@ public class DBHelper extends SQLiteOpenHelper
 
     // DB構造の定義（初期化用）
     AbstractSchemaDefinition schemaDefinition;
-
+    private Context context;
 
     /**
      * コンストラクタ
      */
     public DBHelper(Context context)
     {
-        super(context, DB_NAME, null, DB_VERSION);
+        super(context, Const.DB_MAME, null, DB_VERSION);
 
-        //this.context  = context;
+        this.context  = context;
     }
 
 
@@ -101,6 +103,9 @@ public class DBHelper extends SQLiteOpenHelper
     public void deleteDB()
     {
         FWUtil.d("DBを削除します。");
+        if(Util.isEmpty(DB_FULL_PATH)){
+        	DB_FULL_PATH = "/data/data/" + context.getPackageName() + "/databases/" + Const.DB_MAME;
+        }
         new File(DB_FULL_PATH).delete();
         FWUtil.d("DBを削除しました。");
     }
@@ -109,14 +114,14 @@ public class DBHelper extends SQLiteOpenHelper
     // G&S
 
 
-    /**
-     * DB名を指定する
-     */
-    public static void setDB_NAME(String db_name)
-    {
-        DB_NAME = db_name;
-        FWUtil.d("操作対象のDB名は" + DB_NAME);
-    }
+//    /**
+//     * DB名を指定する
+//     */
+//    public static void setDB_NAME(String db_name)
+//    {
+//        DB_NAME = db_name;
+//        FWUtil.d("操作対象のDB名は" + DB_NAME);
+//    }
 
 
     /**

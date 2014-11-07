@@ -6,6 +6,8 @@ package com.brains.framework.common;
  *
  */
 public interface Const {
+	String DB_MAME = "xiect_shop_db";
+	String APP_TAG = "shopclient";
 	
 //	String REMOTE_SERVER_HOST = "http://192.168.1.104:8080";
 	
@@ -42,4 +44,6 @@ public interface Const {
 	String ORDER_STATUS_7 = "完成";
 	String ORDER_STATUS_8 = "完成";
 	String ORDER_STATUS_9 = "完成";
+	
+	
 }

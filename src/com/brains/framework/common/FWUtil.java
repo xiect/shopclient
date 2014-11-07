@@ -1,7 +1,5 @@
 package com.brains.framework.common;
 
-import com.brains.framework.db.DBHelper;
-
 
 /**
  * FW内でのコアな共通処理
@@ -21,30 +19,32 @@ public class FWUtil extends BaseUtil
         // 設定クラスでstaticメンバを使用できない点に注意。
         // もしstaticにすると，AP側でなくFW側のダミー値が返ってきてしまう。
 
-
+// delete by xiect  delete 静态变量赋值去除
+// 静态变量产生不稳定性
+    	
         // ログのタグを初期化
-        FWUtil.initAppTag( settings.getAppTagForLog() );
-
-
-        // 開発モードのセット
-        FWUtil.initDebuggingMode( settings.isDebuggingFlag() );
-
-        // 開発時プリファレンスクリア設定のセット
-        FWUtil.setForgetPrefOnDebug( settings.isForgetPrefsOnDebug() );
-
-        // 開発時RDBクリア設定のセット
-        FWUtil.setForgetRdbOnDebug( settings.isForgetRdbOnDebug() );
-
-
-        // RDBの名称を登録
-        DBHelper.setDB_NAME( settings.getDbName() );
-
-        // RDBのファイルパスを登録
-        DBHelper.setDB_FULLPATH( settings.getDbFullpath() );
-
-
-        // GoogleMapsのAPI keyをセット
-        FWUtil.setGoogleMapsAPIKey( settings.getGoogleMapsAPIKey() );
+//        FWUtil.initAppTag( settings.getAppTagForLog() );
+//
+//
+//        // 開発モードのセット
+//        FWUtil.initDebuggingMode( settings.isDebuggingFlag() );
+//
+//        // 開発時プリファレンスクリア設定のセット
+//        FWUtil.setForgetPrefOnDebug( settings.isForgetPrefsOnDebug() );
+//
+//        // 開発時RDBクリア設定のセット
+//        FWUtil.setForgetRdbOnDebug( settings.isForgetRdbOnDebug() );
+//
+//
+//        // RDBの名称を登録
+//        DBHelper.setDB_NAME( settings.getDbName() );
+//
+//        // RDBのファイルパスを登録
+//        DBHelper.setDB_FULLPATH( settings.getDbFullpath() );
+//
+//
+//        // GoogleMapsのAPI keyをセット
+//        FWUtil.setGoogleMapsAPIKey( settings.getGoogleMapsAPIKey() );
 
         // 他にAPから渡されるFW側の初期化処理
 

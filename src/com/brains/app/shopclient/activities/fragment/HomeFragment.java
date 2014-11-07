@@ -169,6 +169,7 @@ public class HomeFragment extends BaseFragment implements OnPageChangeListener,O
 			super.onPreExecute();
 			Util.sysLog(TAG, "start get home data from net...");
 			mProgressBar.setVisibility(View.VISIBLE);
+			isReadyShow = false;
 		}
 
 		@Override
@@ -192,6 +193,7 @@ public class HomeFragment extends BaseFragment implements OnPageChangeListener,O
 		protected void onPostExecute(TaskResult result) {
 			super.onPostExecute(result);
 			mPullRefreshScrollView.onRefreshComplete();
+			isReadyShow = true;
 			// 隐藏loading
 			mProgressBar.setVisibility(View.GONE);
 			if (TaskResult.OK == result && tempHomeData != null) {
@@ -244,7 +246,7 @@ public class HomeFragment extends BaseFragment implements OnPageChangeListener,O
 	@Override
 	protected void lazyLoad() {
 		Util.sysLog(TAG,"Home: lazyLoad===isCreatedView:" + isCreatedView +"\tisVisible:" + isVisible);
-		if(isCreatedView && isVisible){
+		if(isCreatedView && isVisible && !isReadyShow){
 			Util.sysLog(TAG, "do lazyLoad");
 			doGetHomeDataList();
 		}else{

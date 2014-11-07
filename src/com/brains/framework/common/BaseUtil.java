@@ -25,7 +25,7 @@ public class BaseUtil
     /**
      * ログ用のタグ。アプリ起動時に，ユーザ定義アプリケーション側で上書きさせる。
      */
-    protected static String APP_TAG = "TODO:";
+    protected static String APP_TAG = Const.APP_TAG;
 
 
     /**

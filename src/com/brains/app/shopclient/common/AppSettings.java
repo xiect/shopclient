@@ -56,7 +56,7 @@ public class AppSettings extends AbstractAppSettings
 
 
         // 開発中モードかどうか
-        DEBUGGING_FLAG = true;
+        DEBUGGING_FLAG = false;
 
 
         // 開発中モードであれば，アプリ起動時に毎回プリファレンスを削除するかどうか。
