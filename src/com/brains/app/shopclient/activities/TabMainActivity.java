@@ -1,6 +1,8 @@
 package com.brains.app.shopclient.activities;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import com.brains.app.shopclient.R;
 import com.brains.app.shopclient.ShoppingApp;
@@ -16,15 +18,20 @@ import com.brains.framework.common.Const;
 import com.brains.framework.widget.BadgeView;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.RadioButton;
@@ -257,8 +264,131 @@ public class TabMainActivity extends FragmentActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		int currentIndex = mViewPager.getCurrentItem();
-		Util.sysLog(TAG, "onActivityResult:" + currentIndex);
-		fragmentList.get(currentIndex).onActivityResult(requestCode, resultCode, data);
+//		int currentIndex = mViewPager.getCurrentItem();
+//		Util.sysLog(TAG, "mViewPager child:" + mViewPager.getChildAt(currentIndex));
+//		Util.sysLog(TAG, "onActivityResult:" + currentIndex);
+//		getSupportFragmentManager().getFragments().get(currentIndex).onActivityResult(requestCode, resultCode, data);
+	}
+
+	private Boolean isHasExit = false;
+	private Boolean isExit = false;
+	private Boolean hasTask = false;
+	private boolean isDialogShow = false;
+	private Timer tExit = new Timer();
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		Log.d(TAG, "event count:" + event.getRepeatCount());
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			Log.d(TAG, "=onKeyDown=== isExit:=====>" + isExit);
+			if (isExit == false) {
+				isExit = true;
+				if (!hasTask) {
+					Log.d(TAG, "=onKeyDown=== hasTask:=====>" + hasTask);
+					hasTask = true;
+					TimerTask task = new TimerTask() {
+						@Override
+						public void run() {
+							isExit = false;
+							Log.d(TAG, "=run== isExit:=====>" + isExit);
+
+							if (!isHasExit && !isDialogShow) {
+								handler.post(new Runnable() {
+									@Override
+									public void run() {
+										String msg = getResources().getString(R.string.msg_confirm_eixt_system);
+										AlertDialog dlg = new AlertDialog.Builder(TabMainActivity.this)
+												.setTitle(msg)
+												.setPositiveButton(
+														"确认",
+														new DialogInterface.OnClickListener() {
+															public void onClick(
+																	DialogInterface dialog,
+																	int whichButton) {
+																dialog.dismiss();
+																isDialogShow = false;
+																finish();
+																System.exit(0);
+															}
+														})
+												.setNegativeButton(
+														"取消",
+														new DialogInterface.OnClickListener() {
+															public void onClick(
+																	DialogInterface dialog,
+																	int whichButton) {
+																dialog.dismiss();
+																isDialogShow = false;
+															}
+														}).create();
+										dlg.setOnKeyListener(new DialogInterface.OnKeyListener() {
+											@Override
+											public boolean onKey(
+													DialogInterface dialog,
+													int keyCode, KeyEvent event) {
+												if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+													dialog.dismiss();
+													isDialogShow = false;
+													return true;
+												}
+												return false;
+											}
+										});
+
+										dlg.show();
+										isDialogShow = true;
+									}
+
+								});
+							}
+							hasTask = false;
+						}
+					};
+					tExit.schedule(task, 250);
+				}
+
+			} else {
+				isHasExit = true;
+				finish();
+				System.exit(0);
+				Log.d(TAG, "===== TimerTask RUN=====");
+			}
+
+		}
+		return false;
+	}
+	
+	private Handler handler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			int what = msg.what;
+			Log.d(TAG, "handleMessage ===>what:" + msg.what);
+			switch (what) {
+			case 0:
+				showExitDialog();
+				break;	
+			default:
+			}
+		}
+	};
+	
+	private void showExitDialog() {
+		String msg = getResources().getString(R.string.msg_confirm_eixt_system);
+		AlertDialog dlg = new AlertDialog.Builder(this)
+				.setTitle(msg)
+				.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+						dialog.dismiss();
+						finish();
+					}
+				})
+				.setNegativeButton("取消",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int whichButton) {
+								dialog.dismiss();
+							}
+						}).create();
+		dlg.show();
 	}
 }
