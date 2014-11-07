@@ -639,7 +639,7 @@
     <string name="cart_product_num">编号:</string>
     <string name="cart_loading">购物车商品同步中...</string>
     <string name="cart_id">编号:</string>
-    <string name="cart_login_tip">您可以在登录后同步电脑与手机购物车中的商品</string>
+    <string name="cart_login_tip">您可以在登录后下单购物车中的商品</string>
     <string name="cart_empty_tip">购物车还是空的，赶紧购物吧~</string>
     <string name="cart_hot_product">去秒杀</string>
     <string name="cart_num">数量：</string>
