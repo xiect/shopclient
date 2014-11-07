@@ -227,16 +227,17 @@ public class SearchActivity extends BaseNormalActivity implements OnClickListene
 		startPointArr[2] = oneOfthree * 2 ;
 		markCurrentPos = 0; // 当前位置取得
 		
+		mListView = (ListView)findViewById(R.id.lv_result_list);	
+		mListFooter = View.inflate(this, R.layout.listview_footer, null);
+	    mListView.addFooterView(mListFooter);
+		loadMoreGIFBtn = (ProgressBar) mListFooter.findViewById(R.id.rectangleProgressBar);
+		mListFooter.setVisibility(View.GONE);
+		
 		// 列表适配
-		mListView = (ListView)findViewById(R.id.lv_result_list);
 		mListViewAdapter = new ProductListAdapter(this,mDataList);
 		mListView.setAdapter(mListViewAdapter);
 		// 注册事件
 		registerOnClickListener(mListView); 
-		mListFooter = View.inflate(this, R.layout.listview_footer, null);
-	    mListView.addFooterView(mListFooter, null, true);
-		loadMoreGIFBtn = (ProgressBar) mListFooter.findViewById(R.id.rectangleProgressBar);
-		
 		
 		// bunding event
 		mTvSortDefault.setOnClickListener(new OnClickListener() {
@@ -408,6 +409,9 @@ public class SearchActivity extends BaseNormalActivity implements OnClickListene
 			mLoading.setVisibility(View.VISIBLE);
 			mTvNoData.setVisibility(View.GONE);
 			mNetErrorView.setVisibility(View.GONE);
+			if(isGetMore && loadMoreGIFBtn != null){
+				loadMoreGIFBtn.setVisibility(View.VISIBLE);	
+			}
 		}
 
 		@Override
@@ -431,16 +435,17 @@ public class SearchActivity extends BaseNormalActivity implements OnClickListene
 			// 隐藏loading
 			mLoading.setVisibility(View.GONE);
 			if(isGetMore){
+				loadMoreGIFBtn.setVisibility(View.GONE);
 				// 加载更多的场合
 				if (TaskResult.OK == result && tempList != null
 						&& tempList.size() > 0) {
 					mDataList.addAll(tempList);
 					// 判断是否要显示更多按钮
-					if(Const.PAGE_COUNT == tempList.size()){
-						// 显示更多按钮
-						loadMoreGIFBtn.setVisibility(View.VISIBLE);
+					if(Const.PAGE_COUNT > tempList.size()){
+						// remove更多按钮
+						mListView.removeFooterView(mListFooter);
 					}else{
-						loadMoreGIFBtn.setVisibility(View.GONE);
+						mListFooter.setVisibility(View.VISIBLE);
 					}
 					// 显示画面
 					showViewWithData();
@@ -460,11 +465,11 @@ public class SearchActivity extends BaseNormalActivity implements OnClickListene
 					mDataList.clear();
 					mDataList.addAll(tempList);
 					// 判断是否要显示更多按钮
-					if(Const.PAGE_COUNT == tempList.size()){
-						// 显示更多按钮
-						loadMoreGIFBtn.setVisibility(View.VISIBLE);
+					if(Const.PAGE_COUNT > tempList.size()){
+						// remove更多按钮
+						mListView.removeFooterView(mListFooter);
 					}else{
-						loadMoreGIFBtn.setVisibility(View.GONE);
+						mListFooter.setVisibility(View.VISIBLE);
 					}
 					// 显示List画面
 					showViewWithData();

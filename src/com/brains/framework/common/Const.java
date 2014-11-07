@@ -9,7 +9,7 @@ public interface Const {
 	String DB_MAME = "xiect_shop_db";
 	String APP_TAG = "shopclient";
 	
-//	String REMOTE_SERVER_HOST = "http://192.168.1.104:8080";
+//	String REMOTE_SERVER_HOST = "http://210.73.152.199:8083";
 	
 	String REMOTE_SERVER_HOST = "http://proem.meibu.net:8085";
 	 
