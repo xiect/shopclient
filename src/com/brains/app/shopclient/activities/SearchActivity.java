@@ -157,7 +157,7 @@ public class SearchActivity extends BaseNormalActivity implements OnClickListene
 		
 		mSortMod = Const.SORT_DEFAULT;
 		// 初始话参数校验
-		doinitParamCheck();
+		doinitParamCheck(true);
 		if(EXTRA_KEYWORD.equals(mSearchMod) && !checkInput()){
 			// keyword 且没有指定 关键字
 		}else{
@@ -171,13 +171,16 @@ public class SearchActivity extends BaseNormalActivity implements OnClickListene
 	 * 校验初始化参数
 	 * 检验失败的场合 画面自动退出并返回上一画面
 	 */
-	private void doinitParamCheck(){
+	private boolean doinitParamCheck(boolean isExitWhenError){
 		if(EXTRA_CATEGORY_ID.equals(mSearchMod)){
 			// 分类查询商品的场合
 			if(Util.isEmpty(mCategoryId)){
 				// 提示请选择有效分类并退出
 				app.showErrorWithToast(R.string.error_choose_category_please);
-				finish();
+				if(isExitWhenError){
+					finish();	
+				}
+				return false;
 			}
 		}
 		
@@ -186,9 +189,18 @@ public class SearchActivity extends BaseNormalActivity implements OnClickListene
 			if(Util.isEmpty(mBrandId)){
 				// 提示请选择有效Brand并退出
 				app.showErrorWithToast(R.string.error_choose_brand_please);
-				finish();
+				if(isExitWhenError){
+					finish();	
+				}
+				return false;
 			}
 		}
+		
+		if(EXTRA_KEYWORD.equals(mSearchMod) && !checkInput()){
+			// keyword 且没有指定 关键字
+			return false;
+		}
+		return true;
 	}
 	
 	private void findView(){
@@ -227,15 +239,18 @@ public class SearchActivity extends BaseNormalActivity implements OnClickListene
 		startPointArr[2] = oneOfthree * 2 ;
 		markCurrentPos = 0; // 当前位置取得
 		
+		// 实例化视图
 		mListView = (ListView)findViewById(R.id.lv_result_list);	
 		mListFooter = View.inflate(this, R.layout.listview_footer, null);
-	    mListView.addFooterView(mListFooter);
 		loadMoreGIFBtn = (ProgressBar) mListFooter.findViewById(R.id.rectangleProgressBar);
-		mListFooter.setVisibility(View.GONE);
+//		mListFooter.setVisibility(View.GONE);
 		
-		// 列表适配
-		mListViewAdapter = new ProductListAdapter(this,mDataList);
-		mListView.setAdapter(mListViewAdapter);
+		// 删除adatper及footer 的配置 转为在获取数据后动态判断是否加footer
+//	    mListView.addFooterView(mListFooter);
+//		// 列表适配
+//		mListViewAdapter = new ProductListAdapter(this,mDataList);
+//		mListView.setAdapter(mListViewAdapter);
+		
 		// 注册事件
 		registerOnClickListener(mListView); 
 		
@@ -281,6 +296,8 @@ public class SearchActivity extends BaseNormalActivity implements OnClickListene
 					if (mImm.isActive( ) ) {     
 						mImm.hideSoftInputFromWindow( v.getApplicationWindowToken() ,0 );   
 			        } 
+					// 将加载更多FLG重置
+					isGetMore = false;
 					doGetProductList();
 				}else{
 					// 提示错误信息
@@ -291,6 +308,18 @@ public class SearchActivity extends BaseNormalActivity implements OnClickListene
 	}
 	
 	
+	private void showListViewWithFooter(){
+		// 列表适配
+		mListView.addFooterView(mListFooter);
+		mListViewAdapter = new ProductListAdapter(this,mDataList);
+		mListView.setAdapter(mListViewAdapter);
+	}
+	
+	private void showListViewWithoutFooter(){
+		mListViewAdapter = new ProductListAdapter(this,mDataList);
+		mListView.setAdapter(mListViewAdapter);
+	}
+	
 	/**
 	 * 重新排序
 	 */
@@ -298,7 +327,10 @@ public class SearchActivity extends BaseNormalActivity implements OnClickListene
 		mSortMod = sort;
 		mCurrentPageNo = 1;
 		isGetMore = false;
-		doGetProductList();
+		// 有参数的情况下执行排序操作
+		if(doinitParamCheck(false)){
+			doGetProductList();	
+		}
 	}
 	
 	private void registerOnClickListener(ListView listView) {
@@ -377,8 +409,6 @@ public class SearchActivity extends BaseNormalActivity implements OnClickListene
 		// 隐藏错误画面
 		mTvNoData.setVisibility(View.GONE);
 		mListView.setVisibility(View.VISIBLE);
-		// 数据更新后刷新列表
-		mListViewAdapter.notifyDataSetChanged();
 	}
 	
 	/**
@@ -411,6 +441,8 @@ public class SearchActivity extends BaseNormalActivity implements OnClickListene
 			mNetErrorView.setVisibility(View.GONE);
 			if(isGetMore && loadMoreGIFBtn != null){
 				loadMoreGIFBtn.setVisibility(View.VISIBLE);	
+				// 显示下一页
+				mCurrentPageNo++;
 			}
 		}
 
@@ -418,6 +450,7 @@ public class SearchActivity extends BaseNormalActivity implements OnClickListene
 		protected TaskResult _doInBackground(TaskParams... params) {
 			try {
 				if(!isGetMore){
+					// 初次加载的场合，显示第一页
 					mCurrentPageNo = 1;
 				}
 				tempList = app.mApi.getSerachList(mKeyWord, mCategoryId, mBrandId, mSortMod,mCurrentPageNo);
@@ -444,12 +477,15 @@ public class SearchActivity extends BaseNormalActivity implements OnClickListene
 					if(Const.PAGE_COUNT > tempList.size()){
 						// remove更多按钮
 						mListView.removeFooterView(mListFooter);
-					}else{
-						mListFooter.setVisibility(View.VISIBLE);
 					}
 					// 显示画面
 					showViewWithData();
+					
+					// 刷新列表
+					mListViewAdapter.notifyDataSetChanged();
 				} else {
+					// 恢复成上一页
+					mCurrentPageNo--;
 					if(TaskResult.FAILED == result && message != null && message.length() > 0){
 						Log.d(TAG, "layout_no_data");
 						app.showErrorWithToast(message);
@@ -466,10 +502,9 @@ public class SearchActivity extends BaseNormalActivity implements OnClickListene
 					mDataList.addAll(tempList);
 					// 判断是否要显示更多按钮
 					if(Const.PAGE_COUNT > tempList.size()){
-						// remove更多按钮
-						mListView.removeFooterView(mListFooter);
+						showListViewWithoutFooter();
 					}else{
-						mListFooter.setVisibility(View.VISIBLE);
+						showListViewWithFooter();
 					}
 					// 显示List画面
 					showViewWithData();
