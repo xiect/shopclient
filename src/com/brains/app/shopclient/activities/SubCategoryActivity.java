@@ -127,6 +127,7 @@ public class SubCategoryActivity extends BaseNormalActivity{
 	 */
 	private class GetCategoryListTask extends GenericTask {
 		String message = null;
+		List<Category> tempList;
 		
 		@Override
 		protected void onPreExecute() {
@@ -139,9 +140,9 @@ public class SubCategoryActivity extends BaseNormalActivity{
 		protected TaskResult _doInBackground(TaskParams... params) {
 			try {
 				// 获得网络数据
-				List<Category> tempList = app.mApi.getSubCategoryList(mCategoryId);
-				mCategoryList.addAll(tempList);
-				tempList = null;
+				tempList = app.mApi.getSubCategoryList(mCategoryId);
+//				mCategoryList.addAll(tempList);
+//				tempList = null;
 				return TaskResult.OK;
 			} catch (AppException e) {
 				message = e.getMessage();
@@ -154,8 +155,11 @@ public class SubCategoryActivity extends BaseNormalActivity{
 		protected void onPostExecute(TaskResult result) {
 			super.onPostExecute(result);
 			// 加载的场合
-			if (TaskResult.OK == result && mCategoryList != null
-					&& mCategoryList.size() > 0) {
+			if (TaskResult.OK == result && tempList != null
+					&& tempList.size() > 0) {
+				mCategoryList.clear();
+				mCategoryList.addAll(tempList);
+				tempList = null;
 				// 显示画面
 				showViewWithData();
 			} else {
