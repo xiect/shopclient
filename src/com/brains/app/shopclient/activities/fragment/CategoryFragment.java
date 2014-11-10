@@ -138,6 +138,7 @@ public class CategoryFragment extends BaseFragment {
 			// 加载的场合
 			if (TaskResult.OK == result && tempList != null
 					&& tempList.size() > 0) {
+				mCategoryList.clear();
 				mCategoryList.addAll(tempList);
 				tempList = null;
 				// 显示画面

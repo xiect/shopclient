@@ -109,6 +109,7 @@ public class BrandFragment extends BaseFragment {
 	 */
 	private class GetBrandListTask extends GenericTask {
 		String message = null;
+		List<Brand> tempList;
 		
 		@Override
 		protected void onPreExecute() {
@@ -121,9 +122,7 @@ public class BrandFragment extends BaseFragment {
 		protected TaskResult _doInBackground(TaskParams... params) {
 			try {
 				// 获得网络数据
-				List<Brand> tempList = app.mApi.getBrandList();
-				mBrandList.addAll(tempList);
-				tempList = null;
+				tempList = app.mApi.getBrandList();
 				return TaskResult.OK;
 			} catch (AppException e) {
 				message = e.getMessage();
@@ -139,8 +138,11 @@ public class BrandFragment extends BaseFragment {
 			// 隐藏loading
 			mProgressBar.setVisibility(View.GONE);
 			// 加载的场合
-			if (TaskResult.OK == result && mBrandList != null
-					&& mBrandList.size() > 0) {
+			if (TaskResult.OK == result && tempList != null
+					&& tempList.size() > 0) {
+				mBrandList.clear();
+				mBrandList.addAll(tempList);
+				tempList = null;
 				// 显示画面
 				showViewWithData();
 			} else {
