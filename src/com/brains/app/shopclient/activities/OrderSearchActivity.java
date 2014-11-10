@@ -174,7 +174,6 @@ public class OrderSearchActivity extends BaseNormalActivity implements OnClickLi
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				Util.sysLog(TAG, "onItemClick======");
-				// TODO CLICK
 				if(arg2 < mDataList.size()){
 					Order order = mDataList.get(arg2);
 					String id = order.getId();
