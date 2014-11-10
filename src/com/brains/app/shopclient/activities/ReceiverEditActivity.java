@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.brains.app.shopclient.R;
 import com.brains.app.shopclient.common.Util;
@@ -26,7 +27,7 @@ public class ReceiverEditActivity extends BaseNormalActivity {
 	private EditText tvTel;
 	private EditText tvZipCode;
 	private EditText tvAdd;
-	
+	private TextView tvTitle;
 	
 	/**
 	 * 取得接货人信息画面Intent
@@ -50,8 +51,10 @@ public class ReceiverEditActivity extends BaseNormalActivity {
 		tvTel = (EditText) findViewById(R.id.reciver_tel);
 		tvZipCode = (EditText) findViewById(R.id.reciver_zip_code);
 		tvAdd = (EditText) findViewById(R.id.reciver_add);
+		tvTitle = (TextView) findViewById(R.id.tv_title);
 		
-		
+		// 画面标题设置
+		tvTitle.setText(R.string.page_title_receiver_info);
 		btnConfirm = (Button)findViewById(R.id.reveiver_comfirm_button);
 		btnConfirm.setOnClickListener(new OnClickListener() {
 			@Override
