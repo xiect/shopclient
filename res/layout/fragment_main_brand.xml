@@ -31,7 +31,7 @@
                 android:dividerHeight="1.0dip"
                 android:paddingRight="8.0dip"
                 android:background="@android:color/white"
-                android:scrollbars="none" />
+                android:scrollbars="vertical" android:scrollbarFadeDuration="0" />
 
             <RelativeLayout
                 android:layout_width="fill_parent"

@@ -21,7 +21,7 @@
 	    
 	    <View android:id="@+id/product_list_tabs_underline" android:background="#ffe1e1e1" android:layout_width="fill_parent" android:layout_height="6.0px"/>
 	    <TextView android:id="@+id/tv_hint_no_data" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="fill_parent" android:gravity="center_vertical|center_horizontal" android:text="@string/no_search_result" />
-		<ListView android:id="@+id/lv_result_list" android:divider="@color/light_gray" android:paddingLeft="5dip" android:paddingRight="5dip" android:dividerHeight="5dip" android:layout_width="fill_parent" android:layout_height="fill_parent" android:background="@color/light_gray"/>
+		<ListView android:id="@+id/lv_result_list" android:divider="@color/light_gray" android:paddingLeft="5dip" android:paddingRight="5dip" android:dividerHeight="5dip" android:layout_width="fill_parent" android:layout_height="fill_parent" android:background="@color/light_gray" android:scrollbars="vertical" android:scrollbarFadeDuration="0"/>
        </LinearLayout>
        <RelativeLayout
                 android:layout_width="fill_parent"

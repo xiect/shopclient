@@ -29,6 +29,6 @@
     <FrameLayout android:background="@color/light_gray"  android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_below="@id/shopping_cart_function_layout" android:layout_above="@id/shopping_cart_count_bottom_layout">
         <include android:layout_gravity="center" android:id="@+id/shopping_cart_no_data" android:layout_width="fill_parent" android:layout_height="fill_parent" layout="@layout/shopping_cart_no_data_layout" />
         <include android:layout_gravity="center" android:id="@+id/shopping_cart_load_error" android:layout_width="wrap_content" android:layout_height="wrap_content" layout="@layout/loading_error_tips" />
-        <ListView android:id="@+id/shopping_cart_list" android:fadingEdge="none" android:layout_width="fill_parent" android:layout_height="fill_parent" android:listSelector="@color/white" android:cacheColorHint="@color/transparent" />
+        <ListView android:id="@+id/shopping_cart_list" android:scrollbars="vertical" android:scrollbarFadeDuration="0" android:fadingEdge="none" android:layout_width="fill_parent" android:layout_height="fill_parent" android:listSelector="@color/white" android:cacheColorHint="@color/transparent" />
     </FrameLayout>
 </RelativeLayout>

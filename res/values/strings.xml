@@ -5,6 +5,7 @@
     <string name="order_time_one_month_before">一个月前订单</string>
     <string name="item_price">商品金额</string>
     <string name="msg_add2card_success">恭喜您,商品已成功加入购物车</string>
+    <string name="page_title_receiver_info">订购人信息</string>
     <string name="page_title_product_detail">商品详细</string>
     <string name="page_title_order_detail">订单详细</string>
     <string name="page_title_login">登录</string>
@@ -65,7 +66,7 @@
     <string name="app_name">商城</string>
     <string name="reciver_name">收货人:</string>
     <string name="reciver_tel">电话:</string>
-    <string name="reciver_add">地址:</string>
+    <string name="reciver_add">备注:</string>
     <string name="reciver_code">邮编:</string>
     
     <string name="person_menu_query_order">订单查询</string>
