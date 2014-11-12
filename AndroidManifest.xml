@@ -39,46 +39,6 @@
             </intent-filter>
         </activity>
         
-        <!-- 首页画面 -->
-        <activity android:name=".activities.HomeActivity" android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="brains.intent.action.ACTION_HOME" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        
-		<!-- 品类画面 -->
-        <activity android:name=".activities.CategoryActivity" android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="brains.intent.action.ACTION_CATEGORY" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        
-		<!-- 品牌画面 -->
-        <activity android:name=".activities.BrandActivity" android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="brains.intent.action.ACTION_BRAND" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        
-   		<!-- 购物车画面 -->
-        <activity android:name=".activities.CartActivity" android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="brains.intent.action.ACTION_CART" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-   		<!-- 我的画面 -->
-        <activity android:name=".activities.MyActivity" android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="brains.intent.action.ACTION_MY" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        
-        
         <activity android:name=".activities.TabMainActivity" android:screenOrientation="portrait" android:hardwareAccelerated="false">
             <intent-filter>
                 <action android:name="brains.intent.action.ACTION_TABMAIN" />
@@ -147,6 +107,21 @@
         <activity android:name=".activities.OrderDetailActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="brains.intent.action.ACTION_ORDER_DETAIL" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity> 
+		<!-- 注册画面 -->
+        <activity android:name=".activities.RegisterActivity" android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="brains.intent.action.ACTION_REGISTER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity> 
+        
+        <!-- 商户选择画面 -->
+        <activity android:name=".activities.ShopTypeSelectActivity" android:screenOrientation="portrait" android:theme="@style/Dialog_Fullscreen">
+            <intent-filter>
+                <action android:name="brains.intent.action.ACTION_SHOP_TYPE" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity> 
