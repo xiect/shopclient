@@ -33,7 +33,9 @@
                 
                 <CheckBox android:textColor="#ff333333" android:id="@+id/remember_user" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="26.699982dip" android:layout_marginTop="13.299988dip" android:button="@drawable/login_remember" android:text="@string/remember_user" android:layout_below="@id/login_editor_layout" android:layout_alignParentLeft="true" />
                 
-                <Button android:textSize="20.0sp" android:textColor="@color/white" android:gravity="center" android:id="@+id/login_comfirm_button" android:background="@drawable/free_register_bg" android:layout_width="fill_parent" android:layout_height="42.0dip" android:layout_marginLeft="13.299988dip" android:layout_marginTop="13.299988dip" android:layout_marginRight="13.299988dip" android:text="@string/login" android:layout_below="@id/remember_user" />
+                <Button android:textSize="20.0sp" android:textColor="@color/white" android:gravity="center" android:id="@+id/login_comfirm_button" android:background="@drawable/free_login_bg" android:layout_width="fill_parent" android:layout_height="42.0dip" android:layout_marginLeft="13.299988dip" android:layout_marginTop="13.299988dip" android:layout_marginRight="13.299988dip" android:text="@string/login" android:layout_below="@id/remember_user" />
+                
+                <Button android:textSize="20.0sp" android:textColor="@color/white" android:gravity="center" android:id="@+id/register__button" android:background="@drawable/free_register_bg" android:layout_width="fill_parent" android:layout_height="42.0dip" android:layout_marginLeft="13.299988dip" android:layout_marginTop="13.299988dip" android:layout_marginRight="13.299988dip" android:text="@string/regist" android:layout_below="@id/login_comfirm_button" />
             </RelativeLayout>
             
 	     	<RelativeLayout

@@ -15,7 +15,7 @@
 
         <include
             android:id="@+id/common_title_2"
-            layout="@layout/app_head_search_category" />
+            layout="@layout/app_head_search_brand" />
     </RelativeLayout>
 
         <FrameLayout 

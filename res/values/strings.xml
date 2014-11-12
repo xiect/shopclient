@@ -1,4 +1,22 @@
 <resources>
+    <string name="shop_type_1">资质类别：</string>
+    <string name="shop_type_2">信誉等级：</string>
+    <string name="shop_type_3">商户类型：</string>
+    
+    <string name="shop_type_1_all">全部</string>
+    <string name="shop_type_2_all">全部</string>
+    <string name="shop_type_3_all">全部</string>
+    
+    <string name="shop_type_1_one">一类</string>
+    <string name="shop_type_1_two">二类</string>
+    <string name="shop_type_1_three">三类</string>
+    
+    <string name="shop_type_2_a">A级</string>
+    <string name="shop_type_2_aa">AA级</string>
+    <string name="shop_type_2_aaa">AAA级</string>
+    
+    <string name="shop_type_3_4s">品牌4S店</string>
+    <string name="shop_type_3_com">综合维修</string>
     
     <string name="msg_confirm_eixt_system">确认要退出系统吗?</string>
     <string name="order_time_one_month">近一个月订单</string>
@@ -9,6 +27,7 @@
     <string name="page_title_product_detail">商品详细</string>
     <string name="page_title_order_detail">订单详细</string>
     <string name="page_title_login">登录</string>
+    <string name="page_title_regster">会员注册</string>
    <string name="page_title_order_search">订单中心</string>
    <string name="content_order_status">订单状态：</string>
     <string name="content_order_money">订单金额</string>
@@ -41,7 +60,10 @@
     <string name="msg_no_data">没有数据</string>
     <string name="user_name">用户名：</string>
     <string name="verification_code">验证码：</string>
+    <string name="user_tel">电    话：</string>
+    <string name="user_mail">邮    箱：</string>
     <string name="user_password">密    码：</string>
+    <string name="user_password_confim">确认密码：</string>
     <string name="login_failed_title">登录失败</string>
     <string name="login_failed_message">登录失败：用户名或密码错误</string>
     <string name="login_user_name_error_hint">请输入用户名</string>
@@ -99,7 +121,7 @@
 	<string name="input_username">请输入用户名</string>
 	<string name="input_password">请输入密码</string>
     <string name="login">登录</string>
-    
+    <string name="regist">注册</string>
 	
    
     <string name="omenu_exit">退出</string>
