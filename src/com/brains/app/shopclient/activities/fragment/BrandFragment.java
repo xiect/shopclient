@@ -5,16 +5,19 @@ import java.util.List;
 
 import com.brains.app.shopclient.R;
 import com.brains.app.shopclient.activities.SearchActivity;
+import com.brains.app.shopclient.activities.ShopTypeSelectActivity;
 import com.brains.app.shopclient.adapter.BrandListAdapter;
 import com.brains.app.shopclient.bean.Brand;
 import com.brains.app.shopclient.common.Util;
 
+import com.brains.framework.common.Const;
 import com.brains.framework.exception.AppException;
 import com.brains.framework.task.GenericTask;
 import com.brains.framework.task.TaskParams;
 import com.brains.framework.task.TaskResult;
 
-import android.support.v4.app.Fragment;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -45,11 +48,21 @@ public class BrandFragment extends BaseFragment {
 	private ProgressBar mProgressBar;
 	private Button mBtnReload;
 	private RelativeLayout rlSearchHeader;
+	private LinearLayout btnHeaderChoose; // 顶部按钮
+	private static final int REQUEST_CODE_4_TYPE = 1;
+	
+	private String mZizhi;
+	private String mXinyu;
+	private String mCategory;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
+		mZizhi = Const.TYPE_ALL;
+		mXinyu = Const.TYPE_ALL;
+		mCategory = Const.TYPE_ALL;
+		
 		fragmentView = inflater.inflate(R.layout.fragment_main_brand, container,false);
 		findView();
 		lazyLoad();
@@ -57,6 +70,7 @@ public class BrandFragment extends BaseFragment {
 	}
 	
 	private void findView(){
+		btnHeaderChoose = (LinearLayout)fragmentView.findViewById(R.id.common_header_right_btn_area);
 		mProgressBar = (ProgressBar)fragmentView.findViewById(R.id.top_refresh_progressBar);
 		rlSearchHeader = (RelativeLayout)fragmentView.findViewById(R.id.home_title_search);
 		rlSearchHeader.setOnClickListener(new OnClickListener() {
@@ -70,6 +84,12 @@ public class BrandFragment extends BaseFragment {
 			@Override
 			public void onClick(View v) {
 				doGetBrandList();
+			}
+		});
+		btnHeaderChoose.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivityForResult(ShopTypeSelectActivity.makeIntent(mZizhi,mXinyu,mCategory), REQUEST_CODE_4_TYPE);
 			}
 		});
 		
@@ -122,7 +142,7 @@ public class BrandFragment extends BaseFragment {
 		protected TaskResult _doInBackground(TaskParams... params) {
 			try {
 				// 获得网络数据
-				tempList = app.mApi.getBrandList();
+				tempList = app.mApi.getBrandList(mZizhi,mXinyu,mCategory);
 				return TaskResult.OK;
 			} catch (AppException e) {
 				message = e.getMessage();
@@ -189,5 +209,32 @@ public class BrandFragment extends BaseFragment {
 				}
 			}
 		});
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		Util.sysLog(TAG, "onActivityResult===");
+		if(requestCode == REQUEST_CODE_4_TYPE && resultCode == Activity.RESULT_OK){
+			if(data != null){
+				String value = data.getStringExtra(ShopTypeSelectActivity.EXTRA_ZIZHI); 
+				if(!Util.isEmpty(value)){
+					mZizhi = value;
+				}
+				
+				value = data.getStringExtra(ShopTypeSelectActivity.EXTRA_XINYU); 
+				if(!Util.isEmpty(value)){
+					mXinyu = value;
+				}
+				
+				value = data.getStringExtra(ShopTypeSelectActivity.EXTRA_CATE); 
+				if(!Util.isEmpty(value)){
+					mCategory = value;
+				}
+				Util.sysLog(TAG, "mZizhi==="+mZizhi +"\tmXinyu:" + mXinyu + "\tmCategory:" + mCategory);
+				// reload data
+				doGetBrandList();
+			}
+		}
 	}
 }

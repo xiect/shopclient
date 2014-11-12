@@ -8,7 +8,6 @@ import org.json.JSONObject;
 
 import com.brains.app.shopclient.bean.Brand;
 import com.brains.app.shopclient.bean.Category;
-import com.brains.app.shopclient.bean.Home;
 import com.brains.app.shopclient.bean.Order;
 import com.brains.app.shopclient.bean.User;
 import com.brains.app.shopclient.db.entity.Product;
@@ -83,10 +82,18 @@ public class Api implements java.io.Serializable {
 	 * 获取品牌列表。
 	 * @return List<KpResult>
 	 */
-	public List<Brand> getBrandList()
+	public List<Brand> getBrandList(String zizhi,String xinyu,String cate)
 			throws AppException {
+		String tempZizhi = Util.formatZizhi(zizhi);
+		String tempXinyu = Util.zero2Blank(xinyu);
+		String tempCat = Util.zero2Blank(cate);
+		
 		String url = remoteDomain + "/vsisfront/appLogin/selectBusiness.do";
-		return Brand.constructListFromJson(http.get(url).asJSONObject());
+		return Brand.constructListFromJson(http.post(url,createParams(
+				new BasicNameValuePair("businessAptitude", tempZizhi),
+				new BasicNameValuePair("businessCredit", tempXinyu),
+				new BasicNameValuePair("businessType", tempCat)
+				)).asJSONObject());
 	}
 	
 	/**
@@ -122,6 +129,24 @@ public class Api implements java.io.Serializable {
 //		String url = remoteDomain + "/webServerTest/TestServlet";
 		
 		return User.constructFromJson(http.get(url).asJSONObject());
+	}
+	
+	public User regist(String name, String mail,String tel,String p1,String p2) throws AppException {
+		http.setCredentials(name, p1);
+		Util.sysLog("API", "userName:" + name);
+		Util.sysLog("API", "mail:" + mail);
+		Util.sysLog("API", "tel:" + tel);
+		Util.sysLog("API", "P1:" + p1);
+		
+		String url = remoteDomain + "/vsisfront/appLogin/register.do";
+		return User.constructFromJson(http.post(url,createParams(
+				new BasicNameValuePair("userName", name),
+				new BasicNameValuePair("passWord", p1),
+				new BasicNameValuePair("repassWord", p2),
+				new BasicNameValuePair("email", mail),
+				new BasicNameValuePair("phone", tel)
+				
+		)).asJSONObject());
 	}
 	
 	/**

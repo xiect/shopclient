@@ -39,6 +39,7 @@ public class LoginActivity extends BaseNormalActivity {
 	private final static String ACTION_LOGIN = "brains.intent.action.ACTION_LOGIN";
 
 	public static final String TAG = "LoginActivity";
+	private Button btnRegist;
 	private Button btnLogin;
     private GenericTask mLoginTask;
     private User mLoginResult;
@@ -49,6 +50,7 @@ public class LoginActivity extends BaseNormalActivity {
     private String mPassword;
     private TextView tvTitle;
     private CheckBox chkSwitch;
+    private static final int REQUEST_CODE_REGIST = 1;
 	
 	/**
 	 * 取得登录画面Intent
@@ -71,6 +73,8 @@ public class LoginActivity extends BaseNormalActivity {
 		tvTitle = (TextView) findViewById(R.id.tv_title);
 		tvTitle.setText(R.string.page_title_login);
 		chkSwitch = (CheckBox) findViewById(R.id.login_switchBtn);
+	
+		btnRegist = (Button) findViewById(R.id.register__button);
 		btnLogin = (Button) findViewById(R.id.login_comfirm_button);
 		btnLogin.setOnClickListener(new OnClickListener() {
 			@Override
@@ -85,6 +89,13 @@ public class LoginActivity extends BaseNormalActivity {
 			}
 		});
 
+		btnRegist.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivityForResult(RegisterActivity.makeIntent(), REQUEST_CODE_REGIST); 
+			}
+		});
+		
 		// password / normal text switch
 		chkSwitch.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
@@ -210,5 +221,18 @@ public class LoginActivity extends BaseNormalActivity {
 		
 		setResult(result, data);
 		finish();
+	}
+
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if(REQUEST_CODE_REGIST == requestCode && Activity.RESULT_OK == resultCode){
+			// 注册成功后回到登录画面
+			// 登录画面退出，回到主页面
+			finish();
+		}else{
+			Util.sysLog(TAG, "onActivityResult cancel");
+		}
 	}
 }

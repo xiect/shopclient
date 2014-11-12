@@ -35,15 +35,18 @@ public interface Const {
 	String USER_FIRST_YES = "YES";
 	String USER_FIRST_NO = "N0";
 	
-	String ORDER_STATUS_1 = "完成";
-	String ORDER_STATUS_2 = "完成";
-	String ORDER_STATUS_3 = "完成";
-	String ORDER_STATUS_4 = "完成";
-	String ORDER_STATUS_5 = "完成";
-	String ORDER_STATUS_6 = "完成";
-	String ORDER_STATUS_7 = "完成";
-	String ORDER_STATUS_8 = "完成";
-	String ORDER_STATUS_9 = "完成";
+	// SHOP TYPE
+	String TYPE_ALL = "0";
+	String TYPE_1_ONE = "1";
+	String TYPE_1_TWO = "2";
+	String TYPE_1_THREE = "3";
+	
+	String TYPE_2_A = "1";
+	String TYPE_2_AA = "2";
+	String TYPE_2_AAA = "3";
+	
+	String TYPE_3_4S = "1";
+	String TYPE_3_OTHER = "2";
 	
 	
 }

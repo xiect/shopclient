@@ -3,6 +3,7 @@ package com.brains.app.shopclient.common;
 import android.util.Log;
 
 import com.brains.framework.common.BaseUtil;
+import com.brains.framework.common.Const;
 
 /**
  * アプリ内でのコアな共通処理
@@ -93,5 +94,25 @@ public class Util extends BaseUtil {
 	public static String getOrderStatusDesc(String code){
 			String msg = "";
 			return msg;
-	};
+	}
+	
+	public static String formatZizhi(String str){
+		String retVal = "";
+		try{
+			String[] values = new String[]{"","A","AA","AAA"};
+			int index = Integer.parseInt(str);
+			retVal = values[index];
+		}catch (Exception e) {
+			
+		}
+		return retVal;
+	}
+	
+	
+	public static String zero2Blank(String str){
+		if(Const.TYPE_ALL.equals(str)){
+			return "";
+		}
+		return str;
+	}
 }
