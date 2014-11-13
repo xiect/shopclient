@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.brains.app.shopclient.R;
+import com.brains.app.shopclient.ShoppingApp;
 import com.brains.app.shopclient.bean.Category;
 import com.brains.app.shopclient.common.Util;
 import com.brains.framework.util.StringUtil;
@@ -66,7 +67,8 @@ public class CategoryListAdapter extends BaseAdapter {
 		holder.desc.setText(category.getDesc());
 		String src = category.getImgSrc();
 		if(!StringUtil.isEmpty(src)){
-			ImageLoader.getInstance().displayImage(src, holder.imageView);
+			ShoppingApp app = (ShoppingApp) context.getApplicationContext();
+			ImageLoader.getInstance().displayImage(src, holder.imageView,app.getCategoryImgOption());
 		}
 		return convertView;
 	}

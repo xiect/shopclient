@@ -3,6 +3,7 @@ package com.brains.app.shopclient.adapter;
 import java.util.List;
 
 import com.brains.app.shopclient.R;
+import com.brains.app.shopclient.ShoppingApp;
 import com.brains.app.shopclient.adapter.BrandListAdapter.ViewHolder;
 import com.brains.app.shopclient.bean.Brand;
 import com.brains.framework.util.StringUtil;
@@ -70,7 +71,8 @@ public class BrandListAdapter extends BaseAdapter {
 		holder.desc.setText(Brand.getDesc());
 		String src = Brand.getImgSrc();
 		if(!StringUtil.isEmpty(src)){
-			ImageLoader.getInstance().displayImage(src, holder.imageView);
+			ShoppingApp app = (ShoppingApp) context.getApplicationContext();
+			ImageLoader.getInstance().displayImage(src, holder.imageView,app.getCategoryImgOption());
 		}
 		return convertView;
 	}

@@ -4,6 +4,7 @@ package com.brains.app.shopclient.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.brains.app.shopclient.R;
 import com.brains.framework.activities.base.BaseNormalActivity;
@@ -29,5 +30,7 @@ public class AboutActivity extends BaseNormalActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.about_activity);
+		TextView tvTitle = (TextView) findViewById(R.id.tv_title);
+		tvTitle.setText(R.string.page_title_about);
 	}
 }

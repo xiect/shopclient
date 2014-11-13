@@ -9,6 +9,7 @@ import com.brains.app.shopclient.common.Util;
 import com.brains.app.shopclient.db.dao.PrefDAO;
 import com.brains.framework.widget.BadgeView;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.UsingFreqLimitedMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -22,7 +23,6 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
-import android.widget.RadioButton;
 import android.widget.Toast;
 import android.graphics.Bitmap;
 
@@ -64,8 +64,24 @@ public class ShoppingApp extends Application {
 	}
 	
 	private void initImageLoader(){
+		categoryLoadOption = new DisplayImageOptions.Builder()
+        .showImageOnLoading(R.drawable.product_icon_default) // resource or drawable
+        .showImageForEmptyUri(R.drawable.product_icon_default) // resource or drawable
+        .showImageOnFail(R.drawable.product_icon_default) // resource or drawable
+        .resetViewBeforeLoading(false)  // default
+        .delayBeforeLoading(500)
+        .cacheInMemory(true) // default
+        .cacheOnDisk(true) // default
+        .imageScaleType(ImageScaleType.EXACTLY) 
+        .bitmapConfig(Bitmap.Config.RGB_565)
+        .build();
+		
+		
 		File cacheDir = StorageUtils.getOwnCacheDirectory(getApplicationContext(), "imageloader/Cache"); 
+		
+		Util.sysLog(TAG, "image cache path:" + cacheDir.getAbsolutePath());
 		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)  
+		.defaultDisplayImageOptions(categoryLoadOption)
 		.memoryCacheExtraOptions(480, 800) 
 		.diskCacheExtraOptions(480, 800, null)
 		.threadPoolSize(2)
@@ -73,30 +89,22 @@ public class ShoppingApp extends Application {
 		.denyCacheImageMultipleSizesInMemory()  
 		.memoryCache(new UsingFreqLimitedMemoryCache(2 * 1024 * 1024))  
 		.memoryCacheSize(2 * 1024 * 1024)    
-		.diskCache(new UnlimitedDiscCache(cacheDir)) 
+		.diskCacheFileNameGenerator(new Md5FileNameGenerator())
         .diskCacheSize(50 * 1024 * 1024)
         .diskCacheFileCount(100)
+        .diskCache(new UnlimitedDiscCache(cacheDir)) 
 		.tasksProcessingOrder(QueueProcessingType.FIFO)  
 		.defaultDisplayImageOptions(DisplayImageOptions.createSimple())  
 		.writeDebugLogs() 
 		.build(); 
 		
 		ImageLoader.getInstance().init(config);
-		
-		categoryLoadOption = new DisplayImageOptions.Builder()
-        .showImageOnLoading(R.drawable.product_icon_default) // resource or drawable
-        .showImageForEmptyUri(R.drawable.product_icon_default) // resource or drawable
-        .showImageOnFail(R.drawable.product_icon_default) // resource or drawable
-        .resetViewBeforeLoading(false)  // default
-        .delayBeforeLoading(1000)
-        .cacheInMemory(false) // default
-        .cacheOnDisk(true) // default
-        .imageScaleType(ImageScaleType.EXACTLY) 
-        .bitmapConfig(Bitmap.Config.RGB_565)
-        .build();
 	}
 	
 	public DisplayImageOptions getCategoryImgOption(){
+		if(categoryLoadOption == null){
+			initImageLoader();
+		}
 		return categoryLoadOption;
 	}
 	

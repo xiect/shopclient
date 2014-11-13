@@ -234,6 +234,7 @@ public class CartFragment extends BaseFragment {
 					Util.sysLog(TAG, "删除购物车中的商品");
 					app.cart.deleteSelectedProduct(getActivity());
 					showCartListView();
+					mAdapter.notifyDataSetChanged();
 				}
 			})
 			.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -288,7 +289,6 @@ public class CartFragment extends BaseFragment {
 //			btnOrder.setText(btnTitle);
 			
 		}
-		mAdapter.notifyDataSetChanged();
 	}
 	
 	/**
@@ -400,6 +400,7 @@ public class CartFragment extends BaseFragment {
 				// 显示错误画面
 				showErrorView();
 			}
+			mAdapter.notifyDataSetChanged();
 		}
 
 		@Override

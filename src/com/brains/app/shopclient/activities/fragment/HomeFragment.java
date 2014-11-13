@@ -6,9 +6,9 @@ import java.util.List;
 import org.json.JSONObject;
 
 import com.brains.app.shopclient.R;
+import com.brains.app.shopclient.activities.ProductDetailActivity;
 import com.brains.app.shopclient.activities.SearchActivity;
 import com.brains.app.shopclient.activities.SubCategoryActivity;
-import com.brains.app.shopclient.adapter.CategoryListAdapter;
 import com.brains.app.shopclient.bean.Category;
 import com.brains.app.shopclient.bean.Home;
 import com.brains.app.shopclient.common.Util;
@@ -39,13 +39,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
+
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
 
 /**
@@ -59,24 +57,24 @@ public class HomeFragment extends BaseFragment implements OnPageChangeListener,O
 	public static final int  SCROLL_WHAT = 0;
 	
 	private PullToRefreshScrollView mPullRefreshScrollView;
-	private ScrollView mScrollView;
 	private RelativeLayout rlSearchHeader;
 	
 	private ViewPager viewPagerBanner;
 	private ImageView[] tips;
 	private List<ImageView> mImageViewList;
 	
-	private float startX,startY;
 	private Handler bannerHandler;
 	private LinearLayout mErrorView;
 	private GetDataTask mTask;
-	private Home mHomeData;
-	private List<Category> mCategoryList;
-	private List<Product> mItemList;
 	private RelativeLayout mProgressBar;
 	private boolean isReadyShow;
 	
 	private ViewGroup llRecommendGroup;
+	private List<Product> mSusumeList;
+	private RelativeLayout[] susumeViews;
+	private ImageView[] susumeImageViews;
+	private TextView[] susumeNameViews;
+	private TextView[] susumePriceViews;
 	
 	private class BannerHandler extends Handler {
         @Override
@@ -92,6 +90,22 @@ public class HomeFragment extends BaseFragment implements OnPageChangeListener,O
         }
     }
     
+	OnClickListener susumeClickListen = new OnClickListener(){
+		@Override
+		public void onClick(View v) {
+			Util.sysLog(TAG, "susume view:" + v.getClass().getName());
+			Util.sysLog(TAG, "susume tag:" + v.getTag());
+			String tag = (String)v.getTag();
+			if(!Util.isEmpty(tag)){
+				int index = Integer.parseInt(tag);
+				Product item = mSusumeList.get(index);
+				// 商品详细迁移
+				startActivity(ProductDetailActivity.makeIntent(item));
+//				getActivity().overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);	
+			}
+		}
+	};
+	
 	OnClickListener bannerClickListen = new OnClickListener(){
 		@Override
 		public void onClick(View v) {
@@ -149,6 +163,40 @@ public class HomeFragment extends BaseFragment implements OnPageChangeListener,O
 		// recommend container
 		llRecommendGroup = (ViewGroup) fragmentView.findViewById(R.id.ll_recommend_group);
 		
+		// 推荐商品
+		susumeViews = new RelativeLayout[6];
+		susumeImageViews = new ImageView[6];
+		susumeNameViews = new TextView[6];
+		susumePriceViews = new TextView[6];
+		
+		susumeViews[0] = (RelativeLayout)fragmentView.findViewById(R.id.home_row1_left);
+		susumeViews[1] = (RelativeLayout)fragmentView.findViewById(R.id.home_row1_right);
+		susumeViews[2] = (RelativeLayout)fragmentView.findViewById(R.id.home_row2_left);
+		susumeViews[3] = (RelativeLayout)fragmentView.findViewById(R.id.home_row2_right);
+		susumeViews[4] = (RelativeLayout)fragmentView.findViewById(R.id.home_row3_left);
+		susumeViews[5] = (RelativeLayout)fragmentView.findViewById(R.id.home_row3_right);
+		
+		susumeImageViews[0] = (ImageView)fragmentView.findViewById(R.id.home_row1_left_image);
+		susumeImageViews[1] = (ImageView)fragmentView.findViewById(R.id.home_row1_right_image);
+		susumeImageViews[2] = (ImageView)fragmentView.findViewById(R.id.home_row2_left_image);
+		susumeImageViews[3] = (ImageView)fragmentView.findViewById(R.id.home_row2_right_image);
+		susumeImageViews[4] = (ImageView)fragmentView.findViewById(R.id.home_row3_left_image);
+		susumeImageViews[5] = (ImageView)fragmentView.findViewById(R.id.home_row3_right_image);
+		
+		susumeNameViews[0] = (TextView)fragmentView.findViewById(R.id.home_row1_left_name);
+		susumeNameViews[1] = (TextView)fragmentView.findViewById(R.id.home_row1_right_name);
+		susumeNameViews[2] = (TextView)fragmentView.findViewById(R.id.home_row2_left_name);
+		susumeNameViews[3] = (TextView)fragmentView.findViewById(R.id.home_row2_right_name);
+		susumeNameViews[4] = (TextView)fragmentView.findViewById(R.id.home_row3_left_name);
+		susumeNameViews[5] = (TextView)fragmentView.findViewById(R.id.home_row3_right_name);
+		
+		susumePriceViews[0] = (TextView)fragmentView.findViewById(R.id.home_row1_left_price);
+		susumePriceViews[1] = (TextView)fragmentView.findViewById(R.id.home_row1_right_price);
+		susumePriceViews[2] = (TextView)fragmentView.findViewById(R.id.home_row2_left_price);
+		susumePriceViews[3] = (TextView)fragmentView.findViewById(R.id.home_row2_right_price);
+		susumePriceViews[4] = (TextView)fragmentView.findViewById(R.id.home_row3_left_price);
+		susumePriceViews[5] = (TextView)fragmentView.findViewById(R.id.home_row3_right_price);
+		
 		// 加载缓存数据
 		loadCache();
 		
@@ -202,7 +250,7 @@ public class HomeFragment extends BaseFragment implements OnPageChangeListener,O
 						&& tempHomeData.getCategoryList().size() > 0 
 						&& tempHomeData.getItemList().size() > 0){
 					// 显示画面
-					showViewWithData(tempHomeData.getItemList(),tempHomeData.getCategoryList());					
+					showViewWithData(tempHomeData.getItemList(),tempHomeData.getCategoryList(),tempHomeData.getSusumeList());					
 				}
 			} else {
 				if(TaskResult.FAILED == result && message != null && message.length() > 0){
@@ -276,23 +324,26 @@ public class HomeFragment extends BaseFragment implements OnPageChangeListener,O
 		}
 		List<Category> tempCategoryList = tempHomeData.getCategoryList();
 		List<Product> tempItemList = tempHomeData.getItemList();
+		List<Product> tempSusumeList = tempHomeData.getSusumeList();
 		if(tempCategoryList == null 
 				|| tempCategoryList.size() < 1
 				|| tempItemList == null
-				|| tempItemList.size() < 1){
+				|| tempItemList.size() < 1
+				|| tempSusumeList == null
+				|| tempSusumeList.size() < 1){
 			// 缓存不正停止加载
 			return;
 		}
 		
 		// 显示画面
-		showViewWithData(tempItemList,tempCategoryList);
+		showViewWithData(tempItemList,tempCategoryList,tempSusumeList);
 	}
 	
 	/**
 	 * 用数据填充视图
 	 * banner & category
 	 */
-	private void showViewWithData(List<Product> bannerList,List<Category> recommendList){
+	private void showViewWithData(List<Product> bannerList,List<Category> recommendList,List<Product> susumeList){
 		// 前提list 是有数据的
 		int imageSize = bannerList.size();
 		mImageViewList = new ArrayList<ImageView>(imageSize);
@@ -312,7 +363,7 @@ public class HomeFragment extends BaseFragment implements OnPageChangeListener,O
 			mImageViewList.add(tempImgView);
 			src = item.getImgSrc();
 			if(!Util.isEmpty(src)){
-				ImageLoader.getInstance().displayImage(src, tempImgView);	
+				ImageLoader.getInstance().displayImage(src, tempImgView,app.getCategoryImgOption());	
 			}
 		}
 		
@@ -366,9 +417,29 @@ public class HomeFragment extends BaseFragment implements OnPageChangeListener,O
 		// show Category
 		Util.sysLog(TAG, "recommendList size:" + recommendList.size());
 		showRecommendWithData(recommendList);
+		
+		// showSusume
+		Util.sysLog(TAG, "susumeList size:" + susumeList.size());
+		showSusumeWithData(susumeList);
+		
 		isReadyShow = true;
 	}
 	
+	private void showSusumeWithData(List<Product> susumeList){
+		this.mSusumeList = susumeList;
+		int len = susumeList.size();
+		Product item = null;
+		for(int index = 0;index < len; index++){
+			item = susumeList.get(index);
+			susumeNameViews[index].setText(item.getName());
+			susumePriceViews[index].setText(Util.formatRmb(item.getPrice()));
+			String src = item.getImgSrc();
+			if(!Util.isEmpty(src)){
+				ImageLoader.getInstance().displayImage(src,susumeImageViews[index],app.getCategoryImgOption());
+			}
+			susumeViews[index].setOnClickListener(susumeClickListen);
+		}
+	}
 	
 	private void showRecommendWithData(List<Category> recommendsList){
 		llRecommendGroup.removeAllViews();
@@ -392,7 +463,7 @@ public class HomeFragment extends BaseFragment implements OnPageChangeListener,O
 			
 			if(!Util.isEmpty(cat.getImgSrc())){
 				imageView = (ImageView)view.findViewById(R.id.category_item_img);
-				ImageLoader.getInstance().displayImage(cat.getImgSrc(), imageView);
+				ImageLoader.getInstance().displayImage(cat.getImgSrc(), imageView,app.getCategoryImgOption());
 			}
 			
 			layoutParams = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));  
