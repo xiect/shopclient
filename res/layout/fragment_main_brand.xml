@@ -56,6 +56,7 @@
                     android:layout_centerInParent="true"
                     layout="@layout/loading_error_tips" />
             </RelativeLayout>
+            <TextView android:id="@+id/tv_hint_no_data" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="fill_parent" android:gravity="center_vertical|center_horizontal" android:text="@string/no_search_result4shop" />
         </FrameLayout>
   
 

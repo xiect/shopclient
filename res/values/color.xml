@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="haf_transparent">#9000</color>
     <color name="page_lighter_gray">#F1F1F2</color>
     <color name="page_lighter_blue">#3399FF</color>
     
