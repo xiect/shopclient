@@ -41,7 +41,7 @@
 				    </RelativeLayout>	
 		    	</LinearLayout>
 		    	<!-- 商品介绍  商品参数  用户评价-->
-		    	<LinearLayout android:layout_marginTop="30dp" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/panel_bg" android:layout_margin="10dp">
+		    	<LinearLayout android:layout_marginTop="30dp" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/panel_bg" android:layout_margin="10dp">
 				    <!-- 商品介绍 -->	
 				    <RelativeLayout  android:id="@+id/product_descrip_view" android:layout_width="fill_parent" android:layout_height="wrap_content" android:padding="10dp" android:clickable="true" android:background="@drawable/b2c_wrap_view_selector" >
 				    	<TextView android:text="@string/product_description_label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerVertical="true" style="@style/BigText"/>

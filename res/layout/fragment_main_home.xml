@@ -47,13 +47,17 @@
             ptr:ptrAnimationStyle="flip"
             ptr:ptrMode="pullFromStart" >
  				 <RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent" >
+                    <!--  banner area -->
                     <FrameLayout android:id="@+id/fl_banner_area" android:layout_width="fill_parent" android:layout_height="200dp" android:orientation="vertical" android:layout_alignParentTop="true" >
 		                <android.support.v4.view.ViewPager android:id="@+id/viewPager_banner" android:layout_width="fill_parent" android:layout_height="200dp" />
 		                <RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent" android:orientation="vertical" >
 		                    <LinearLayout android:id="@+id/viewGroup_banner" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_alignParentBottom="true" android:layout_marginBottom="10dp" android:gravity="center_horizontal" android:orientation="horizontal" > </LinearLayout>
 		                </RelativeLayout>
 		            </FrameLayout>
-		             <LinearLayout android:id="@+id/ll_recommend_group" android:layout_width="fill_parent" android:layout_height="wrap_content"  android:orientation="vertical" android:layout_below="@id/fl_banner_area"> </LinearLayout>
+		            <!-- recommend -->
+ 					<include android:id="@+id/home_susume_gropu_area" layout="@layout/recommend_layout" />
+		            <!-- category -->
+		            <LinearLayout android:id="@+id/ll_recommend_group" android:layout_width="fill_parent" android:layout_height="wrap_content"  android:orientation="vertical" android:layout_below="@id/home_susume_gropu_area"> </LinearLayout>
                 </RelativeLayout>           
         </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
     </FrameLayout>
