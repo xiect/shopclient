@@ -81,8 +81,8 @@ public class MyFragment extends BaseFragment {
 		public void onClick(View v) {
 			Log.d(TAG,"btnLogin clicked");
 			Intent intent = LoginActivity.makeIntent();
-			getActivity().startActivityForResult(intent, REQUEST_CODE_LOGIN);
-			getActivity().overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out); 
+			startActivityForResult(intent, REQUEST_CODE_LOGIN);
+//			overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out); 
 		}
 	};
 	
@@ -117,11 +117,11 @@ public class MyFragment extends BaseFragment {
 	private void doQueryOrder(){
 		if(app.isLogin()){
 			// already login,go to order center page 
-			getActivity().startActivity(OrderSearchActivity.makeIntent());
+			startActivity(OrderSearchActivity.makeIntent());
 			getActivity().overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
 		}else{
 			// not login ,go to login page
-			getActivity().startActivityForResult(LoginActivity.makeIntent(), REQUEST_CODE_4_ORDER);
+			startActivityForResult(LoginActivity.makeIntent(), REQUEST_CODE_4_ORDER);
 		}
 	}
 	

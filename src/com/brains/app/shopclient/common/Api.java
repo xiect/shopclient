@@ -84,8 +84,8 @@ public class Api implements java.io.Serializable {
 	 */
 	public List<Brand> getBrandList(String zizhi,String xinyu,String cate)
 			throws AppException {
-		String tempZizhi = Util.formatZizhi(zizhi);
-		String tempXinyu = Util.zero2Blank(xinyu);
+		String tempZizhi = Util.zero2Blank(zizhi);
+		String tempXinyu = Util.formatXinyu(xinyu);
 		String tempCat = Util.zero2Blank(cate);
 		
 		String url = remoteDomain + "/vsisfront/appLogin/selectBusiness.do";

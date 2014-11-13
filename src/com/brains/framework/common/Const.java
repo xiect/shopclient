@@ -48,5 +48,5 @@ public interface Const {
 	String TYPE_3_4S = "1";
 	String TYPE_3_OTHER = "2";
 	
-	
+	String ERROR_NET = "加载失败";
 }

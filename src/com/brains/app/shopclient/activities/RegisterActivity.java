@@ -1,10 +1,5 @@
 package com.brains.app.shopclient.activities;
 
-import java.util.ArrayList;
-
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.james.mime4j.field.address.parser.BaseNode;
-
 import com.brains.app.shopclient.R;
 import com.brains.app.shopclient.bean.User;
 import com.brains.app.shopclient.common.Util;
@@ -15,8 +10,6 @@ import com.brains.framework.task.TaskParams;
 import com.brains.framework.task.TaskResult;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.AsyncTask.Status;
@@ -27,7 +20,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * 注册画面
@@ -43,7 +35,7 @@ public class RegisterActivity extends BaseNormalActivity {
 	private EditText mTelText;
 	private EditText mPasswordText1;
 	private EditText mPasswordText2;
-	
+	private User mLoginResult;
 	
 	private Button mRegisterButton;
 	private Button mCancleButton;
@@ -196,13 +188,16 @@ public class RegisterActivity extends BaseNormalActivity {
 				// 保存别名
 				app.mPrefDAO.saveNikeName(mUserResult.getNikeName());
 				app.showMsgWithToast(R.string.register_success);
+				// 返回前一个画面
+				setResult(Activity.RESULT_OK);
+				finish();
 			} else {
 				if(TaskResult.FAILED == result && message != null && message.length() > 0){
 					Log.d(TAG, "layout_no_data");
 					app.showErrorWithToast(message);
 				}else{
 					Log.d(TAG, "layout_no_data");
-					app.showErrorWithToast("这位客官遇到点小麻烦，请重新登录!");
+					app.showErrorWithToast("这位客官遇到点小麻烦，请重新注册!");
 				}
 			}
 			

@@ -96,7 +96,7 @@ public class Util extends BaseUtil {
 			return msg;
 	}
 	
-	public static String formatZizhi(String str){
+	public static String formatXinyu(String str){
 		String retVal = "";
 		try{
 			String[] values = new String[]{"","A","AA","AAA"};

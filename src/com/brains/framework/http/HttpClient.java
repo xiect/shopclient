@@ -130,7 +130,7 @@ public class HttpClient {
 
 	public static final int RETRIEVE_LIMIT = 20;
 	public static final int RETRIED_TIME = 3;
-
+	
 	
 
 	protected DefaultHttpClient mClient;
@@ -391,12 +391,12 @@ public class HttpClient {
 			response = mClient.execute(method);
 		} catch (ClientProtocolException e) {
 			Log.e(TAG, e.getMessage(), e);
-			throw new AppException( "网络通信错误:" + e.getMessage());
+			throw new AppException(Const.ERROR_NET);
 		} catch (IOException e) {
-			throw new AppException( "网络通信错误:" + e.getMessage());
+			throw new AppException(Const.ERROR_NET);
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
-			throw new AppException( "网络通信错误:" + e.getMessage());
+			throw new AppException(Const.ERROR_NET);
 		}
 
 		if (response != null) {
@@ -578,9 +578,9 @@ public class HttpClient {
 				res.setTextOnSuccess( response_text );	
 				response.getEntity().consumeContent();
 			} catch (ParseException e) {
-				throw new AppException( "网络通信错误:" + e.getMessage());
+				throw new AppException(Const.ERROR_NET);
 			} catch (IOException e) {
-				throw new AppException( "网络通信错误:" + e.getMessage());
+				throw new AppException(Const.ERROR_NET);
 			}
 			break;
 		// Mine mistake, Check the Log
@@ -589,19 +589,19 @@ public class HttpClient {
 		case NOT_FOUND:
 		case NOT_ACCEPTABLE:
 			Log.d(TAG,"HTTP ===== NOT_ACCEPTABLE");
-			throw new AppException( "网络通信错误:" + msg);
+			throw new AppException(Const.ERROR_NET);
 		case NOT_AUTHORIZED:
 			Log.d(TAG,"HTTP ===== NOT_AUTHORIZED");
-			throw new AppException( "网络通信错误:" + msg);
+			throw new AppException(Const.ERROR_NET);
 		case FORBIDDEN:
 			Log.d(TAG,"HTTP ===== FORBIDDEN");
-			throw new AppException( "网络通信错误:" + msg);
+			throw new AppException(Const.ERROR_NET);
 		case INTERNAL_SERVER_ERROR:
 		case BAD_GATEWAY:
 		case SERVICE_UNAVAILABLE:
-			throw new AppException( "网络通信错误:" + msg);
+			throw new AppException(Const.ERROR_NET);
 		default:
-			throw new AppException( "网络通信错误:" + msg);
+			throw new AppException(Const.ERROR_NET);
 		}
 	}
 

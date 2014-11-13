@@ -31,6 +31,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.TextView;
 
 /**
  * 品牌
@@ -54,6 +55,7 @@ public class BrandFragment extends BaseFragment {
 	private String mZizhi;
 	private String mXinyu;
 	private String mCategory;
+	private TextView tvNoData;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,6 +72,8 @@ public class BrandFragment extends BaseFragment {
 	}
 	
 	private void findView(){
+		tvNoData = (TextView) fragmentView.findViewById(R.id.tv_hint_no_data);
+		
 		btnHeaderChoose = (LinearLayout)fragmentView.findViewById(R.id.common_header_right_btn_area);
 		mProgressBar = (ProgressBar)fragmentView.findViewById(R.id.top_refresh_progressBar);
 		rlSearchHeader = (RelativeLayout)fragmentView.findViewById(R.id.home_title_search);
@@ -134,6 +138,7 @@ public class BrandFragment extends BaseFragment {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
+			tvNoData.setVisibility(View.GONE);
 			mLlErrorArea.setVisibility(View.GONE);
 			mProgressBar.setVisibility(View.VISIBLE);
 		}
@@ -183,13 +188,15 @@ public class BrandFragment extends BaseFragment {
 		// 隐藏列表
 		listView.setVisibility(View.GONE);
 		// 显示错误画面
-		mLlErrorArea.setVisibility(View.VISIBLE);
+		mLlErrorArea.setVisibility(View.GONE);
+		// 显示无数据画面
+		tvNoData.setVisibility(View.VISIBLE);
 	}
 	
 	private void showViewWithData() {
 		Util.sysLog(TAG, "showViewWithData");
 		isPrepared = true;
-		
+		tvNoData.setVisibility(View.GONE);
 		// 隐藏错误画面
 		mLlErrorArea.setVisibility(View.GONE);
 		listView.setVisibility(View.VISIBLE);

@@ -130,7 +130,7 @@ public class CartFragment extends BaseFragment {
 			@Override
 			public void onClick(View v) {
 				// 登录画面跳转
-				getActivity().startActivityForResult(LoginActivity.makeIntent(), REQUEST_CODE);
+				startActivityForResult(LoginActivity.makeIntent(), REQUEST_CODE);
 			}
 		});
 		btnHeaderEdit.setOnClickListener(new OnClickListener() {
@@ -164,7 +164,7 @@ public class CartFragment extends BaseFragment {
 						ctx.startActivity(NewOderActivity.makeIntent());
 					}else{
 						// 未登录的情况下 去登录画面
-						getActivity().startActivityForResult(LoginActivity.makeIntent(), REQUEST_CODE_4_ORDER);
+						startActivityForResult(LoginActivity.makeIntent(), REQUEST_CODE_4_ORDER);
 					}
 				}else if(selectedNum > 1){
 					String msg = getResources().getString(R.string.msg_product_selected_one_please);

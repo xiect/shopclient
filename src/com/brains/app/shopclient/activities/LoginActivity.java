@@ -4,7 +4,6 @@ package com.brains.app.shopclient.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
 import android.text.Selection;
 import android.text.Spannable;
 import android.text.method.HideReturnsTransformationMethod;
@@ -227,9 +226,11 @@ public class LoginActivity extends BaseNormalActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
+		Util.sysLog(TAG, "requestCode:" + requestCode + "\tresultCode:"+resultCode);
 		if(REQUEST_CODE_REGIST == requestCode && Activity.RESULT_OK == resultCode){
 			// 注册成功后回到登录画面
 			// 登录画面退出，回到主页面
+			setResult(resultCode, data);
 			finish();
 		}else{
 			Util.sysLog(TAG, "onActivityResult cancel");
