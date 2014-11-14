@@ -23,18 +23,15 @@
 	    <TextView android:id="@+id/tv_hint_no_data" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="fill_parent" android:gravity="center_vertical|center_horizontal" android:text="@string/no_search_result" />
 		<ListView android:id="@+id/lv_result_list" android:divider="@color/light_gray" android:paddingLeft="5dip" android:paddingRight="5dip" android:dividerHeight="5dip" android:layout_width="fill_parent" android:layout_height="fill_parent" android:background="@color/light_gray" android:scrollbars="vertical" android:scrollbarFadeDuration="0"/>
        </LinearLayout>
-       <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/rl_oading_area" android:visibility="gone">
-                <ProgressBar
-                    android:id="@+id/top_refresh_progressBar"
-                    style="@android:style/Widget.ProgressBar.Small.Inverse"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                   />
-                <TextView android:gravity="center_vertical" android:id="@+id/tv" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_toRightOf="@id/top_refresh_progressBar"  android:layout_marginLeft="4.0dip" android:text="加载中..." />
+       <RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent" android:id="@+id/rl_oading_area" android:visibility="gone">
+			<LinearLayout  android:layout_width="wrap_content"  android:layout_height="wrap_content" android:orientation="horizontal" android:layout_centerInParent="true">
+	                <ProgressBar
+	                    android:id="@+id/top_refresh_progressBar"
+	                    style="@android:style/Widget.ProgressBar.Small.Inverse"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"/>
+	                <TextView android:gravity="center_vertical" android:id="@+id/tv" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_toRightOf="@id/top_refresh_progressBar"  android:layout_marginLeft="4.0dip" android:text="加载中..." />
+	       </LinearLayout>
        </RelativeLayout>
        
        	<RelativeLayout
