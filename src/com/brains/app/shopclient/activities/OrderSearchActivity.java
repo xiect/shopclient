@@ -125,13 +125,16 @@ public class OrderSearchActivity extends BaseNormalActivity implements OnClickLi
 		
 		// 列表适配
 		mListView = (ListView)findViewById(R.id.lv_result_list);
-		mListViewAdapter = new OrderListAdapter(this,mDataList);
-		mListView.setAdapter(mListViewAdapter);
+		mListFooter = View.inflate(this, R.layout.listview_footer, null);
+		loadMoreGIFBtn = (ProgressBar) mListFooter.findViewById(R.id.rectangleProgressBar);
+		
+//		mListView.addFooterView(mListFooter, null, true);
+//		mListViewAdapter = new OrderListAdapter(this,mDataList);
+//		mListView.setAdapter(mListViewAdapter);
+		
 		// 注册事件
 		registerOnClickListener(mListView); 
-		mListFooter = View.inflate(this, R.layout.listview_footer, null);
-	    mListView.addFooterView(mListFooter, null, true);
-		loadMoreGIFBtn = (ProgressBar) mListFooter.findViewById(R.id.rectangleProgressBar);
+		
 		// 设定标题
 		mTvTitle.setText(R.string.page_title_order_search);
 		
@@ -233,8 +236,6 @@ public class OrderSearchActivity extends BaseNormalActivity implements OnClickLi
 		// 隐藏错误画面
 		mTvNoData.setVisibility(View.GONE);
 		mListView.setVisibility(View.VISIBLE);
-		// 数据更新后刷新列表
-		mListViewAdapter.notifyDataSetChanged();
 	}
 	
 	/**
@@ -249,6 +250,20 @@ public class OrderSearchActivity extends BaseNormalActivity implements OnClickLi
 		mSearchTask = new SearchTask();
 		mSearchTask.execute();
 	}
+	
+	
+	private void showListViewWithFooter(){
+		// 列表适配
+		mListView.addFooterView(mListFooter);
+		mListViewAdapter = new OrderListAdapter(this,mDataList);
+		mListView.setAdapter(mListViewAdapter);
+	}
+	
+	private void showListViewWithoutFooter(){
+		mListViewAdapter = new OrderListAdapter(this,mDataList);
+		mListView.setAdapter(mListViewAdapter);
+	}
+	
 	
 	/**
 	 * 检索task
@@ -265,15 +280,21 @@ public class OrderSearchActivity extends BaseNormalActivity implements OnClickLi
 			mLoading.setVisibility(View.VISIBLE);
 			mTvNoData.setVisibility(View.GONE);
 			mNetErrorView.setVisibility(View.GONE);
+			if(isGetMore && loadMoreGIFBtn != null){
+				loadMoreGIFBtn.setVisibility(View.VISIBLE);	
+				// 显示下一页
+				mCurrentPageNo++;
+			}
 		}
 
 		@Override
 		protected TaskResult _doInBackground(TaskParams... params) {
 			try {
 				if(!isGetMore){
+					// 初次加载的场合，显示第一页
 					mCurrentPageNo = 1;
 				}
-				tempList = app.mApi.getOrderSerachList(mSortMod);
+				tempList = app.mApi.getOrderSerachList(mSortMod,mCurrentPageNo);
 			} catch (AppException e) {
 				message = e.getMessage();
 				e.printStackTrace();
@@ -288,20 +309,23 @@ public class OrderSearchActivity extends BaseNormalActivity implements OnClickLi
 			// 隐藏loading
 			mLoading.setVisibility(View.GONE);
 			if(isGetMore){
+				loadMoreGIFBtn.setVisibility(View.GONE);
 				// 加载更多的场合
 				if (TaskResult.OK == result && tempList != null
 						&& tempList.size() > 0) {
 					mDataList.addAll(tempList);
 					// 判断是否要显示更多按钮
-					if(Const.PAGE_COUNT == tempList.size()){
-						// 显示更多按钮
-						loadMoreGIFBtn.setVisibility(View.VISIBLE);
-					}else{
-						loadMoreGIFBtn.setVisibility(View.GONE);
+					if(Const.PAGE_COUNT > tempList.size()){
+						// remove更多按钮
+						mListView.removeFooterView(mListFooter);
 					}
 					// 显示画面
 					showViewWithData();
+					// 数据更新后刷新列表
+					mListViewAdapter.notifyDataSetChanged();
 				} else {
+					// 恢复成上一页
+					mCurrentPageNo--;
 					if(TaskResult.FAILED == result && message != null && message.length() > 0){
 						Log.d(TAG, "layout_no_data");
 						app.showErrorWithToast(message);
@@ -317,11 +341,10 @@ public class OrderSearchActivity extends BaseNormalActivity implements OnClickLi
 					mDataList.clear();
 					mDataList.addAll(tempList);
 					// 判断是否要显示更多按钮
-					if(Const.PAGE_COUNT == tempList.size()){
-						// 显示更多按钮
-						loadMoreGIFBtn.setVisibility(View.VISIBLE);
+					if(Const.PAGE_COUNT > tempList.size()){
+						showListViewWithoutFooter();
 					}else{
-						loadMoreGIFBtn.setVisibility(View.GONE);
+						showListViewWithFooter();
 					}
 					// 显示List画面
 					showViewWithData();

@@ -174,10 +174,10 @@ public class Api implements java.io.Serializable {
 	 * @param flag
 	 * @return Response
 	 */
-	public List<Order> getOrderSerachList(String flag) throws AppException {
+	public List<Order> getOrderSerachList(String flag,int pageNum) throws AppException {
 		String url = remoteDomain + "/vsisfront/appLogin/selectOrder.do";
 		return Order.constructListFromJson(http.post(url,
-				createParams(new BasicNameValuePair("time", flag)))
+				createParams(new BasicNameValuePair("time", flag),new BasicNameValuePair("page", String.valueOf(pageNum))))
 				.asJSONObject());
 	}
 	
