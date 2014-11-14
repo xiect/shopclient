@@ -55,6 +55,7 @@ public class BrandFragment extends BaseFragment {
 	private String mZizhi;
 	private String mXinyu;
 	private String mCategory;
+	private String mKeyword;
 	private TextView tvNoData;
 	
 	@Override
@@ -64,6 +65,7 @@ public class BrandFragment extends BaseFragment {
 		mZizhi = Const.TYPE_ALL;
 		mXinyu = Const.TYPE_ALL;
 		mCategory = Const.TYPE_ALL;
+		mKeyword = "";
 		
 		fragmentView = inflater.inflate(R.layout.fragment_main_brand, container,false);
 		findView();
@@ -93,7 +95,7 @@ public class BrandFragment extends BaseFragment {
 		btnHeaderChoose.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				startActivityForResult(ShopTypeSelectActivity.makeIntent(mZizhi,mXinyu,mCategory), REQUEST_CODE_4_TYPE);
+				startActivityForResult(ShopTypeSelectActivity.makeIntent(mZizhi,mXinyu,mCategory,mKeyword), REQUEST_CODE_4_TYPE);
 			}
 		});
 		
@@ -147,7 +149,7 @@ public class BrandFragment extends BaseFragment {
 		protected TaskResult _doInBackground(TaskParams... params) {
 			try {
 				// 获得网络数据
-				tempList = app.mApi.getBrandList(mZizhi,mXinyu,mCategory);
+				tempList = app.mApi.getBrandList(mZizhi,mXinyu,mCategory,mKeyword);
 				return TaskResult.OK;
 			} catch (AppException e) {
 				message = e.getMessage();
@@ -238,7 +240,10 @@ public class BrandFragment extends BaseFragment {
 				if(!Util.isEmpty(value)){
 					mCategory = value;
 				}
-				Util.sysLog(TAG, "mZizhi==="+mZizhi +"\tmXinyu:" + mXinyu + "\tmCategory:" + mCategory);
+				
+				value = data.getStringExtra(ShopTypeSelectActivity.EXTRA_KEYWORD); 
+				mKeyword = value;
+				Util.sysLog(TAG, "mZizhi==="+mZizhi +"\tmXinyu:" + mXinyu + "\tmCategory:" + mCategory + "\tmKeyword:" + mKeyword);
 				// reload data
 				doGetBrandList();
 			}

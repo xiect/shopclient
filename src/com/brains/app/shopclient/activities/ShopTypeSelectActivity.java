@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RadioGroup;
 
 
@@ -25,24 +27,28 @@ public class ShopTypeSelectActivity extends BaseNormalActivity implements OnClic
 	public static final String EXTRA_ZIZHI = "EXTRA_ZIZHI";
 	public static final String EXTRA_XINYU = "EXTRA_XINYU";
 	public static final String EXTRA_CATE = "EXTRA_CATE";
+	public static final String EXTRA_KEYWORD = "EXTRA_KEYWORD";
 	
 	private String typeZizhi;
 	private String typeXinyu;
 	private String typeCategory;
+	private String mKeyword;
 	
 	private RadioGroup group1;
 	private RadioGroup group2;
 	private RadioGroup group3;
-	
+	private EditText mTxtKeyword;
+	private Button mBtnSearch; // 搜索按钮
 	/**
 	 * 取得关于画面Intent
 	 * @return
 	 */
-	public static Intent makeIntent(String zizhi,String xinyu ,String category) {
+	public static Intent makeIntent(String zizhi,String xinyu ,String category,String keyword) {
 		Intent intent = new Intent().setAction(ACTION);
 		intent.putExtra(EXTRA_ZIZHI, zizhi);
 		intent.putExtra(EXTRA_XINYU, xinyu);
 		intent.putExtra(EXTRA_CATE, category);
+		intent.putExtra(EXTRA_KEYWORD, keyword);
 		return intent;
 	}
 	
@@ -57,11 +63,16 @@ public class ShopTypeSelectActivity extends BaseNormalActivity implements OnClic
 			typeZizhi = bundle.getString(EXTRA_ZIZHI, Const.TYPE_ALL);
 			typeXinyu = bundle.getString(EXTRA_XINYU, Const.TYPE_ALL);
 			typeCategory = bundle.getString(EXTRA_CATE, Const.TYPE_ALL);
+			mKeyword = bundle.getString(EXTRA_KEYWORD, "");
 		}else{
 			typeZizhi = Const.TYPE_ALL;
 			typeXinyu = Const.TYPE_ALL;
 			typeCategory = Const.TYPE_ALL;	
 		}
+		
+		mTxtKeyword = (EditText)findViewById(R.id.homeActivity_autoComplete);
+		mBtnSearch = (Button) findViewById(R.id.btn_search_btn);
+		mTxtKeyword.setText(mKeyword);
 		
 		group1 = (RadioGroup) findViewById(R.id.shop_type_group1);
 		group2 = (RadioGroup) findViewById(R.id.shop_type_group2);
@@ -82,6 +93,19 @@ public class ShopTypeSelectActivity extends BaseNormalActivity implements OnClic
 			group3.getChildAt(i).setOnClickListener(this);
 		}
 		
+		mBtnSearch.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mKeyword = mTxtKeyword.getEditableText().toString();
+				Intent data = new Intent();
+				data.putExtra(EXTRA_ZIZHI, typeZizhi);
+				data.putExtra(EXTRA_XINYU, typeXinyu);
+				data.putExtra(EXTRA_CATE, typeCategory);
+				data.putExtra(EXTRA_KEYWORD, mKeyword);
+				setResult(Activity.RESULT_OK, data);
+				finish();
+			}
+		});
 		showWithData();
 	}
 	

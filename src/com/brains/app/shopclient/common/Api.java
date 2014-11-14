@@ -82,7 +82,7 @@ public class Api implements java.io.Serializable {
 	 * 获取品牌列表。
 	 * @return List<KpResult>
 	 */
-	public List<Brand> getBrandList(String zizhi,String xinyu,String cate)
+	public List<Brand> getBrandList(String zizhi,String xinyu,String cate,String keyword)
 			throws AppException {
 		String tempZizhi = Util.zero2Blank(zizhi);
 		String tempXinyu = Util.formatXinyu(xinyu);
@@ -92,7 +92,8 @@ public class Api implements java.io.Serializable {
 		return Brand.constructListFromJson(http.post(url,createParams(
 				new BasicNameValuePair("businessAptitude", tempZizhi),
 				new BasicNameValuePair("businessCredit", tempXinyu),
-				new BasicNameValuePair("businessType", tempCat)
+				new BasicNameValuePair("businessType", tempCat),
+				new BasicNameValuePair("name", keyword)
 				)).asJSONObject());
 	}
 	
